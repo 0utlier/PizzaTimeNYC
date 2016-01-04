@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 99260DFE1C2DD36800EFB125 /* PizzaPlace.m */; };
+		99260E021C2DD4AA00EFB125 /* GW eating a slice.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */; };
+		99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99260E031C2DD4DD00EFB125 /* Images.xcassets */; };
+		99260E071C2DD72200EFB125 /* its pizza time.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99260E051C2DD72200EFB125 /* its pizza time.jpg */; };
+		99260E081C2DD72200EFB125 /* pizza time all turtles.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99260E061C2DD72200EFB125 /* pizza time all turtles.jpg */; };
+		99260E0A1C2DD9B500EFB125 /* its pizza time resized.png in Resources */ = {isa = PBXBuildFile; fileRef = 99260E091C2DD9B500EFB125 /* its pizza time resized.png */; };
+		99447E3A1C31B00200260B8E /* InfoPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 99447E391C31B00200260B8E /* InfoPage.m */; };
+		998B96861C32052300DC8EB7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 998B96851C32052300DC8EB7 /* Reachability.m */; };
+		999E74151C337C030030099A /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 999E74141C337C030030099A /* Icon-Small.png */; };
+		999E74171C337D5F0030099A /* animatedBike29.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 999E74161C337D5F0030099A /* animatedBike29.jpg */; };
+		99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */; };
+		99D629811C2F690700B49E26 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D629801C2F690700B49E26 /* WebViewController.m */; };
 		AA71E9091C2B32E400FA48F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9081C2B32E400FA48F6 /* main.m */; };
 		AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90B1C2B32E500FA48F6 /* AppDelegate.m */; };
 		AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90E1C2B32E500FA48F6 /* ViewController.m */; };
@@ -18,7 +30,6 @@
 		AA71E9301C2B32E500FA48F6 /* Pizza_Time_NYCUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E92F1C2B32E500FA48F6 /* Pizza_Time_NYCUITests.m */; };
 		AA71E93E1C2B486A00FA48F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA71E93D1C2B486A00FA48F6 /* MapKit.framework */; };
 		AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */; };
-		AA71E9471C2B62B900FA48F6 /* PizzaPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9461C2B62B900FA48F6 /* PizzaPlace.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +50,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99260DFD1C2DD36800EFB125 /* PizzaPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PizzaPlace.h; path = "Pizza Time NYC/PizzaPlace.h"; sourceTree = "<group>"; };
+		99260DFE1C2DD36800EFB125 /* PizzaPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PizzaPlace.m; path = "Pizza Time NYC/PizzaPlace.m"; sourceTree = "<group>"; };
+		99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "GW eating a slice.jpg"; sourceTree = "<group>"; };
+		99260E031C2DD4DD00EFB125 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		99260E051C2DD72200EFB125 /* its pizza time.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "its pizza time.jpg"; sourceTree = "<group>"; };
+		99260E061C2DD72200EFB125 /* pizza time all turtles.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "pizza time all turtles.jpg"; sourceTree = "<group>"; };
+		99260E091C2DD9B500EFB125 /* its pizza time resized.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "its pizza time resized.png"; sourceTree = "<group>"; };
+		99447E381C31B00200260B8E /* InfoPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoPage.h; path = "Pizza Time NYC/InfoPage.h"; sourceTree = "<group>"; };
+		99447E391C31B00200260B8E /* InfoPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoPage.m; path = "Pizza Time NYC/InfoPage.m"; sourceTree = "<group>"; };
+		998B96841C32052300DC8EB7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		998B96851C32052300DC8EB7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		999E74141C337C030030099A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-Small.png"; sourceTree = "<group>"; };
+		999E74161C337D5F0030099A /* animatedBike29.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = animatedBike29.jpg; sourceTree = "<group>"; };
+		99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TwoBrosPizzaLogo.jpg; sourceTree = "<group>"; };
+		99D6297F1C2F690700B49E26 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = "Pizza Time NYC/WebViewController.h"; sourceTree = "<group>"; };
+		99D629801C2F690700B49E26 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = "Pizza Time NYC/WebViewController.m"; sourceTree = "<group>"; };
 		AA71E9041C2B32E400FA48F6 /* Pizza Time NYC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pizza Time NYC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA71E9081C2B32E400FA48F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA71E90A1C2B32E500FA48F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -59,8 +86,6 @@
 		AA71E93D1C2B486A00FA48F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		AA71E93F1C2B48B800FA48F6 /* MapKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapKitViewController.h; sourceTree = "<group>"; };
 		AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapKitViewController.m; sourceTree = "<group>"; };
-		AA71E9451C2B62B900FA48F6 /* PizzaPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PizzaPlace.h; sourceTree = "<group>"; };
-		AA71E9461C2B62B900FA48F6 /* PizzaPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PizzaPlace.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +114,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		99260E001C2DD37900EFB125 /* PizzaPlace */ = {
+			isa = PBXGroup;
+			children = (
+				99260DFD1C2DD36800EFB125 /* PizzaPlace.h */,
+				99260DFE1C2DD36800EFB125 /* PizzaPlace.m */,
+			);
+			name = PizzaPlace;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		99447E3B1C31B00D00260B8E /* InfoPage */ = {
+			isa = PBXGroup;
+			children = (
+				99447E381C31B00200260B8E /* InfoPage.h */,
+				99447E391C31B00200260B8E /* InfoPage.m */,
+			);
+			name = InfoPage;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		998B96871C32052900DC8EB7 /* Apple Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				998B96841C32052300DC8EB7 /* Reachability.h */,
+				998B96851C32052300DC8EB7 /* Reachability.m */,
+			);
+			name = "Apple Reachability";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		99D629821C2F6BEA00B49E26 /* WebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				99D6297F1C2F690700B49E26 /* WebViewController.h */,
+				99D629801C2F690700B49E26 /* WebViewController.m */,
+			);
+			name = WebViewController;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		AA71E8FB1C2B32E400FA48F6 = {
 			isa = PBXGroup;
 			children = (
@@ -115,14 +180,18 @@
 				AA71E9431C2B48CB00FA48F6 /* App Delegate */,
 				AA71E9441C2B48D800FA48F6 /* View Controller */,
 				AA71E9421C2B48BC00FA48F6 /* MapKitViewController */,
-				AA71E9481C2B62C300FA48F6 /* PizzaPlace */,
+				99260E001C2DD37900EFB125 /* PizzaPlace */,
+				99D629821C2F6BEA00B49E26 /* WebViewController */,
+				99447E3B1C31B00D00260B8E /* InfoPage */,
+				998B96871C32052900DC8EB7 /* Apple Reachability */,
 				AA71E9101C2B32E500FA48F6 /* Main.storyboard */,
+				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
 				AA71E9161C2B32E500FA48F6 /* Assets.xcassets */,
 				AA71E91B1C2B32E500FA48F6 /* Info.plist */,
 				AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */,
-				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
 				AA71E9071C2B32E400FA48F6 /* Supporting Files */,
 				AA71E93D1C2B486A00FA48F6 /* MapKit.framework */,
+				99260E031C2DD4DD00EFB125 /* Images.xcassets */,
 			);
 			path = "Pizza Time NYC";
 			sourceTree = "<group>";
@@ -130,6 +199,13 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */,
+				99260E051C2DD72200EFB125 /* its pizza time.jpg */,
+				99260E091C2DD9B500EFB125 /* its pizza time resized.png */,
+				99260E061C2DD72200EFB125 /* pizza time all turtles.jpg */,
+				99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */,
+				999E74161C337D5F0030099A /* animatedBike29.jpg */,
+				999E74141C337C030030099A /* Icon-Small.png */,
 				AA71E9081C2B32E400FA48F6 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -179,15 +255,6 @@
 				AA71E90E1C2B32E500FA48F6 /* ViewController.m */,
 			);
 			name = "View Controller";
-			sourceTree = "<group>";
-		};
-		AA71E9481C2B62C300FA48F6 /* PizzaPlace */ = {
-			isa = PBXGroup;
-			children = (
-				AA71E9451C2B62B900FA48F6 /* PizzaPlace.h */,
-				AA71E9461C2B62B900FA48F6 /* PizzaPlace.m */,
-			);
-			name = PizzaPlace;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,9 +363,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */,
+				99260E0A1C2DD9B500EFB125 /* its pizza time resized.png in Resources */,
 				AA71E91A1C2B32E500FA48F6 /* LaunchScreen.storyboard in Resources */,
+				99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */,
 				AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */,
 				AA71E9121C2B32E500FA48F6 /* Main.storyboard in Resources */,
+				99260E071C2DD72200EFB125 /* its pizza time.jpg in Resources */,
+				99260E081C2DD72200EFB125 /* pizza time all turtles.jpg in Resources */,
+				999E74171C337D5F0030099A /* animatedBike29.jpg in Resources */,
+				999E74151C337C030030099A /* Icon-Small.png in Resources */,
+				99260E021C2DD4AA00EFB125 /* GW eating a slice.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,10 +399,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA71E9151C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld in Sources */,
+				99D629811C2F690700B49E26 /* WebViewController.m in Sources */,
 				AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */,
-				AA71E9471C2B62B900FA48F6 /* PizzaPlace.m in Sources */,
+				99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */,
 				AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */,
 				AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */,
+				99447E3A1C31B00200260B8E /* InfoPage.m in Sources */,
+				998B96861C32052300DC8EB7 /* Reachability.m in Sources */,
 				AA71E9091C2B32E400FA48F6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,8 +547,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Pizza Time NYC/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.comcom.Pizza-Time-NYC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -481,8 +560,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Pizza Time NYC/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.comcom.Pizza-Time-NYC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -556,6 +636,7 @@
 				AA71E9361C2B32E500FA48F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA71E9371C2B32E500FA48F6 /* Build configuration list for PBXNativeTarget "Pizza Time NYCTests" */ = {
 			isa = XCConfigurationList;
@@ -564,6 +645,7 @@
 				AA71E9391C2B32E500FA48F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA71E93A1C2B32E500FA48F6 /* Build configuration list for PBXNativeTarget "Pizza Time NYCUITests" */ = {
 			isa = XCConfigurationList;
@@ -572,6 +654,7 @@
 				AA71E93C1C2B32E500FA48F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

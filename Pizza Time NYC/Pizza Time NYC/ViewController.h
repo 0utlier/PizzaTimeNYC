@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reachability.h"
 
 @interface ViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *pizzaTimeButton;
+@property (nonatomic) Reachability *hostReachability;
+@property (nonatomic) Reachability *internetReachability;
+@property (nonatomic) Reachability *wifiReachability;
 
 @end
 

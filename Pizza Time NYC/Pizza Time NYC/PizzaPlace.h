@@ -2,20 +2,21 @@
 //  PizzaPlace.h
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 12/23/15.
+//  Created by SUGAR^2 on 12/25/15.
 //  Copyright © 2015 TTT. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-//PizzaPlace is the definition of each of our dollarPizza places
 @interface PizzaPlace : NSObject
 
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *image;
-@property (nonatomic, retain) NSString *url;
+//information on PizzaPlace
+@property (nonatomic, retain) NSString *pizzaPlaceName;
+@property (nonatomic, retain) NSString *pizzaPlaceURL;
+@property (nonatomic, retain) NSString *pizzaPlaceImage;
 
-@property float latitude;
-@property float longitude;
-
+//location of PizzaPlace
+@property (nonatomic, retain) NSString *pizzaPlaceAddress;
+@property float pizzaPlaceLatitude;
+@property float pizzaPlaceLongitude;
 @end
