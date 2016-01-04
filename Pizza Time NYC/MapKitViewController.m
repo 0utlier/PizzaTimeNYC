@@ -20,12 +20,14 @@ BOOL userLocationShown;
 	[super viewDidLoad];
 	userLocationShown = NO;
 	self.UserLocationProperty = [[MKUserLocation alloc] init];
-	[self checkForLocationServicesEnabled];
 	[self createLocationManager];
 	[self createMapView];
+	[self checkForLocationServicesEnabled]; // originally after "createLocationManager"
+	// moved for ESB zoom
 	
 	[self createPizzaPlaces];
-	[self createToolBar];
+//	[self createToolBar];
+//	[self createTabBar];
 	[self createSearchBar];
 	[self createLongPressGesture];
 	//check for location
@@ -46,33 +48,38 @@ BOOL userLocationShown;
 	[self.locationManager setDelegate:self];
 	[self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 }
+// commented out for TabBar addition // delegate
 
--(void)createToolBar {
-	[self.view addSubview:self.mapToolBar];
-	//uncomment following line for programmtic version of toolBar
-	
-	/*UIToolbar *toolbar = [[UIToolbar alloc] init];
-	 toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
-	 NSMutableArray *items = [[NSMutableArray alloc] init];
-	 [items addObject:[[[UIBarButtonItem alloc] initWith....]];
-	 [toolbar setItems:items animated:NO];
-	 [self.view addSubview:toolbar];*/
-	
-	// Add an action for each bar button ITEM
-	self.currentLocationButton.target = self;
-	self.currentLocationButton.action = @selector(currentLocationButtonPressed);
-	
-	self.searchAddressButton.target = self;
-	self.searchAddressButton.action = @selector(searchButtonPressed);
-	
-	/* //uncomment this if infoButton needs to do anything besides open page
-	self.addPizzaPlaceButton.target = self;
-	self.addPizzaPlaceButton.action = @selector(addPizzaPlaceButtonPressed);
-	
-	 self.infoButton.target = self;
-	 self.infoButton.action = @selector(infoButtonPressed);
-	 */
-}
+//-(void)createToolBar {
+//	[self.view addSubview:self.mapToolBar];
+//	//uncomment following line for programmtic version of toolBar
+//	
+//	/*UIToolbar *toolbar = [[UIToolbar alloc] init];
+//	 toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+//	 NSMutableArray *items = [[NSMutableArray alloc] init];
+//	 [items addObject:[[[UIBarButtonItem alloc] initWith....]];
+//	 [toolbar setItems:items animated:NO];
+//	 [self.view addSubview:toolbar];*/
+//	
+//	// Add an action for each bar button ITEM
+//	self.currentLocationButton.target = self;
+//	self.currentLocationButton.action = @selector(currentLocationButtonPressed);
+//	
+//	self.searchAddressButton.target = self;
+//	self.searchAddressButton.action = @selector(searchButtonPressed);
+//	
+//	/* //uncomment this if infoButton needs to do anything besides open page
+//	 self.addPizzaPlaceButton.target = self;
+//	 self.addPizzaPlaceButton.action = @selector(addPizzaPlaceButtonPressed);
+//	 
+//	 self.infoButton.target = self;
+//	 self.infoButton.action = @selector(infoButtonPressed);
+//	 */
+//}
+//
+//-(void)createTabBar {
+//	[self.view addSubview:self.mapTabBar];
+//}
 
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
@@ -177,57 +184,57 @@ BOOL userLocationShown;
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 { //use the below if drops are necessary
 	/*
-	if([annotation isKindOfClass:[MKUserLocation class]]);
+	 if([annotation isKindOfClass:[MKUserLocation class]]);
 		return nil;
-	
-	static NSString *AnnotationIdentifier=@"AnnotationIdentifier";
-	MKPinAnnotationView *pinView=[[MKPinAnnotationView alloc ]initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
-	
-	pinView.animatesDrop=YES;
-	pinView.canShowCallout=YES;
-	pinView.pinColor=MKPinAnnotationColorRed;
-	pinView.leftCalloutAccessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,80,60)];
-	
-	UIImageView *IconView = [[UIImageView alloc] initWithFrame:pinView.leftCalloutAccessoryView.frame];
-	for (PizzaPlace *pizzaPlace in self.pizzaPlaceArray) {
+	 
+	 static NSString *AnnotationIdentifier=@"AnnotationIdentifier";
+	 MKPinAnnotationView *pinView=[[MKPinAnnotationView alloc ]initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
+	 
+	 pinView.animatesDrop=YES;
+	 pinView.canShowCallout=YES;
+	 pinView.pinColor=MKPinAnnotationColorRed;
+	 pinView.leftCalloutAccessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,80,60)];
+	 
+	 UIImageView *IconView = [[UIImageView alloc] initWithFrame:pinView.leftCalloutAccessoryView.frame];
+	 for (PizzaPlace *pizzaPlace in self.pizzaPlaceArray) {
 		if ([pizzaPlace.pizzaPlaceName isEqualToString:annotation.title]) {
-			//			NSLog(@"my annotation %@ and my location %@",annotation.title, pizzaPlace.pizzaPlaceName);
-			UIImage *image = [UIImage imageNamed:pizzaPlace.pizzaPlaceImage];
-			IconView.image = image;
+	 //			NSLog(@"my annotation %@ and my location %@",annotation.title, pizzaPlace.pizzaPlaceName);
+	 UIImage *image = [UIImage imageNamed:pizzaPlace.pizzaPlaceImage];
+	 IconView.image = image;
 		}
+	 }
+	 pinView.leftCalloutAccessoryView = IconView;
+	 
+	 UIButton *rbutton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	 [rbutton setTitle:annotation.title forState:UIControlStateNormal];
+	 //	[rbutton addTarget:self action:@selector(showDetailViewController:sender:) forControlEvents:UIControlEventTouchUpInside];
+	 pinView.rightCalloutAccessoryView=rbutton;
+	 
+	 
+	 return pinView;
+	 */
+	static NSString *AnnotationIdentifier=@"AnnotationIdentifier";
+	MKAnnotationView *pinView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
+	
+	if (!pinView) {
+		
+		MKAnnotationView *customPinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
+		if (annotation == mapView.userLocation){
+			customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
+		}
+		else{
+			customPinView.image = [UIImage imageNamed:@"Icon-Small.png"];
+		}
+		//			customPinView.animatesDrop = NO;
+		customPinView.canShowCallout = YES;
+		return customPinView;
+		
+	} else {
+		
+		pinView.annotation = annotation;
 	}
-	pinView.leftCalloutAccessoryView = IconView;
-	
-	UIButton *rbutton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-	[rbutton setTitle:annotation.title forState:UIControlStateNormal];
-	//	[rbutton addTarget:self action:@selector(showDetailViewController:sender:) forControlEvents:UIControlEventTouchUpInside];
-	pinView.rightCalloutAccessoryView=rbutton;
-	
 	
 	return pinView;
-	*/
-		static NSString *AnnotationIdentifier=@"AnnotationIdentifier";
-		MKAnnotationView *pinView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
-		
-		if (!pinView) {
-			
-			MKAnnotationView *customPinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
-			if (annotation == mapView.userLocation){
-				customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
-			}
-			else{
-				customPinView.image = [UIImage imageNamed:@"Icon-Small.png"];
-			}
-//			customPinView.animatesDrop = NO;
-			customPinView.canShowCallout = YES;
-			return customPinView;
-			
-		} else {
-			
-			pinView.annotation = annotation;
-		}
-		
-		return pinView;
 	
 }
 
@@ -237,9 +244,9 @@ BOOL userLocationShown;
 	for (aV in views) {
 		
 		// Don't pin drop if annotation is user location
-//		if ([aV.annotation isKindOfClass:[MKUserLocation class]]) {
-//			continue;
-//		}
+		//		if ([aV.annotation isKindOfClass:[MKUserLocation class]]) {
+		//			continue;
+		//		}
 		
 		// Check if current annotation is inside visible map rect, else go to next one
 		MKMapPoint point =  MKMapPointForCoordinate(aV.annotation.coordinate);
@@ -333,16 +340,19 @@ BOOL userLocationShown;
 -(void)currentLocationButtonPressed {
 	NSLog(@"Current Location button was pressed");
 	// this should zoom in on current location again
-
-	[self checkForLocationServicesEnabled];
 	
-	[self.mapView setRegion:MKCoordinateRegionMake(self.UserLocationProperty.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
-
-	self.locationManager.delegate = self;
-	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	userLocationShown = NO;
-
-	[self.locationManager startUpdatingLocation];
+	[self checkForLocationServicesEnabled];
+	if([CLLocationManager authorizationStatus]!=kCLAuthorizationStatusDenied)
+	{
+		
+		[self.mapView setRegion:MKCoordinateRegionMake(self.UserLocationProperty.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
+		
+		self.locationManager.delegate = self;
+		self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+		userLocationShown = NO;
+		
+		[self.locationManager startUpdatingLocation];
+	}
 }
 
 // bring user to settings of Pizza Time (stock settings)
@@ -361,6 +371,15 @@ BOOL userLocationShown;
 	//check for authorization here
 	if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied)
 	{
+		// set Empire State Building as a location and set pin
+		CLLocationCoordinate2D centerCoordinate;
+		centerCoordinate.latitude = 40.7484;
+		centerCoordinate.longitude = -73.9857;
+		NSLog(@"lat = %f, long = %f", centerCoordinate.latitude, centerCoordinate.longitude);
+		// set region of map to focus on Empire State Building
+		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(centerCoordinate, 200, 200);
+		[self.mapView setRegion:region animated:YES];
+		
 		NSLog(@"Location Services Disabled");
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
 														message:@"Is Shredder on your tail? We'll keep your location a secret!"
@@ -388,9 +407,9 @@ BOOL userLocationShown;
 		self.searchBar.hidden = NO;
 		[self.searchBar becomeFirstResponder];
 	}
-		else {
-			self.searchBar.hidden = YES;
-		}
+	else {
+		self.searchBar.hidden = YES;
+	}
 	
 }
 
@@ -417,11 +436,11 @@ BOOL userLocationShown;
 		CGPoint point = [sender locationInView:self.mapView];
 		CLLocationCoordinate2D locCoord = [self.mapView convertPoint:point toCoordinateFromView:self.mapView];
 		// Then all you have to do is create the annotation and add it to the map
-//		MKAnnotation *dropPin = [[MKAnnotation	alloc] init];
-//		dropPin.latitude = [NSNumber numberWithDouble:locCoord.latitude];
-//		dropPin.longitude = [NSNumber numberWithDouble:locCoord.longitude];
-//		[self.mapView addAnnotation:dropPin];
-
+		//		MKAnnotation *dropPin = [[MKAnnotation	alloc] init];
+		//		dropPin.latitude = [NSNumber numberWithDouble:locCoord.latitude];
+		//		dropPin.longitude = [NSNumber numberWithDouble:locCoord.longitude];
+		//		[self.mapView addAnnotation:dropPin];
+		
 		CLLocationCoordinate2D centerCoordinate;
 		centerCoordinate.latitude = (CLLocationDegrees)locCoord.latitude;
 		centerCoordinate.longitude = (CLLocationDegrees)locCoord.longitude;
@@ -431,7 +450,7 @@ BOOL userLocationShown;
 		[annotation setSubtitle:@"Are you my mother?"];
 		[self.mapView addAnnotation:annotation];
 		//If we keep this, add the values to an array of places, so that it will not only reload next time, it can be added to the dataBase
-
+		
 	}
 }
 

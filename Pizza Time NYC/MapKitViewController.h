@@ -17,12 +17,17 @@
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic,strong) CLLocationManager *locationManager;
 
+
 // TOOL BAR Properties
 @property (weak, nonatomic) IBOutlet UIToolbar *mapToolBar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *infoButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addPizzaPlaceButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchAddressButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *currentLocationButton;
+
+// TAB BAR Properties
+@property (weak, nonatomic) IBOutlet UITabBar *mapTabBar;
+
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 

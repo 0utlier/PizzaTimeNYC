@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="iMG-BD-WDk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="iMG-BD-WDk">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -23,7 +23,7 @@
                                 <rect key="frame" x="260" y="285" width="81" height="30"/>
                                 <state key="normal" title="PIZZA TIME"/>
                                 <connections>
-                                    <segue destination="FeS-Td-4QL" kind="show" id="M3p-Gt-qyx"/>
+                                    <segue destination="hzR-Tc-z9c" kind="show" id="M3p-Gt-qyx"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="its pizza time resized.png" translatesAutoresizingMaskIntoConstraints="NO" id="dwT-pq-cuk">
@@ -54,9 +54,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="164" y="-401"/>
+            <point key="canvasLocation" x="-986" y="-574"/>
         </scene>
-        <!--Map Kit View Controller-->
+        <!--MAP-->
         <scene sceneID="OqX-WX-h9h">
             <objects>
                 <viewController id="FeS-Td-4QL" customClass="MapKitViewController" sceneMemberID="viewController">
@@ -68,7 +68,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fhv-hj-ahw">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fhv-hj-ahw">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem title="⦿" width="87" id="z8g-u7-1iC"/>
@@ -89,21 +89,34 @@
                                 <rect key="frame" x="4" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <tabBar contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lup-FD-qYI">
+                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem title="MAP" image="globe@2x.png" id="2zU-Vi-g9V"/>
+                                    <tabBarItem title="LIST" image="newspaper@2x.png" id="yM0-3h-AqW"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="top" secondItem="meQ-fk-BlY" secondAttribute="bottom" id="0nH-N5-jWq"/>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="width" secondItem="4vK-yZ-6N6" secondAttribute="width" id="7fw-y9-DTt"/>
                             <constraint firstItem="jhG-dC-xfO" firstAttribute="top" secondItem="fhv-hj-ahw" secondAttribute="bottom" id="O0z-Ro-fcG"/>
+                            <constraint firstItem="lup-FD-qYI" firstAttribute="width" secondItem="4vK-yZ-6N6" secondAttribute="width" id="Pez-oS-5v8"/>
                             <constraint firstItem="fhv-hj-ahw" firstAttribute="leading" secondItem="4vK-yZ-6N6" secondAttribute="leading" id="VCJ-pV-eup"/>
+                            <constraint firstItem="jhG-dC-xfO" firstAttribute="top" secondItem="lup-FD-qYI" secondAttribute="bottom" id="abW-al-ez1"/>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="leading" secondItem="4vK-yZ-6N6" secondAttribute="leadingMargin" constant="-16" id="gY5-RQ-Frf"/>
+                            <constraint firstItem="lup-FD-qYI" firstAttribute="centerX" secondItem="4vK-yZ-6N6" secondAttribute="centerX" id="iu8-Iz-ag2"/>
                             <constraint firstAttribute="trailing" secondItem="fhv-hj-ahw" secondAttribute="trailing" id="m3C-nI-YY4"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="MAP" image="globe.png" id="p0S-Ij-17a"/>
                     <connections>
                         <outlet property="addPizzaPlaceButton" destination="UYO-VJ-y1N" id="wlg-EQ-gcT"/>
                         <outlet property="currentLocationButton" destination="z8g-u7-1iC" id="CLw-Eh-SBv"/>
                         <outlet property="infoButton" destination="vmy-37-8yL" id="Brg-Kt-e4Y"/>
+                        <outlet property="mapTabBar" destination="lup-FD-qYI" id="m6W-Y7-5eT"/>
                         <outlet property="mapToolBar" destination="fhv-hj-ahw" id="On6-X3-ZLy"/>
                         <outlet property="searchAddressButton" destination="IzS-rp-faj" id="HnK-VV-eiq"/>
                         <outlet property="searchBar" destination="jjP-bI-wuf" id="DOB-FM-m4m"/>
@@ -111,7 +124,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0dC-7F-L6t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="876" y="-401"/>
+            <point key="canvasLocation" x="537" y="-574"/>
+        </scene>
+        <!--LIST-->
+        <scene sceneID="69m-0O-EXo">
+            <objects>
+                <tableViewController id="dnN-Li-t9V" customClass="TableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="sA8-3v-3Cg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fab-d2-IqQ">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fab-d2-IqQ" id="Hl0-hP-gTB">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="dnN-Li-t9V" id="8tz-vp-HoE"/>
+                            <outlet property="delegate" destination="dnN-Li-t9V" id="hrw-Ae-5xH"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="LIST" image="newspaper.png" id="NEY-gy-416"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q4C-5N-56R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="537" y="122"/>
         </scene>
         <!--Info Page-->
         <scene sceneID="nZc-Ye-8zt">
@@ -133,7 +175,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IMAGES BY RACHEL MCHUGH AND KEN SIU" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UAx-SY-Llx">
-                                <rect key="frame" x="65" y="290" width="450" height="20.5"/>
+                                <rect key="frame" x="65" y="290" width="450" height="21"/>
                                 <color key="backgroundColor" red="1" green="0.29158985359041156" blue="0.42769635521821714" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -176,7 +218,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pjD-te-51c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="958" y="318"/>
+            <point key="canvasLocation" x="1314" y="-574"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="aal-mG-ynT">
@@ -232,7 +274,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lMT-28-ZoQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-571" y="318"/>
+            <point key="canvasLocation" x="1314" y="122"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="JJr-FB-59Z">
@@ -265,7 +307,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7gT-jS-nw5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="164" y="318"/>
+            <point key="canvasLocation" x="-1721" y="122"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zfb-17-gWa">
@@ -283,11 +325,33 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fTU-xQ-IPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-571" y="-401"/>
+            <point key="canvasLocation" x="-1721" y="-574"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="6Hw-9e-sP4">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="hzR-Tc-z9c" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="dlk-CQ-buW">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="FeS-Td-4QL" kind="relationship" relationship="viewControllers" id="ntY-EF-HEy"/>
+                        <segue destination="dnN-Li-t9V" kind="relationship" relationship="viewControllers" id="dFt-lU-h5c"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Klq-zR-viR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-274" y="-574"/>
         </scene>
     </scenes>
     <resources>
+        <image name="globe.png" width="26" height="26"/>
+        <image name="globe@2x.png" width="1000" height="820"/>
         <image name="its pizza time resized.png" width="1000" height="820"/>
+        <image name="newspaper.png" width="26" height="26"/>
+        <image name="newspaper@2x.png" width="1000" height="820"/>
         <image name="pizza time all turtles.jpg" width="1024" height="694"/>
     </resources>
 </document>

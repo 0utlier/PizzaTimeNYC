@@ -52,7 +52,7 @@
 	
 	self.wifiReachability = [Reachability reachabilityForLocalWiFi];
 	[self.wifiReachability startNotifier];
-	
+// use a counter, by returning 1 if triggered and 0 if not, use this to eliminate checking for other connections. maybe even a bool
 	[self logReachability:self.hostReachability];
 	[self logReachability:self.internetReachability];
 	[self logReachability:self.wifiReachability];

@@ -30,6 +30,10 @@
 		AA71E9301C2B32E500FA48F6 /* Pizza_Time_NYCUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E92F1C2B32E500FA48F6 /* Pizza_Time_NYCUITests.m */; };
 		AA71E93E1C2B486A00FA48F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA71E93D1C2B486A00FA48F6 /* MapKit.framework */; };
 		AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */; };
+		AACB1BC11C3AFEFA0069E947 /* MapsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AACB1BC01C3AFEFA0069E947 /* MapsIcon.png */; };
+		AACB1BC31C3B0EA50069E947 /* globe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AACB1BC21C3B0EA50069E947 /* globe@2x.png */; };
+		AACB1BC51C3B1AB00069E947 /* newspaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AACB1BC41C3B1AB00069E947 /* newspaper@2x.png */; };
+		AACB1BC81C3B21890069E947 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AACB1BC71C3B21890069E947 /* TableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +90,11 @@
 		AA71E93D1C2B486A00FA48F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		AA71E93F1C2B48B800FA48F6 /* MapKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapKitViewController.h; sourceTree = "<group>"; };
 		AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapKitViewController.m; sourceTree = "<group>"; };
+		AACB1BC01C3AFEFA0069E947 /* MapsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MapsIcon.png; sourceTree = "<group>"; };
+		AACB1BC21C3B0EA50069E947 /* globe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe@2x.png"; sourceTree = "<group>"; };
+		AACB1BC41C3B1AB00069E947 /* newspaper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newspaper@2x.png"; sourceTree = "<group>"; };
+		AACB1BC61C3B21890069E947 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		AACB1BC71C3B21890069E947 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +186,7 @@
 		AA71E9061C2B32E400FA48F6 /* Pizza Time NYC */ = {
 			isa = PBXGroup;
 			children = (
+				AACB1BC91C3B218E0069E947 /* TableViewController */,
 				AA71E9431C2B48CB00FA48F6 /* App Delegate */,
 				AA71E9441C2B48D800FA48F6 /* View Controller */,
 				AA71E9421C2B48BC00FA48F6 /* MapKitViewController */,
@@ -199,6 +209,9 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AACB1BC41C3B1AB00069E947 /* newspaper@2x.png */,
+				AACB1BC21C3B0EA50069E947 /* globe@2x.png */,
+				AACB1BC01C3AFEFA0069E947 /* MapsIcon.png */,
 				99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */,
 				99260E051C2DD72200EFB125 /* its pizza time.jpg */,
 				99260E091C2DD9B500EFB125 /* its pizza time resized.png */,
@@ -255,6 +268,15 @@
 				AA71E90E1C2B32E500FA48F6 /* ViewController.m */,
 			);
 			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		AACB1BC91C3B218E0069E947 /* TableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AACB1BC61C3B21890069E947 /* TableViewController.h */,
+				AACB1BC71C3B21890069E947 /* TableViewController.m */,
+			);
+			name = TableViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,6 +386,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */,
+				AACB1BC31C3B0EA50069E947 /* globe@2x.png in Resources */,
+				AACB1BC11C3AFEFA0069E947 /* MapsIcon.png in Resources */,
 				99260E0A1C2DD9B500EFB125 /* its pizza time resized.png in Resources */,
 				AA71E91A1C2B32E500FA48F6 /* LaunchScreen.storyboard in Resources */,
 				99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */,
@@ -371,6 +395,7 @@
 				AA71E9121C2B32E500FA48F6 /* Main.storyboard in Resources */,
 				99260E071C2DD72200EFB125 /* its pizza time.jpg in Resources */,
 				99260E081C2DD72200EFB125 /* pizza time all turtles.jpg in Resources */,
+				AACB1BC51C3B1AB00069E947 /* newspaper@2x.png in Resources */,
 				999E74171C337D5F0030099A /* animatedBike29.jpg in Resources */,
 				999E74151C337C030030099A /* Icon-Small.png in Resources */,
 				99260E021C2DD4AA00EFB125 /* GW eating a slice.jpg in Resources */,
@@ -401,6 +426,7 @@
 				AA71E9151C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld in Sources */,
 				99D629811C2F690700B49E26 /* WebViewController.m in Sources */,
 				AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */,
+				AACB1BC81C3B21890069E947 /* TableViewController.m in Sources */,
 				99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */,
 				AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */,
 				AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */,
