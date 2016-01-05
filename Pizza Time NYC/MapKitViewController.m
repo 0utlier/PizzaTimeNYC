@@ -24,10 +24,13 @@ BOOL userLocationShown;
 	[self createMapView];
 	[self checkForLocationServicesEnabled]; // originally after "createLocationManager"
 	// moved for ESB zoom
+	self.dao = [DAO sharedDAO];
+	[self.dao createPizzaPlaces];
 	
-	[self createPizzaPlaces];
-//	[self createToolBar];
-//	[self createTabBar];
+	//	[self createPizzaPlaces]; // moved to DAO
+	[self createPizzaPins];
+	//	[self createToolBar]; // hidden by tabBar
+	//	[self createTabBar]; // hidden by storyBoard version
 	[self createSearchBar];
 	[self createLongPressGesture];
 	//check for location
@@ -53,25 +56,25 @@ BOOL userLocationShown;
 //-(void)createToolBar {
 //	[self.view addSubview:self.mapToolBar];
 //	//uncomment following line for programmtic version of toolBar
-//	
+//
 //	/*UIToolbar *toolbar = [[UIToolbar alloc] init];
 //	 toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
 //	 NSMutableArray *items = [[NSMutableArray alloc] init];
 //	 [items addObject:[[[UIBarButtonItem alloc] initWith....]];
 //	 [toolbar setItems:items animated:NO];
 //	 [self.view addSubview:toolbar];*/
-//	
+//
 //	// Add an action for each bar button ITEM
 //	self.currentLocationButton.target = self;
 //	self.currentLocationButton.action = @selector(currentLocationButtonPressed);
-//	
+//
 //	self.searchAddressButton.target = self;
 //	self.searchAddressButton.action = @selector(searchButtonPressed);
-//	
+//
 //	/* //uncomment this if infoButton needs to do anything besides open page
 //	 self.addPizzaPlaceButton.target = self;
 //	 self.addPizzaPlaceButton.action = @selector(addPizzaPlaceButtonPressed);
-//	 
+//
 //	 self.infoButton.target = self;
 //	 self.infoButton.action = @selector(infoButtonPressed);
 //	 */
@@ -107,67 +110,47 @@ BOOL userLocationShown;
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
 }
+-(void)findDistance {
+	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
+		double pizzaPlaceLat = (double)pizzaPlace.pizzaPlaceLatitude;
+		double pizzaPlaceLong = (double)pizzaPlace.pizzaPlaceLongitude;
+		
+		// find user's location
+		double userLocationLat = (double)self.UserLocationProperty.coordinate.latitude;
+		double userLocationLong = (double)self.UserLocationProperty.coordinate.longitude;
+		
+		if (self.UserLocationProperty.location.coordinate.latitude == 0.0) {
+			//		NSLog(@"Yea, I have no idea where you are!");
+			userLocationLat = 40.7484;
+			userLocationLong = -73.9857;
+		}
+		CLLocation *pizzaPlaceLocation = [[CLLocation alloc] initWithLatitude:pizzaPlaceLat
+																	longitude:pizzaPlaceLong];
+		
+		CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userLocationLat
+															  longitude:userLocationLong];
+		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocation];
+		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
+		//	NSLog(@"Calculated Miles %@", [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)]);
+		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
+		NSLog(@"distance in miles: %@", distanceFromUser);
+		//convert to float and then assign to pizzaPlaceDistance
+		float distanceFloat = [distanceFromUser floatValue];
+		pizzaPlace.pizzaPlaceDistance = distanceFloat;
+	}
+}
 
 #pragma mark - custom Annotations
-
--(void)createPizzaPlaces
-{
-	//TwoBros PizzaPlaces //as of 12.26.15 we have 7 TB
-	// name, address, image, url, Lat / Long
-	PizzaPlace *tb32_stMarks = [[PizzaPlace alloc]init];
-	PizzaPlace *tb542_9thAve = [[PizzaPlace alloc]init];
-	PizzaPlace *tb601_6thAve = [[PizzaPlace alloc]init];
-	PizzaPlace *tb557_8thAve = [[PizzaPlace alloc]init];
-	PizzaPlace *tb31_46thSt = [[PizzaPlace alloc]init];
-	PizzaPlace *tb755_6thAve = [[PizzaPlace alloc]init];
-	PizzaPlace *tb319_6thAve = [[PizzaPlace alloc]init];
-	
-	tb32_stMarks.pizzaPlaceName = @"Two Bros 32 St. Marks";
-	tb542_9thAve.pizzaPlaceName = @"Two Bros 542 9th Ave";
-	tb601_6thAve.pizzaPlaceName = @"Two Bros 601 6th Ave";
-	tb557_8thAve.pizzaPlaceName = @"Two Bros 557 8th Ave";
-	tb31_46thSt.pizzaPlaceName = @"Two Bros 31 46th St";
-	tb755_6thAve.pizzaPlaceName = @"Two Bros 755 6th Ave";
-	tb319_6thAve.pizzaPlaceName = @"Two Bros 319 6th Ave";
-	
-	tb32_stMarks.pizzaPlaceAddress = @"32 Saint Marks Place New York NY 10003";
-	tb32_stMarks.pizzaPlaceLatitude = 40.728677;
-	tb32_stMarks.pizzaPlaceLongitude = -73.988488;
-	
-	tb542_9thAve.pizzaPlaceAddress = @"542 9th Ave New York NY 10018";
-	tb542_9thAve.pizzaPlaceLatitude = 40.756921;
-	tb542_9thAve.pizzaPlaceLongitude = -73.993333;
-	
-	tb601_6thAve.pizzaPlaceAddress = @"601 6th Ave New York NY 10011";
-	tb601_6thAve.pizzaPlaceLatitude = 40.739602;
-	tb601_6thAve.pizzaPlaceLongitude = -73.995534;
-	
-	tb557_8thAve.pizzaPlaceAddress = @"557 8th Ave New York NY 10018";
-	tb557_8thAve.pizzaPlaceLatitude = 40.754742;
-	tb557_8thAve.pizzaPlaceLongitude = -73.992015;
-	
-	tb31_46thSt.pizzaPlaceAddress = @"31 West 46th St New York NY 10036";
-	tb31_46thSt.pizzaPlaceLatitude = 40.756775;
-	tb31_46thSt.pizzaPlaceLongitude = -73.980227;
-	
-	tb755_6thAve.pizzaPlaceAddress = @"755 6th Ave New York NY 10010";
-	tb755_6thAve.pizzaPlaceLatitude = 40.744382;
-	tb755_6thAve.pizzaPlaceLongitude = -73.992049;
-	
-	tb319_6thAve.pizzaPlaceAddress = @"319 6th Avenue New York NY 10014";
-	tb319_6thAve.pizzaPlaceLatitude = 40.731076;
-	tb319_6thAve.pizzaPlaceLongitude = -74.001708;
-	
-	self.pizzaPlaceArray = [[NSMutableArray alloc]initWithArray:@[tb32_stMarks, tb542_9thAve, tb601_6thAve, tb557_8thAve, tb31_46thSt, tb755_6thAve, tb319_6thAve]];
-	
-	for (PizzaPlace *pizzaPlace in self.pizzaPlaceArray) {
+-(void)createPizzaPins {
+	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		pizzaPlace.pizzaPlaceImage = @"TwoBrosPizzaLogo.jpg";
 		pizzaPlace.pizzaPlaceURL = @"http://www.2brospizza.com/";
 		[self createAnnotation:pizzaPlace];
+		//		[self findDistance:pizzaPlace];
 	}
-	//	NSLog(@"PizzaPlaceArry:%@", self.pizzaPlaceArray);
+	//	NSLog(@"PizzaPlaceArry:%@", self.dao.pizzaPlaceArray);
+	
 }
-
 - (void)createAnnotation:(PizzaPlace *)PizzaPlace
 {
 	CLLocationCoordinate2D centerCoordinate;
@@ -285,7 +268,7 @@ BOOL userLocationShown;
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
 	WebViewController *detailViewController = (WebViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
-	for (PizzaPlace *pizzaPlace in self.pizzaPlaceArray) {
+	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		if ([pizzaPlace.pizzaPlaceName isEqualToString:view.annotation.title]) {
 			NSLog(@"my annotation %@ and my location %@",view.annotation.title, pizzaPlace.pizzaPlaceName);
 			detailViewController.url = pizzaPlace.pizzaPlaceURL;
@@ -315,6 +298,7 @@ BOOL userLocationShown;
 	// set the inital map view location to user and use region of 0.01 x 0.01
 	[self.mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
 	userLocationShown = YES;
+	[self findDistance];
 	
 }
 
@@ -375,6 +359,7 @@ BOOL userLocationShown;
 		CLLocationCoordinate2D centerCoordinate;
 		centerCoordinate.latitude = 40.7484;
 		centerCoordinate.longitude = -73.9857;
+		self.UserLocationProperty.coordinate = centerCoordinate;
 		NSLog(@"lat = %f, long = %f", centerCoordinate.latitude, centerCoordinate.longitude);
 		// set region of map to focus on Empire State Building
 		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(centerCoordinate, 200, 200);

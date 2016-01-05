@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MapKitViewController.h"
+#import "DAO.h"
 
 @interface TableViewController : UITableViewController
 
 @property (nonatomic, retain) MapKitViewController *mapKitViewController; // unsure if I need this
+@property (nonatomic, retain) DAO *dao;
 
 @end

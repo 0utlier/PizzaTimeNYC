@@ -19,4 +19,5 @@
 @property (nonatomic, retain) NSString *pizzaPlaceAddress;
 @property float pizzaPlaceLatitude;
 @property float pizzaPlaceLongitude;
+@property float pizzaPlaceDistance;
 @end

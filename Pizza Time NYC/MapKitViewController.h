@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "DAO.h"
 #import "PizzaPlace.h"
 #import "WebViewController.h"
 
@@ -16,6 +17,7 @@
 
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic,strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) DAO *dao;
 
 
 // TOOL BAR Properties
@@ -32,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 //@property (nonatomic,retain) PizzaPlace *pizzaPlace;// i do not believe I need this
-@property(nonatomic, retain) NSMutableArray *pizzaPlaceArray;
+//@property(nonatomic, retain) NSMutableArray *pizzaPlaceArray; //moved to DAO
 
 @property (nonatomic, retain) MKUserLocation *UserLocationProperty;
 

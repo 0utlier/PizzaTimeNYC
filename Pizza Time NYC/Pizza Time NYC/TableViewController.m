@@ -20,6 +20,10 @@
 	// instantiate tableView
 	self.tableView.delegate=self;//unsure if necessary
 	self.tableView.dataSource=self;
+	
+	self.dao = [DAO sharedDAO];
+	[self.dao createPizzaPlaces];
+	[self createPizzaCells];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -41,19 +45,36 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-//    return [self.dao.companyList count];
-	return 0;
+    return [self.dao.pizzaPlaceArray count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+	static NSString *CellIdentifier = @"Cell";
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	
+	// Configure the cell...
+	if (cell == nil) {
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+	}
+	
+	// Display pizzaPlace in the table cell
+	PizzaPlace *pizzaPlace = [self.dao.pizzaPlaceArray objectAtIndex:indexPath.row];
+//	UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+//	recipeImageView.image = [UIImage imageNamed:recipe.imageFile];
+	
+	UILabel *nameLabel = (UILabel *)[cell viewWithTag:100];
+	nameLabel.text = pizzaPlace.pizzaPlaceName;
+	
+	UILabel *addressLabel = (UILabel *)[cell viewWithTag:101];
+	addressLabel.text = pizzaPlace.pizzaPlaceAddress;
+
+	UILabel *distanceLabel = (UILabel *)[cell viewWithTag:102];
+	distanceLabel.text = [NSString stringWithFormat:@"%f", pizzaPlace.pizzaPlaceDistance];
+
+	return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -98,5 +119,18 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)createPizzaCells {
+	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
+		pizzaPlace.pizzaPlaceImage = @"TwoBrosPizzaLogo.jpg";
+		pizzaPlace.pizzaPlaceURL = @"http://www.2brospizza.com/";
+//		[self createAnnotation:pizzaPlace];
+	}
+	//	NSLog(@"PizzaPlaceArry:%@", self.pizzaPlaceArray);
+	
+}
+
+
+
 
 @end
