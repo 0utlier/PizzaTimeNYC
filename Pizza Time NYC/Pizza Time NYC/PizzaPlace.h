@@ -11,13 +11,16 @@
 @interface PizzaPlace : NSObject
 
 //information on PizzaPlace
-@property (nonatomic, retain) NSString *pizzaPlaceName;
-@property (nonatomic, retain) NSString *pizzaPlaceURL;
-@property (nonatomic, retain) NSString *pizzaPlaceImage;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *url;
+@property (nonatomic, retain) NSString *image;
 
 //location of PizzaPlace
-@property (nonatomic, retain) NSString *pizzaPlaceAddress;
-@property float pizzaPlaceLatitude;
-@property float pizzaPlaceLongitude;
-@property float pizzaPlaceDistance;
+@property (nonatomic, retain) NSString *address;
+@property (nonatomic, retain) NSString *street;
+@property (nonatomic, retain) NSString *city;
+@property (nonatomic) NSInteger zip;
+@property float latitude;
+@property float longitude;
+@property float distance;
 @end

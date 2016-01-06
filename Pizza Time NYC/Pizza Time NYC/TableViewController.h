@@ -10,9 +10,12 @@
 #import "MapKitViewController.h"
 #import "DAO.h"
 
-@interface TableViewController : UITableViewController
+@interface TableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, retain) MapKitViewController *mapKitViewController; // unsure if I need this
+//@property (nonatomic, retain) MapKitViewController *mapKitViewController; // unsure if I need this
 @property (nonatomic, retain) DAO *dao;
+
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

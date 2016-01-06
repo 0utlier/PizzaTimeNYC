@@ -13,12 +13,14 @@
 @end
 
 BOOL userLocationShown;
+BOOL firstTimeLoaded;
 
 @implementation MapKitViewController
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	userLocationShown = NO;
+	firstTimeLoaded = NO;
 	self.UserLocationProperty = [[MKUserLocation alloc] init];
 	[self createLocationManager];
 	[self createMapView];
@@ -35,7 +37,18 @@ BOOL userLocationShown;
 	[self createLongPressGesture];
 	//check for location
 	//	[self currentLocationButtonPressed]; // this slows down the process of showing the user's location
+//	self.navigationController.hidesBarsOnTap = YES;
 	
+}
+
+-(void)viewWillAppear:(BOOL)animated {// find location every time the view appears
+	if(firstTimeLoaded) {
+		[self currentLocationButtonPressed];
+	}
+	else {
+		NSLog(@"Map LOADED first time");
+		firstTimeLoaded = YES;
+	}
 }
 
 - (void)createMapView {
@@ -51,6 +64,7 @@ BOOL userLocationShown;
 	[self.locationManager setDelegate:self];
 	[self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 }
+
 // commented out for TabBar addition // delegate
 
 //-(void)createToolBar {
@@ -112,8 +126,8 @@ BOOL userLocationShown;
 }
 -(void)findDistance {
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
-		double pizzaPlaceLat = (double)pizzaPlace.pizzaPlaceLatitude;
-		double pizzaPlaceLong = (double)pizzaPlace.pizzaPlaceLongitude;
+		double pizzaPlaceLat = (double)pizzaPlace.latitude;
+		double pizzaPlaceLong = (double)pizzaPlace.longitude;
 		
 		// find user's location
 		double userLocationLat = (double)self.UserLocationProperty.coordinate.latitude;
@@ -130,36 +144,41 @@ BOOL userLocationShown;
 		CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userLocationLat
 															  longitude:userLocationLong];
 		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocation];
-		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
+//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
 		//	NSLog(@"Calculated Miles %@", [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)]);
 		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
-		NSLog(@"distance in miles: %@", distanceFromUser);
+//		NSLog(@"distance in miles: %@", distanceFromUser);
 		//convert to float and then assign to pizzaPlaceDistance
 		float distanceFloat = [distanceFromUser floatValue];
-		pizzaPlace.pizzaPlaceDistance = distanceFloat;
+		pizzaPlace.distance = distanceFloat;
+//		NSLog(@"The distance saved as %f for %@", pizzaPlace.distance, pizzaPlace.name);
 	}
 }
 
 #pragma mark - custom Annotations
 -(void)createPizzaPins {
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
-		pizzaPlace.pizzaPlaceImage = @"TwoBrosPizzaLogo.jpg";
-		pizzaPlace.pizzaPlaceURL = @"http://www.2brospizza.com/";
+		pizzaPlace.image = @"TwoBrosPizzaLogo.jpg";
+		pizzaPlace.url = @"http://www.2brospizza.com/";
 		[self createAnnotation:pizzaPlace];
 		//		[self findDistance:pizzaPlace];
 	}
-	//	NSLog(@"PizzaPlaceArry:%@", self.dao.pizzaPlaceArray);
+	//	NSLog(@"PizzaPlaceArray:%@", self.dao.pizzaPlaceArray);
 	
 }
-- (void)createAnnotation:(PizzaPlace *)PizzaPlace
+- (void)createAnnotation:(PizzaPlace *)pizzaPlace
 {
 	CLLocationCoordinate2D centerCoordinate;
-	centerCoordinate.latitude = PizzaPlace.pizzaPlaceLatitude;
-	centerCoordinate.longitude = PizzaPlace.pizzaPlaceLongitude;
+	centerCoordinate.latitude = pizzaPlace.latitude;
+	centerCoordinate.longitude = pizzaPlace.longitude;
 	MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
 	[annotation setCoordinate:centerCoordinate];
-	[annotation setTitle:PizzaPlace.pizzaPlaceName]; //You can set the subtitle too
-	[annotation setSubtitle:PizzaPlace.pizzaPlaceAddress];
+
+	[annotation setTitle:pizzaPlace.name]; //You can set the subtitle too
+	NSString *secondLineAddress = [pizzaPlace.city stringByAppendingString:[NSString stringWithFormat:@" %ld",(long)pizzaPlace.zip ]];
+	NSString *allAddress = [pizzaPlace.street stringByAppendingString:[NSString stringWithFormat:@"\n%@", secondLineAddress]];
+	NSLog(@"%@", allAddress);
+	[annotation setSubtitle:allAddress];
 	[self.mapView addAnnotation:annotation];
 	
 }
@@ -182,7 +201,7 @@ BOOL userLocationShown;
 	 for (PizzaPlace *pizzaPlace in self.pizzaPlaceArray) {
 		if ([pizzaPlace.pizzaPlaceName isEqualToString:annotation.title]) {
 	 //			NSLog(@"my annotation %@ and my location %@",annotation.title, pizzaPlace.pizzaPlaceName);
-	 UIImage *image = [UIImage imageNamed:pizzaPlace.pizzaPlaceImage];
+	 UIImage *image = [UIImage imageNamed:pizzaPlace.image];
 	 IconView.image = image;
 		}
 	 }
@@ -204,9 +223,11 @@ BOOL userLocationShown;
 		MKAnnotationView *customPinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
 		if (annotation == mapView.userLocation){
 			customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
+			customPinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		}
 		else{
 			customPinView.image = [UIImage imageNamed:@"Icon-Small.png"];
+			customPinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		}
 		//			customPinView.animatesDrop = NO;
 		customPinView.canShowCallout = YES;
@@ -269,11 +290,16 @@ BOOL userLocationShown;
 {
 	WebViewController *detailViewController = (WebViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
-		if ([pizzaPlace.pizzaPlaceName isEqualToString:view.annotation.title]) {
-			NSLog(@"my annotation %@ and my location %@",view.annotation.title, pizzaPlace.pizzaPlaceName);
-			detailViewController.url = pizzaPlace.pizzaPlaceURL;
+		if ([pizzaPlace.name isEqualToString:view.annotation.title]) {
+			NSLog(@"my annotation %@ and my location %@",view.annotation.title, pizzaPlace.name);
+			detailViewController.url = pizzaPlace.url;
 			// Pass the selected object to the new view controller.
 			// Push the view controller.
+		}
+		else {
+			NSLog(@"user clicked on self");
+			//maybe have questions [via alert]: "what do you want to know about yourself?"
+			return;
 		}
 	}
 	[self.navigationController pushViewController:detailViewController animated:YES];

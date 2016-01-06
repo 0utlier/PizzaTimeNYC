@@ -22,7 +22,7 @@
 		AA71E9091C2B32E400FA48F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9081C2B32E400FA48F6 /* main.m */; };
 		AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90B1C2B32E500FA48F6 /* AppDelegate.m */; };
 		AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90E1C2B32E500FA48F6 /* ViewController.m */; };
-		AA71E9121C2B32E500FA48F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA71E9101C2B32E500FA48F6 /* Main.storyboard */; settings = {ASSET_TAGS = (10, ); }; };
+		AA71E9121C2B32E500FA48F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA71E9101C2B32E500FA48F6 /* Main.storyboard */; };
 		AA71E9151C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */; };
 		AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA71E9161C2B32E500FA48F6 /* Assets.xcassets */; };
 		AA71E91A1C2B32E500FA48F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */; };
@@ -198,8 +198,8 @@
 				99D629821C2F6BEA00B49E26 /* WebViewController */,
 				99447E3B1C31B00D00260B8E /* InfoPage */,
 				998B96871C32052900DC8EB7 /* Apple Reachability */,
-				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
 				AA71E9101C2B32E500FA48F6 /* Main.storyboard */,
+				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
 				AA71E9161C2B32E500FA48F6 /* Assets.xcassets */,
 				AA71E91B1C2B32E500FA48F6 /* Info.plist */,
 				AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */,

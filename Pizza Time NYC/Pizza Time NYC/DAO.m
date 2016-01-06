@@ -13,7 +13,9 @@
 
 -(void)createPizzaPlaces
 {
-	//TwoBros PizzaPlaces //as of 12.26.15 we have 7 TB
+	if (!self.pizzaPlaceArray) {// if data has not loaded, load. Else, ...
+		
+		//TwoBros PizzaPlaces //as of 12.26.15 we have 7 TB
 	// name, address, image, url, Lat / Long
 	PizzaPlace *tb32_stMarks = [[PizzaPlace alloc]init];
 	PizzaPlace *tb542_9thAve = [[PizzaPlace alloc]init];
@@ -23,44 +25,71 @@
 	PizzaPlace *tb755_6thAve = [[PizzaPlace alloc]init];
 	PizzaPlace *tb319_6thAve = [[PizzaPlace alloc]init];
 	
-	tb32_stMarks.pizzaPlaceName = @"Two Bros 32 St. Marks";
-	tb542_9thAve.pizzaPlaceName = @"Two Bros 542 9th Ave";
-	tb601_6thAve.pizzaPlaceName = @"Two Bros 601 6th Ave";
-	tb557_8thAve.pizzaPlaceName = @"Two Bros 557 8th Ave";
-	tb31_46thSt.pizzaPlaceName = @"Two Bros 31 46th St";
-	tb755_6thAve.pizzaPlaceName = @"Two Bros 755 6th Ave";
-	tb319_6thAve.pizzaPlaceName = @"Two Bros 319 6th Ave";
+	tb32_stMarks.name = @"Two Bros 32 St. Marks";
+	tb542_9thAve.name = @"Two Bros 542 9th Ave";
+	tb601_6thAve.name = @"Two Bros 601 6th Ave";
+	tb557_8thAve.name = @"Two Bros 557 8th Ave";
+	tb31_46thSt.name = @"Two Bros 31 46th St";
+	tb755_6thAve.name = @"Two Bros 755 6th Ave";
+	tb319_6thAve.name = @"Two Bros 319 6th Ave";
 	
-	tb32_stMarks.pizzaPlaceAddress = @"32 Saint Marks Place New York NY 10003";
-	tb32_stMarks.pizzaPlaceLatitude = 40.728677;
-	tb32_stMarks.pizzaPlaceLongitude = -73.988488;
+	tb32_stMarks.address = @"32 Saint Marks Place New York NY 10003";
+	tb32_stMarks.street = @"32 Saint Marks Place";
+	tb32_stMarks.city = @"New York NY";
+	tb32_stMarks.zip = 10003;
+	tb32_stMarks.latitude = 40.728677;
+	tb32_stMarks.longitude = -73.988488;
 	
-	tb542_9thAve.pizzaPlaceAddress = @"542 9th Ave New York NY 10018";
-	tb542_9thAve.pizzaPlaceLatitude = 40.756921;
-	tb542_9thAve.pizzaPlaceLongitude = -73.993333;
+	tb542_9thAve.address = @"542 9th Ave New York NY 10018";
+	tb542_9thAve.street = @"542 9th Ave";
+	tb542_9thAve.city = @"New York NY";
+	tb542_9thAve.zip = 10018;
+	tb542_9thAve.latitude = 40.756921;
+	tb542_9thAve.longitude = -73.993333;
 	
-	tb601_6thAve.pizzaPlaceAddress = @"601 6th Ave New York NY 10011";
-	tb601_6thAve.pizzaPlaceLatitude = 40.739602;
-	tb601_6thAve.pizzaPlaceLongitude = -73.995534;
+	tb601_6thAve.address = @"601 6th Ave New York NY 10011";
+	tb601_6thAve.street = @"601 6th Ave";
+	tb601_6thAve.city = @"New York NY";
+	tb601_6thAve.zip = 10011;
+	tb601_6thAve.latitude = 40.739602;
+	tb601_6thAve.longitude = -73.995534;
 	
-	tb557_8thAve.pizzaPlaceAddress = @"557 8th Ave New York NY 10018";
-	tb557_8thAve.pizzaPlaceLatitude = 40.754742;
-	tb557_8thAve.pizzaPlaceLongitude = -73.992015;
+	tb557_8thAve.address = @"557 8th Ave New York NY 10018";
+	tb557_8thAve.street = @"557 8th Ave";
+	tb557_8thAve.city = @"New York NY";
+	tb557_8thAve.zip = 10018;
+	tb557_8thAve.latitude = 40.754742;
+	tb557_8thAve.longitude = -73.992015;
 	
-	tb31_46thSt.pizzaPlaceAddress = @"31 West 46th St New York NY 10036";
-	tb31_46thSt.pizzaPlaceLatitude = 40.756775;
-	tb31_46thSt.pizzaPlaceLongitude = -73.980227;
+	tb31_46thSt.address = @"31 West 46th St New York NY 10036";
+	tb31_46thSt.street = @"31 West 46th St";
+	tb31_46thSt.city = @"New York NY";
+	tb31_46thSt.zip = 10036;
+	tb31_46thSt.latitude = 40.756775;
+	tb31_46thSt.longitude = -73.980227;
 	
-	tb755_6thAve.pizzaPlaceAddress = @"755 6th Ave New York NY 10010";
-	tb755_6thAve.pizzaPlaceLatitude = 40.744382;
-	tb755_6thAve.pizzaPlaceLongitude = -73.992049;
+	tb755_6thAve.address = @"755 6th Ave New York NY 10010";
+	tb755_6thAve.street = @"755 6th Ave";
+	tb755_6thAve.city = @"New York NY";
+	tb755_6thAve.zip = 10010;
+	tb755_6thAve.latitude = 40.744382;
+	tb755_6thAve.longitude = -73.992049;
 	
-	tb319_6thAve.pizzaPlaceAddress = @"319 6th Avenue New York NY 10014";
-	tb319_6thAve.pizzaPlaceLatitude = 40.731076;
-	tb319_6thAve.pizzaPlaceLongitude = -74.001708;
+	tb319_6thAve.address = @"319 6th Avenue New York NY 10014";
+	tb319_6thAve.street = @"319 6th Avenue";
+	tb319_6thAve.city = @"New York NY";
+	tb319_6thAve.zip = 10014;
+	tb319_6thAve.latitude = 40.731076;
+	tb319_6thAve.longitude = -74.001708;
 	
 	self.pizzaPlaceArray = [[NSMutableArray alloc]initWithArray:@[tb32_stMarks, tb542_9thAve, tb601_6thAve, tb557_8thAve, tb31_46thSt, tb755_6thAve, tb319_6thAve]];
-		//	NSLog(@"PizzaPlaceArry:%@", self.pizzaPlaceArray);
+//			NSLog(@"PizzaPlaceArray:%@", self.pizzaPlaceArray);
+	}
+	else
+	{
+//		NSLog(@"already exists");
+	}
+
 }
 
 + (instancetype)sharedDAO

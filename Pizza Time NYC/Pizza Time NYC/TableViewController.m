@@ -24,11 +24,19 @@
 	self.dao = [DAO sharedDAO];
 	[self.dao createPizzaPlaces];
 	[self createPizzaCells];
+	[self createSearchBar];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	[self sortByDistance];
+//	self.navigationController.hidesBarsOnTap = YES;
+	[self.tableView reloadData];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+	[self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,7 +52,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
+//#warning Incomplete implementation, return the number of rows
     return [self.dao.pizzaPlaceArray count];
 }
 
@@ -64,13 +72,19 @@
 //	recipeImageView.image = [UIImage imageNamed:recipe.imageFile];
 	
 	UILabel *nameLabel = (UILabel *)[cell viewWithTag:100];
-	nameLabel.text = pizzaPlace.pizzaPlaceName;
+	nameLabel.text = pizzaPlace.name;
 	
-	UILabel *addressLabel = (UILabel *)[cell viewWithTag:101];
-	addressLabel.text = pizzaPlace.pizzaPlaceAddress;
-
-	UILabel *distanceLabel = (UILabel *)[cell viewWithTag:102];
-	distanceLabel.text = [NSString stringWithFormat:@"%f", pizzaPlace.pizzaPlaceDistance];
+	//seperate the address into two lines
+	UILabel *addressLabelTop = (UILabel *)[cell viewWithTag:101];
+	addressLabelTop.text = pizzaPlace.street;
+	
+	UILabel *addressLabelBottom = (UILabel *)[cell viewWithTag:102];
+	NSString *secondLineAddress = [pizzaPlace.city stringByAppendingString:[NSString stringWithFormat:@" %ld",(long)pizzaPlace.zip ]];
+//	NSLog(@"%@", secondLineAddress);
+	addressLabelBottom.text = secondLineAddress;
+	
+	UILabel *distanceLabel = (UILabel *)[cell viewWithTag:103];
+	distanceLabel.text = [NSString stringWithFormat:@"%.2f mi", pizzaPlace.distance];
 
 	return cell;
 }
@@ -122,15 +136,40 @@
 
 -(void)createPizzaCells {
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
-		pizzaPlace.pizzaPlaceImage = @"TwoBrosPizzaLogo.jpg";
-		pizzaPlace.pizzaPlaceURL = @"http://www.2brospizza.com/";
+		pizzaPlace.image = @"TwoBrosPizzaLogo.jpg";
+		pizzaPlace.url = @"http://www.2brospizza.com/";
 //		[self createAnnotation:pizzaPlace];
 	}
-	//	NSLog(@"PizzaPlaceArry:%@", self.pizzaPlaceArray);
+	//	NSLog(@"PizzaPlaceArray:%@", self.pizzaPlaceArray);
 	
 }
 
+-(void)createSearchBar {
+	self.searchBar.delegate = self;
+	[self.view addSubview:self.searchBar];
+//	self.searchBar.hidden = YES;
+}
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+	searchBar.showsCancelButton = YES;
+	return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+	searchBar.showsCancelButton = NO;
+	return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
+	[searchBar resignFirstResponder];
+	[searchBar setShowsCancelButton:NO animated:YES];
+//	self.searchBar.hidden = YES;
+}
+
+-(void)sortByDistance {
+	NSSortDescriptor *mySorter = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
+	[self.dao.pizzaPlaceArray sortUsingDescriptors:[NSArray arrayWithObject:mySorter]];
+}
 
 
 @end
