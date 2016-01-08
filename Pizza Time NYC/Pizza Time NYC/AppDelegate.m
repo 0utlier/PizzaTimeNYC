@@ -17,6 +17,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
+	NSString *backgroundMusic = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
+	self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusic] error:NULL];
+//	self.audioPlayer.delegate = self;// unsure of warning
+	self.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
+//	[self.audioPlayer play];
 	return YES;
 }
 
@@ -122,6 +127,18 @@
             abort();
         }
     }
+}
+
++(AppDelegate*) sharedDelegate {
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+-(void)playMusic {
+	[self.audioPlayer play];
+}
+
+-(void)stopMusic {
+	[self.audioPlayer stop];
 }
 
 @end

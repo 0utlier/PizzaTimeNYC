@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MapKitViewController.h"
 #import "DAO.h"
+#import "PizzaPlaceInfoViewController.h"
+#import "PizzaPlaceDirectionsViewController.h"
 
 @interface TableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 

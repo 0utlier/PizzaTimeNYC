@@ -12,8 +12,9 @@
 
 @end
 
-BOOL userLocationShown;
-BOOL firstTimeLoaded;
+BOOL userLocationShown; // to stop from reloading user's Location
+BOOL firstTimeLoaded; // to stop refresh [of map] on initial load
+int count;// set the user's [current location] image to 3 separate items
 
 @implementation MapKitViewController
 
@@ -37,11 +38,12 @@ BOOL firstTimeLoaded;
 	[self createLongPressGesture];
 	//check for location
 	//	[self currentLocationButtonPressed]; // this slows down the process of showing the user's location
-//	self.navigationController.hidesBarsOnTap = YES;
+	//	self.navigationController.hidesBarsOnTap = YES;
 	
 }
 
 -(void)viewWillAppear:(BOOL)animated {// find location every time the view appears
+	[self.navigationController setNavigationBarHidden:YES];
 	if(firstTimeLoaded) {
 		[self currentLocationButtonPressed];
 	}
@@ -144,14 +146,14 @@ BOOL firstTimeLoaded;
 		CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userLocationLat
 															  longitude:userLocationLong];
 		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocation];
-//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
+		//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
 		//	NSLog(@"Calculated Miles %@", [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)]);
 		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
-//		NSLog(@"distance in miles: %@", distanceFromUser);
+		//		NSLog(@"distance in miles: %@", distanceFromUser);
 		//convert to float and then assign to pizzaPlaceDistance
 		float distanceFloat = [distanceFromUser floatValue];
 		pizzaPlace.distance = distanceFloat;
-//		NSLog(@"The distance saved as %f for %@", pizzaPlace.distance, pizzaPlace.name);
+		//		NSLog(@"The distance saved as %f for %@", pizzaPlace.distance, pizzaPlace.name);
 	}
 }
 
@@ -173,11 +175,11 @@ BOOL firstTimeLoaded;
 	centerCoordinate.longitude = pizzaPlace.longitude;
 	MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
 	[annotation setCoordinate:centerCoordinate];
-
+	
 	[annotation setTitle:pizzaPlace.name]; //You can set the subtitle too
 	NSString *secondLineAddress = [pizzaPlace.city stringByAppendingString:[NSString stringWithFormat:@" %ld",(long)pizzaPlace.zip ]];
 	NSString *allAddress = [pizzaPlace.street stringByAppendingString:[NSString stringWithFormat:@"\n%@", secondLineAddress]];
-	NSLog(@"%@", allAddress);
+	//	NSLog(@"%@", allAddress);
 	[annotation setSubtitle:allAddress];
 	[self.mapView addAnnotation:annotation];
 	
@@ -217,12 +219,32 @@ BOOL firstTimeLoaded;
 	 */
 	static NSString *AnnotationIdentifier=@"AnnotationIdentifier";
 	MKAnnotationView *pinView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
-	
 	if (!pinView) {
 		
 		MKAnnotationView *customPinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
 		if (annotation == mapView.userLocation){
-			customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
+			switch (count%3) {
+				case 0:
+					//					NSLog(@"count is 0 - set bike");
+					customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
+					count +=1;
+					break;
+				case 1:
+					//					NSLog(@"Count is 1 - set board");
+					customPinView.image = [UIImage imageNamed:@"skateboard29.png"];
+					count +=1;
+					break;
+				case 2:
+					//					NSLog(@"Count is 2 - set walker");
+					customPinView.image = [UIImage imageNamed:@"walk29.png"];
+					count +=1;
+					break;
+				default:
+					NSLog(@"Count is DEFAULT - decide what to do");
+					customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
+					count +=1;
+					break;
+			}
 			customPinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		}
 		else{
@@ -287,22 +309,32 @@ BOOL firstTimeLoaded;
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
-{
-	WebViewController *detailViewController = (WebViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
+{	//	PizzaPlaceInfoViewController *detailViewController = (PizzaPlaceInfoViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"PizzaPlaceInfoViewController"];
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		if ([pizzaPlace.name isEqualToString:view.annotation.title]) {
-			NSLog(@"my annotation %@ and my location %@",view.annotation.title, pizzaPlace.name);
-			detailViewController.url = pizzaPlace.url;
+			//			NSLog(@"my annotation %@ and my location %@",view.annotation.title, pizzaPlace.name);
+			
 			// Pass the selected object to the new view controller.
 			// Push the view controller.
+			
+			UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];//TabBarController
+			//tabBarController.viewControllers = @[detailViewController];
+			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = tabBarController.viewControllers[0];
+						PizzaPlaceDirectionsViewController *pizzaPlaceDirectionsViewController = tabBarController.viewControllers[1];
+			[pizzaPlaceInfoViewController setLabelValues:pizzaPlace];
+						[pizzaPlaceDirectionsViewController setPizzaPlaceProperty:pizzaPlace];
+
+			[self.navigationController pushViewController:tabBarController animated:YES];
 		}
-		else {
+		else if ([view.annotation.title isEqualToString:@"Current Location"])
+		{
 			NSLog(@"user clicked on self");
 			//maybe have questions [via alert]: "what do you want to know about yourself?"
+			//maybe link to personal/profile page
 			return;
 		}
+		
 	}
-	[self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 
@@ -386,7 +418,7 @@ BOOL firstTimeLoaded;
 		centerCoordinate.latitude = 40.7484;
 		centerCoordinate.longitude = -73.9857;
 		self.UserLocationProperty.coordinate = centerCoordinate;
-		NSLog(@"lat = %f, long = %f", centerCoordinate.latitude, centerCoordinate.longitude);
+		//		NSLog(@"lat = %f, long = %f", centerCoordinate.latitude, centerCoordinate.longitude);
 		// set region of map to focus on Empire State Building
 		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(centerCoordinate, 200, 200);
 		[self.mapView setRegion:region animated:YES];

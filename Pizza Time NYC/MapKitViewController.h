@@ -12,6 +12,8 @@
 #import "DAO.h"
 #import "PizzaPlace.h"
 #import "WebViewController.h"
+#import "PizzaPlaceInfoViewController.h"
+#import "PizzaPlaceDirectionsViewController.h"
 
 @interface MapKitViewController : ViewController <MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate>// in case we want to search for address
 
