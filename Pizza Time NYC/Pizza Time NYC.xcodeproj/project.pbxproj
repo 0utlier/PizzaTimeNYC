@@ -30,6 +30,8 @@
 		AA71E9301C2B32E500FA48F6 /* Pizza_Time_NYCUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E92F1C2B32E500FA48F6 /* Pizza_Time_NYCUITests.m */; };
 		AA71E93E1C2B486A00FA48F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA71E93D1C2B486A00FA48F6 /* MapKit.framework */; };
 		AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */; };
+		AA8E22881C4174FE0018ABE8 /* speakerCross60.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8E22861C4174FE0018ABE8 /* speakerCross60.png */; };
+		AA8E22891C4174FE0018ABE8 /* speaker60.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8E22871C4174FE0018ABE8 /* speaker60.png */; };
 		AA9FDF4F1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9FDF4E1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m */; };
 		AAA7C1EC1C402B6E00EE8B43 /* speaker30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7C1EA1C402B6E00EE8B43 /* speaker30.png */; };
 		AAA7C1ED1C402B6E00EE8B43 /* speakerCross30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7C1EB1C402B6E00EE8B43 /* speakerCross30.png */; };
@@ -107,6 +109,8 @@
 		AA71E93D1C2B486A00FA48F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		AA71E93F1C2B48B800FA48F6 /* MapKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapKitViewController.h; sourceTree = "<group>"; };
 		AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapKitViewController.m; sourceTree = "<group>"; };
+		AA8E22861C4174FE0018ABE8 /* speakerCross60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speakerCross60.png; sourceTree = "<group>"; };
+		AA8E22871C4174FE0018ABE8 /* speaker60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speaker60.png; sourceTree = "<group>"; };
 		AA9FDF4D1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PizzaPlaceDirectionsViewController.h; sourceTree = "<group>"; };
 		AA9FDF4E1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PizzaPlaceDirectionsViewController.m; sourceTree = "<group>"; };
 		AAA7C1EA1C402B6E00EE8B43 /* speaker30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speaker30.png; sourceTree = "<group>"; };
@@ -204,7 +208,6 @@
 		AA71E8FB1C2B32E400FA48F6 = {
 			isa = PBXGroup;
 			children = (
-				AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */,
 				AA71E9061C2B32E400FA48F6 /* Pizza Time NYC */,
 				AA71E9231C2B32E500FA48F6 /* Pizza Time NYCTests */,
 				AA71E92E1C2B32E500FA48F6 /* Pizza Time NYCUITests */,
@@ -240,10 +243,11 @@
 				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
 				AA71E9161C2B32E500FA48F6 /* Assets.xcassets */,
 				AA71E91B1C2B32E500FA48F6 /* Info.plist */,
-				AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */,
 				AA71E9071C2B32E400FA48F6 /* Supporting Files */,
 				AA71E93D1C2B486A00FA48F6 /* MapKit.framework */,
+				AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */,
 				99260E031C2DD4DD00EFB125 /* Images.xcassets */,
+				AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */,
 			);
 			path = "Pizza Time NYC";
 			sourceTree = "<group>";
@@ -251,6 +255,8 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA8E22861C4174FE0018ABE8 /* speakerCross60.png */,
+				AA8E22871C4174FE0018ABE8 /* speaker60.png */,
 				AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */,
 				AAA7C1EA1C402B6E00EE8B43 /* speaker30.png */,
 				AAA7C1EB1C402B6E00EE8B43 /* speakerCross30.png */,
@@ -486,7 +492,9 @@
 				AACDE9501C3DBF7A004EF963 /* pacman@2x.png in Resources */,
 				AAD0FCD61C3F38E00060B05B /* pizzaPepperoni300.png in Resources */,
 				AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */,
+				AA8E22891C4174FE0018ABE8 /* speaker60.png in Resources */,
 				99260E071C2DD72200EFB125 /* its pizza time.jpg in Resources */,
+				AA8E22881C4174FE0018ABE8 /* speakerCross60.png in Resources */,
 				AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */,
 				AACDE9541C3DC225004EF963 /* bank@2x.png in Resources */,
 				99260E081C2DD72200EFB125 /* pizza time all turtles.jpg in Resources */,

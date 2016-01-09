@@ -15,6 +15,7 @@
 BOOL userLocationShown; // to stop from reloading user's Location
 BOOL firstTimeLoaded; // to stop refresh [of map] on initial load
 int count;// set the user's [current location] image to 3 separate items
+//BOOL soundMapPage; // silent or loud (NO = 0 = Silent)
 
 @implementation MapKitViewController
 
@@ -22,6 +23,7 @@ int count;// set the user's [current location] image to 3 separate items
 	[super viewDidLoad];
 	userLocationShown = NO;
 	firstTimeLoaded = NO;
+	self.appDelegate = [AppDelegate sharedDelegate];
 	self.UserLocationProperty = [[MKUserLocation alloc] init];
 	[self createLocationManager];
 	[self createMapView];
@@ -36,6 +38,8 @@ int count;// set the user's [current location] image to 3 separate items
 	//	[self createTabBar]; // hidden by storyBoard version
 	[self createSearchBar];
 	[self createLongPressGesture];
+	[self assignLabels];
+	[self assignSounds];
 	//check for location
 	//	[self currentLocationButtonPressed]; // this slows down the process of showing the user's location
 	//	self.navigationController.hidesBarsOnTap = YES;
@@ -99,6 +103,36 @@ int count;// set the user's [current location] image to 3 separate items
 //-(void)createTabBar {
 //	[self.view addSubview:self.mapTabBar];
 //}
+
+-(void)assignLabels {// and buttons
+	UIButton *speakerButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width -76, 16, 60, 60)];
+	self.speakerButtonMapPage = speakerButtonMapPage;
+	// Add an action in current code file (i.e. target)
+	[self.speakerButtonMapPage addTarget:self
+								  action:@selector(speakerButtonPressed:)
+						forControlEvents:UIControlEventTouchUpInside];
+	
+	if (self.appDelegate.sound == YES) {
+		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
+	}
+	else {
+		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
+	}
+	[self.view addSubview:self.speakerButtonMapPage];
+}
+
+-(void)assignSounds {
+	if (self.appDelegate.audioPlayer.rate == 0.0) {
+		NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
+		if (!self.appDelegate.audioPlayer) {
+			self.appDelegate.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
+		}
+		self.appDelegate.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
+	}
+	else {
+		NSLog(@"You've already created the player!");
+	}
+}
 
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
@@ -320,10 +354,10 @@ int count;// set the user's [current location] image to 3 separate items
 			UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];//TabBarController
 			//tabBarController.viewControllers = @[detailViewController];
 			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = tabBarController.viewControllers[0];
-						PizzaPlaceDirectionsViewController *pizzaPlaceDirectionsViewController = tabBarController.viewControllers[1];
+			PizzaPlaceDirectionsViewController *pizzaPlaceDirectionsViewController = tabBarController.viewControllers[1];
 			[pizzaPlaceInfoViewController setLabelValues:pizzaPlace];
-						[pizzaPlaceDirectionsViewController setPizzaPlaceProperty:pizzaPlace];
-
+			[pizzaPlaceDirectionsViewController setPizzaPlaceProperty:pizzaPlace];
+			
 			[self.navigationController pushViewController:tabBarController animated:YES];
 		}
 		else if ([view.annotation.title isEqualToString:@"Current Location"])
@@ -371,6 +405,21 @@ int count;// set the user's [current location] image to 3 separate items
  */
 
 #pragma mark - ACTIONS
+
+// this should disable and enable the sound of the app
+-(void)speakerButtonPressed:(UIButton *)speakerButton {
+	if (self.appDelegate.sound) {
+//		NSLog(@"sound disabled"); //disable sound
+		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
+		//		self.appDelegate.audioPlayer.rate = 0.0;
+	}
+	else {
+//		NSLog(@"sound enabled"); //enable sound
+		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
+		//		self.appDelegate.audioPlayer.rate = 1.0;
+	}
+}
+
 
 // Main initial button press
 -(void)infoButtonPressed { //currently commented out, because StoryBoard is showing the current display correctly

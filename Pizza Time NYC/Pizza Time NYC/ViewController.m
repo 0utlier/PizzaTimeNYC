@@ -14,12 +14,46 @@
 
 int countHomePage; // for the image at the front
 BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
-BOOL soundHomePage; // silent or loud (NO = 0 = Silent)
+//BOOL soundHomePage; // silent or loud (NO = 0 = Silent)
 
 @implementation ViewController
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	self.appDelegate = [AppDelegate sharedDelegate];
+	//	[self checkInternet]; //comment back in when ready to fix
+	[self assignLabels];
+	[self assignSounds];
+	[self buildNumberInfo];
+	
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+	[self.navigationController setNavigationBarHidden:YES];
+	if(firstTimeLoadedHomePage) {
+		// do what occurs first time
+	}
+	else {
+		NSLog(@"Map LOADED first time");
+		firstTimeLoadedHomePage = YES;
+	}
+	
+}
+
+-(void)assignLabels {// and buttons
+	UIImage *pizzaButtonImage = [UIImage imageNamed:@"pizzaPepperoni300.png"];
+	[self.pizzaTimeButton setBackgroundImage:pizzaButtonImage forState:UIControlStateNormal];
+	
+	UIImage *pizzaButtonImagePressed = [UIImage imageNamed:@"pizzaFullSliceRemove.jpg"];
+	[self.pizzaTimeButton setBackgroundImage:pizzaButtonImagePressed forState:UIControlStateHighlighted];
+	
+	if (self.appDelegate.sound == YES) {
+		[self.speakerButton setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
+	}
+	else {
+		[self.speakerButton setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
+	}
+	
 	// Add an action in current code file (i.e. target)
 	[self.pizzaTimeButton addTarget:self
 							 action:@selector(pizzaTimeButtonPressed:)
@@ -28,49 +62,8 @@ BOOL soundHomePage; // silent or loud (NO = 0 = Silent)
 	[self.speakerButton addTarget:self
 						   action:@selector(speakerButtonPressed:)
 				 forControlEvents:UIControlEventTouchUpInside];
-//	[self checkInternet];
-	[self assignLabels];
-	[self assignSounds];
-	[self buildNumberInfo];
 	
-	self.appDelegate = [AppDelegate sharedDelegate];
-	// ok to delete, for now (1.8.16)
-//	if (!sound == YES) {
-//		sound = NO;
-//	}
-//	else {
-//		NSLog(@"keep the music playing");
-//	}
-	
-}
-
--(void)viewWillAppear:(BOOL)animated {
-	[self.navigationController setNavigationBarHidden:YES];
-	if(firstTimeLoadedHomePage) {
-// do what occurs first time
-	}
-	else {
-		NSLog(@"Map LOADED first time");
-		firstTimeLoadedHomePage = YES;
-	}
-
-}
-
--(void)assignLabels {// and buttons
-	UIImage *pizzaButtonImage = [UIImage imageNamed:@"pizzaPepperoni300.png"];
-	[self.pizzaTimeButton setBackgroundImage:pizzaButtonImage forState:UIControlStateNormal];
-	UIImage *pizzaButtonImagePressed = [UIImage imageNamed:@"pizzaFullSliceRemove.jpg"];
-	[self.pizzaTimeButton setBackgroundImage:pizzaButtonImagePressed forState:UIControlStateHighlighted];
-	
-	if (soundHomePage == YES) {
-		UIImage *speakerButtonImage = [UIImage imageNamed:@"speaker30.png"];
-		[self.speakerButton setBackgroundImage:speakerButtonImage forState:UIControlStateNormal];
-	}
-	else {
-		UIImage *speakerButtonImage = [UIImage imageNamed:@"speakerCross30.png"];
-		[self.speakerButton setBackgroundImage:speakerButtonImage forState:UIControlStateNormal];
-	}
-	//	UIImage *speakerButtonImagePressed = [UIImage imageNamed:@"speakerCross30.png"];
+	//	UIImage *speakerButtonImagePressed = [UIImage imageNamed:@"speakerCross60.png"];
 	//	[self.speakerButton setBackgroundImage:speakerButtonImagePressed forState:UIControlStateHighlighted];
 	
 	//	UILabel *pizzaLabel = (UILabel *)[self.view viewWithTag:1001];
@@ -100,8 +93,8 @@ BOOL soundHomePage; // silent or loud (NO = 0 = Silent)
 -(void)buildNumberInfo {
 	NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
 	NSString *appVersion = [infoDict objectForKey:@"CFBundleShortVersionString"]; // example: 1.0.0
-//	NSNumber *buildNumber = [infoDict objectForKey:@"CFBundleVersion"]; // example: 42
-//	NSLog(@"\nversion = %@\nbuild = %@", appVersion, buildNumber);
+	//	NSNumber *buildNumber = [infoDict objectForKey:@"CFBundleVersion"]; // example: 42
+	//	NSLog(@"\nversion = %@\nbuild = %@", appVersion, buildNumber);
 	UILabel *nameLabel = (UILabel *)[self.view viewWithTag:1000];
 	nameLabel.text = [NSString stringWithFormat:@"ver %@",appVersion];
 	
@@ -121,28 +114,16 @@ BOOL soundHomePage; // silent or loud (NO = 0 = Silent)
 }
 
 // this should disable and enable the sound of the app
--(void)speakerButtonPressed:(UIButton *)pizzaTimeButton {
-	if (soundHomePage) {
-		NSLog(@"sound disabled");
-		//disable sound
-		UIImage *speakerButtonImage = [UIImage imageNamed:@"speakerCross30.png"];
-		[self.speakerButton setBackgroundImage:speakerButtonImage forState:UIControlStateNormal];
+-(void)speakerButtonPressed:(UIButton *)speakerButton {
+	if (self.appDelegate.sound) {
+		//		NSLog(@"sound disabled"); //disable sound
+		[self.speakerButton setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 0.0;
-		//				[self.appDelegate.audioPlayer stop];
-		[self.appDelegate stopMusic];
-		soundHomePage = NO;
-//		NSLog(@"play rate = %f",self.appDelegate.audioPlayer.rate);
 	}
 	else {
-		NSLog(@"sound enabled");
-		//enable sound
-		UIImage *speakerButtonImage = [UIImage imageNamed:@"speaker30.png"];
-		[self.speakerButton setBackgroundImage:speakerButtonImage forState:UIControlStateNormal];
-		//				[self.appDelegate.audioPlayer play];
-		[self.appDelegate playMusic];
+		//		NSLog(@"sound enabled"); //enable sound
+		[self.speakerButton setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 1.0;
-		soundHomePage = YES;
-//		NSLog(@"play rate = %f",self.appDelegate.audioPlayer.rate);
 	}
 }
 
@@ -187,7 +168,7 @@ BOOL soundHomePage; // silent or loud (NO = 0 = Silent)
 		case NotReachable: {
 			howReachableString = @"not reachable";
 			NSLog(@"Enter the alertView here to say connect");
-			//			[self connectionAlert];
+			[self connectionAlert];
 			break;
 		}
 		case ReachableViaWWAN: {
@@ -204,26 +185,26 @@ BOOL soundHomePage; // silent or loud (NO = 0 = Silent)
 	//	NSLog(@"%@ %@", whichReachabilityString, howReachableString);
 	
 }
-/*
- -(void)connectionAlert {
+
+-(void)connectionAlert {
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Internet Connection Disabled"
- message:@"Are you brooding underground with Raphael?"
- delegate:self
- cancelButtonTitle:@"Battery"
- otherButtonTitles:@"Settings", nil];
+													message:@"Are you brooding underground with Raphael?"
+												   delegate:self
+										  cancelButtonTitle:@"Battery"
+										  otherButtonTitles:@"Settings", nil];
 	[alert show];
  
- }
- 
- - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	//	NSLog(@"%ld", (long)buttonIndex);
 	if (buttonIndex == 1) {
- NSLog(@"open the settings app to wifi or root");
+		NSLog(@"open the settings app to wifi or root");
 	}
 	else {
- NSLog(@"User does not want to share location");
- // enter audio BUMMMMMMMERRRRR
+		NSLog(@"User does not want to share location");
+		// enter audio BUMMMMMMMERRRRR
 	}
- }
- */
+}
+
 @end

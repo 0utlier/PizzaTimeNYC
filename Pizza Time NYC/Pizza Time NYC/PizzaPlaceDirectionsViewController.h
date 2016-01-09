@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "PizzaPlace.h"
+#import "AppDelegate.h"
 
 @interface PizzaPlaceDirectionsViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
@@ -19,6 +20,12 @@
 @property (nonatomic, retain) MKUserLocation *UserLocationProperty;
 
 @property (nonatomic, retain) PizzaPlace *currentPizzaPlace;
+
+// for use of the avAudioPlayer
+@property (strong, nonatomic) AppDelegate *appDelegate;
+
+@property (weak, nonatomic) IBOutlet UIButton *speakerButtonDirectPage;
+
 
 -(void)setPizzaPlaceProperty:(PizzaPlace *)pizzaPlace;
 - (void)setDirectionalValues:(PizzaPlace *)pizzaPlace;

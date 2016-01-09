@@ -116,11 +116,16 @@
                                     <tabBarItem title="LIST" image="newspaper@2x.png" id="yM0-3h-AqW"/>
                                 </items>
                             </tabBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LP9-Wi-oiV">
+                                <rect key="frame" x="534" y="124" width="30" height="30"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="top" secondItem="meQ-fk-BlY" secondAttribute="bottom" id="0nH-N5-jWq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LP9-Wi-oiV" secondAttribute="trailing" constant="16" id="3PD-78-MBt"/>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="width" secondItem="4vK-yZ-6N6" secondAttribute="width" id="7fw-y9-DTt"/>
+                            <constraint firstItem="LP9-Wi-oiV" firstAttribute="top" secondItem="jjP-bI-wuf" secondAttribute="bottom" constant="16" id="JEz-uA-a10"/>
                             <constraint firstItem="jhG-dC-xfO" firstAttribute="top" secondItem="fhv-hj-ahw" secondAttribute="bottom" id="O0z-Ro-fcG"/>
                             <constraint firstItem="lup-FD-qYI" firstAttribute="width" secondItem="4vK-yZ-6N6" secondAttribute="width" id="Pez-oS-5v8"/>
                             <constraint firstItem="fhv-hj-ahw" firstAttribute="leading" secondItem="4vK-yZ-6N6" secondAttribute="leading" id="VCJ-pV-eup"/>

@@ -21,12 +21,15 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 	[super viewDidLoad];
 	NSLog(@"directions page loaded");
 	self.UserLocationProperty = [[MKUserLocation alloc] init];
+	self.appDelegate = [AppDelegate sharedDelegate];
 	[self createLocationManager];
 	[self createMapView];
 	[self checkForLocationServicesEnabled]; // originally after "createLocationManager"
 	[self setDirectionalValues:self.currentPizzaPlace];
 	[self setEdgesForExtendedLayout:UIRectEdgeNone];
 	[self setAutomaticallyAdjustsScrollViewInsets:NO];
+	[self assignLabels];
+	[self assignSounds];
 }
 
 -(void)viewWillAppear:(BOOL)animated {// find location every time the view appears
@@ -76,6 +79,37 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 
 -(void)setPizzaPlaceProperty:(PizzaPlace *)pizzaPlace {
 	self.currentPizzaPlace = pizzaPlace;
+}
+
+-(void)assignLabels {// and buttons
+	UIButton *speakerButtonDirectPage = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width -76, 16, 60, 60)];
+	self.speakerButtonDirectPage = speakerButtonDirectPage;
+	// Add an action in current code file (i.e. target)
+	[self.speakerButtonDirectPage addTarget:self
+								  action:@selector(speakerButtonPressed:)
+						   forControlEvents:UIControlEventTouchUpInside];
+	
+	if (self.appDelegate.sound == YES) {
+		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
+		[self.view addSubview:self.speakerButtonDirectPage];
+	}
+	else {
+		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
+		[self.view addSubview:self.speakerButtonDirectPage];
+	}
+}
+
+-(void)assignSounds {
+	if (self.appDelegate.audioPlayer.rate == 0.0) {
+		NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
+		if (!self.appDelegate.audioPlayer) {
+			self.appDelegate.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
+		}
+		self.appDelegate.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
+	}
+	else {
+		NSLog(@"You've already created the player!");
+	}
 }
 
 /*
@@ -194,6 +228,20 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 }
 
 #pragma mark - ACTIONS
+
+// this should disable and enable the sound of the app
+-(void)speakerButtonPressed:(UIButton *)speakerButton {
+	if (self.appDelegate.sound) {
+		//		NSLog(@"sound disabled"); //disable sound
+		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
+		//		self.appDelegate.audioPlayer.rate = 0.0;
+	}
+	else {
+		//		NSLog(@"sound enabled"); //enable sound
+		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
+		//		self.appDelegate.audioPlayer.rate = 1.0;
+	}
+}
 
 // Main initial button press
 -(void)currentLocationButtonPressed {

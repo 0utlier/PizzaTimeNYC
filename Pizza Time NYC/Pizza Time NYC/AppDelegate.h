@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate> 
 
 
 
@@ -21,13 +21,15 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+@property (nonatomic)BOOL sound; // silent or loud (NO = 0 = Silent)
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
 +(AppDelegate*) sharedDelegate;
 
--(void)stopMusic;
--(void)playMusic;
+-(UIImage *)stopMusic;
+-(UIImage *)playMusic;
 
 
 @end

@@ -29,6 +29,10 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchAddressButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *currentLocationButton;
 
+//@property (weak, nonatomic) IBOutlet UIButton *speakerButtonMapPage;
+@property (weak, nonatomic) IBOutlet UIButton *speakerButtonMapPage;
+
+
 // TAB BAR Properties
 @property (weak, nonatomic) IBOutlet UITabBar *mapTabBar;
 

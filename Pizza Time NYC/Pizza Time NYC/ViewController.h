@@ -13,12 +13,16 @@
 
 @interface ViewController : UIViewController <AVAudioPlayerDelegate>
 
+//buttons to preform actions
 @property (weak, nonatomic) IBOutlet UIButton *pizzaTimeButton;
 @property (weak, nonatomic) IBOutlet UIButton *speakerButton;
+
+// to check the internet connection
 @property (nonatomic) Reachability *hostReachability;
 @property (nonatomic) Reachability *internetReachability;
 @property (nonatomic) Reachability *wifiReachability;
 
+// for use of the avAudioPlayer
 @property (strong, nonatomic) AppDelegate *appDelegate;
 
 
