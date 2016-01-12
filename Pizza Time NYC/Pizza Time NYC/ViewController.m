@@ -20,8 +20,11 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.appDelegate = [AppDelegate sharedDelegate];
-	//	[self checkInternet]; //comment back in when ready to fix
+//	NSLog(@"%@", [MethodManager sharedManager]);
+//	NSLog(@"%@", [MethodManager sharedManager]);
+//	self.appDelegate = [AppDelegate sharedDelegate];
+	self.methodManager = [MethodManager sharedManager];
+//	[self checkInternet]; //comment back in when ready to fix
 	[self assignLabels];
 	[self assignSounds];
 	[self buildNumberInfo];
@@ -34,7 +37,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 		// do what occurs first time
 	}
 	else {
-		NSLog(@"Map LOADED first time");
+		NSLog(@"ViewHome LOADED first time");
 		firstTimeLoadedHomePage = YES;
 	}
 	
@@ -47,21 +50,23 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 	UIImage *pizzaButtonImagePressed = [UIImage imageNamed:@"pizzaFullSliceRemove.jpg"];
 	[self.pizzaTimeButton setBackgroundImage:pizzaButtonImagePressed forState:UIControlStateHighlighted];
 	
-	if (self.appDelegate.sound == YES) {
-		[self.speakerButton setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
-	}
-	else {
-		[self.speakerButton setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
-	}
+//	if (self.methodManager.sound == YES) {
+//		[self.speakerButton setBackgroundImage:[self.methodManager playMusic] forState:UIControlStateNormal];
+//	}
+//	else {
+//		[self.speakerButton setBackgroundImage:[self.methodManager stopMusic] forState:UIControlStateNormal];
+//	}
+	[self.view addSubview:[self.methodManager assignOptionsButton]];
+	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	
 	// Add an action in current code file (i.e. target)
 	[self.pizzaTimeButton addTarget:self
 							 action:@selector(pizzaTimeButtonPressed:)
 				   forControlEvents:UIControlEventTouchUpInside];
 	// Add an action in current code file (i.e. target)
-	[self.speakerButton addTarget:self
-						   action:@selector(speakerButtonPressed:)
-				 forControlEvents:UIControlEventTouchUpInside];
+//	[self.speakerButton addTarget:self
+//						   action:@selector(speakerButtonPressed:)
+//				 forControlEvents:UIControlEventTouchUpInside];
 	
 	//	UIImage *speakerButtonImagePressed = [UIImage imageNamed:@"speakerCross60.png"];
 	//	[self.speakerButton setBackgroundImage:speakerButtonImagePressed forState:UIControlStateHighlighted];
@@ -75,18 +80,29 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 	//	timeLabel.font = [UIFont fontWithName:@"couria" size:24];
 	//	timeLabel.text = @"TIME";
 	
+	// divide by 2 for center and minus 30 for center of png
+//	UIButton *optionsButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2 - 30, 80, 60, 60)];
+//	// Add an action in current code file (i.e. target)
+//	[optionsButtonMapPage addTarget:self
+//							 action:@selector(optionsButtonPressed:)
+//				   forControlEvents:UIControlEventTouchUpInside];
+//	
+//	[optionsButtonMapPage setBackgroundImage:[UIImage imageNamed:@"menu.png"] forState:UIControlStateNormal];
+//	[self.view addSubview:optionsButtonMapPage];
+//
+	
 }
 
 -(void)assignSounds {
-	if (self.appDelegate.audioPlayer.rate == 0.0) {
+	if (self.methodManager.audioPlayer.rate == 0.0) {
 		NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
-		if (!self.appDelegate.audioPlayer) {
-			self.appDelegate.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
+		if (!self.methodManager.audioPlayer) {
+			self.methodManager.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
 		}
-		self.appDelegate.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
+		self.methodManager.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
 	}
 	else {
-		NSLog(@"You've already created the player!");
+		//		NSLog(@"You've already created the player!");
 	}
 }
 
@@ -114,17 +130,25 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 }
 
 // this should disable and enable the sound of the app
--(void)speakerButtonPressed:(UIButton *)speakerButton {
-	if (self.appDelegate.sound) {
-		//		NSLog(@"sound disabled"); //disable sound
-		[self.speakerButton setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
-		//		self.appDelegate.audioPlayer.rate = 0.0;
-	}
-	else {
-		//		NSLog(@"sound enabled"); //enable sound
-		[self.speakerButton setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
-		//		self.appDelegate.audioPlayer.rate = 1.0;
-	}
+//-(void)speakerButtonPressed:(UIButton *)speakerButton {
+//	if (self.appDelegate.sound) {
+//		//		NSLog(@"sound disabled"); //disable sound
+//		[self.speakerButton setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
+//		//		self.appDelegate.audioPlayer.rate = 0.0;
+//	}
+//	else {
+//		//		NSLog(@"sound enabled"); //enable sound
+//		[self.speakerButton setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
+//		//		self.appDelegate.audioPlayer.rate = 1.0;
+//	}
+//}
+
+// this should show the menu page
+-(void)optionsButtonPressed:(UIButton *)optionsButton {
+	NSLog(@"optionsButton was pressed");
+	// this should open the options page of Pizza Time
+	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionsPage"];
+	[self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 #pragma mark - REACHABILITY

@@ -14,20 +14,26 @@
 
 @implementation TableViewController
 
+- (void)didReceiveMemoryWarning {
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	//	NSLog(@"Table View Controller loaded!");
 	// instantiate tableView
 	self.tableView.delegate=self;//unsure if necessary
 	self.tableView.dataSource=self;
-	
+	self.methodManager = [MethodManager sharedManager];
+//	self.appDelegate = [AppDelegate sharedDelegate];
 	self.dao = [DAO sharedDAO];
 	[self.dao createPizzaPlaces];
 	[self createPizzaCells];
 	[self createSearchBar];
 	// Uncomment the following line to preserve selection between presentations.
 	// self.clearsSelectionOnViewWillAppear = NO;
-	
+	[self assignLabels];
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	[self sortByDistance];
@@ -40,10 +46,40 @@
 	[self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
+#pragma mark - CREATE PAGE
+
+-(void)createPizzaCells {
+	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
+		pizzaPlace.image = @"TwoBrosPizzaLogo.jpg";
+		pizzaPlace.url = @"http://www.2brospizza.com/";
+		//		[self createAnnotation:pizzaPlace];
+	}
+	//	NSLog(@"PizzaPlaceArray:%@", self.pizzaPlaceArray);
+	
 }
+
+-(void)createSearchBar {
+	self.searchBar.delegate = self;
+	[self.view addSubview:self.searchBar];
+	self.searchBar.hidden = YES;
+}
+
+-(void)assignLabels {// and buttons
+	
+	[self.view addSubview:[self.methodManager assignOptionsButton]];
+	[self.view addSubview:[self.methodManager assignSpeakerButton]];
+//	NSLog(@"view has width of %f", self.view.bounds.size.width);
+	UIButton *searchButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 60, 60)];
+	// Add an action in current code file (i.e. target)
+	[searchButtonMapPage addTarget:self
+							 action:@selector(searchButtonPressed:)
+				   forControlEvents:UIControlEventTouchUpInside];
+	
+	[searchButtonMapPage setBackgroundImage:[UIImage imageNamed:@"search60.png"] forState:UIControlStateNormal];
+	[self.view addSubview:searchButtonMapPage];
+
+}
+
 
 #pragma mark - Table view data source
 
@@ -157,21 +193,12 @@
  }
  */
 
--(void)createPizzaCells {
-	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
-		pizzaPlace.image = @"TwoBrosPizzaLogo.jpg";
-		pizzaPlace.url = @"http://www.2brospizza.com/";
-		//		[self createAnnotation:pizzaPlace];
-	}
-	//	NSLog(@"PizzaPlaceArray:%@", self.pizzaPlaceArray);
-	
+-(void)sortByDistance {
+	NSSortDescriptor *mySorter = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
+	[self.dao.pizzaPlaceArray sortUsingDescriptors:[NSArray arrayWithObject:mySorter]];
 }
 
--(void)createSearchBar {
-	self.searchBar.delegate = self;
-	[self.view addSubview:self.searchBar];
-	//	self.searchBar.hidden = YES;
-}
+#pragma mark - SearchBar Delegate
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
 	searchBar.showsCancelButton = YES;
@@ -184,15 +211,37 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
-	[searchBar resignFirstResponder];
-	[searchBar setShowsCancelButton:NO animated:YES];
-	//	self.searchBar.hidden = YES;
+//	[searchBar resignFirstResponder];
+//	[searchBar setShowsCancelButton:NO animated:YES];
+//		self.searchBar.hidden = YES;
+	// show the buttons again
+//	[self.view bringSubviewToFront:self.searchBar];
+//	self.searchBar.frame = CGRectMake(0, 0, 320, 480);
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 self.searchBar.frame = CGRectMake(-320, 16, 320, 44);
+					 }];
+//	self.searchBar.hidden = YES;
+//	[self assignLabels];
 }
 
--(void)sortByDistance {
-	NSSortDescriptor *mySorter = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
-	[self.dao.pizzaPlaceArray sortUsingDescriptors:[NSArray arrayWithObject:mySorter]];
+#pragma mark - ACTIONS
+
+// Main initial button press
+-(void)searchButtonPressed:(UIButton *)searchButton {
+	NSLog(@"searchButton was pressed");
+	// this should hide the buttons and present the search bar of Pizza Time
+//	self.searchBar.hidden = NO;
+//	optionsButton.hidden = YES;
+	searchButton.hidden = YES;
+	[self.view bringSubviewToFront:self.searchBar];
+	self.searchBar.frame = CGRectMake(-320, 0, 320, 480);
+	self.searchBar.hidden = NO;
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 self.searchBar.frame = CGRectMake(0, 0, 320, 480);
+					 }];
+	[self.searchBar becomeFirstResponder];
+
 }
-
-
 @end

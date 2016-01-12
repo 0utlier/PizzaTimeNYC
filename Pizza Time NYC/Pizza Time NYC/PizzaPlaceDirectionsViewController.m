@@ -21,7 +21,8 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 	[super viewDidLoad];
 	NSLog(@"directions page loaded");
 	self.UserLocationProperty = [[MKUserLocation alloc] init];
-	self.appDelegate = [AppDelegate sharedDelegate];
+//	self.appDelegate = [AppDelegate sharedDelegate];
+	self.methodManager = [MethodManager sharedManager];
 	[self createLocationManager];
 	[self createMapView];
 	[self checkForLocationServicesEnabled]; // originally after "createLocationManager"
@@ -89,26 +90,34 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 								  action:@selector(speakerButtonPressed:)
 						   forControlEvents:UIControlEventTouchUpInside];
 	
-	if (self.appDelegate.sound == YES) {
-		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
-		[self.view addSubview:self.speakerButtonDirectPage];
+	if (self.methodManager.sound == YES) {
+		[self.speakerButtonDirectPage setBackgroundImage:[self.methodManager playMusic] forState:UIControlStateNormal];
 	}
 	else {
-		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
-		[self.view addSubview:self.speakerButtonDirectPage];
+		[self.speakerButtonDirectPage setBackgroundImage:[self.methodManager stopMusic] forState:UIControlStateNormal];
 	}
+	[self.view addSubview:self.speakerButtonDirectPage];
+	// divide by 2 for center and minus 30 for center of png
+	UIButton *optionsButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2 - 30, 16, 60, 60)];
+	// Add an action in current code file (i.e. target)
+	[optionsButtonMapPage addTarget:self
+							 action:@selector(optionsButtonPressed:)
+				   forControlEvents:UIControlEventTouchUpInside];
+	
+	[optionsButtonMapPage setBackgroundImage:[UIImage imageNamed:@"menu.png"] forState:UIControlStateNormal];
+	[self.view addSubview:optionsButtonMapPage];
 }
 
 -(void)assignSounds {
-	if (self.appDelegate.audioPlayer.rate == 0.0) {
+	if (self.methodManager.audioPlayer.rate == 0.0) {
 		NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
-		if (!self.appDelegate.audioPlayer) {
-			self.appDelegate.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
+		if (!self.methodManager.audioPlayer) {
+			self.methodManager.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
 		}
-		self.appDelegate.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
+		self.methodManager.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
 	}
 	else {
-		NSLog(@"You've already created the player!");
+//		NSLog(@"You've already created the player!");
 	}
 }
 
@@ -231,17 +240,26 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 
 // this should disable and enable the sound of the app
 -(void)speakerButtonPressed:(UIButton *)speakerButton {
-	if (self.appDelegate.sound) {
+	if (self.methodManager.sound) {
 		//		NSLog(@"sound disabled"); //disable sound
-		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
+		[self.speakerButtonDirectPage setBackgroundImage:[self.methodManager stopMusic] forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 0.0;
 	}
 	else {
 		//		NSLog(@"sound enabled"); //enable sound
-		[self.speakerButtonDirectPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
+		[self.speakerButtonDirectPage setBackgroundImage:[self.methodManager playMusic] forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 1.0;
 	}
 }
+
+// this should show the menu page
+-(void)optionsButtonPressed:(UIButton *)optionsButton {
+	NSLog(@"optionsButton was pressed");
+	// this should open the options page of Pizza Time
+	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionsPage"];
+	[self.navigationController pushViewController:detailViewController animated:YES];
+}
+
 
 // Main initial button press
 -(void)currentLocationButtonPressed {

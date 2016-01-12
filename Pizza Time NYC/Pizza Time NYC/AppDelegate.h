@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <AVFoundation/AVFoundation.h>
+#import "MethodManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> 
 
@@ -23,6 +24,13 @@
 
 @property (nonatomic)BOOL sound; // silent or loud (NO = 0 = Silent)
 
+@property (nonatomic, strong) UIButton *optionsButton;
+@property (nonatomic, strong) UIButton *speakerButton;
+@property (nonatomic, strong) UIButton *searchBarButton;
+
+@property (nonatomic, strong) UISearchBar *searchBar;
+
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
@@ -30,6 +38,15 @@
 
 -(UIImage *)stopMusic;
 -(UIImage *)playMusic;
+
+-(UIButton *)assignOptionsButton;
+-(UIButton *)assignSpeakerButton;
+-(UIButton *)assignSearchButton;
+
+-(void)searchBarPresent;
+
+-(void)searchButtonPressed:(UIButton *)searchButton;
+
 
 
 @end

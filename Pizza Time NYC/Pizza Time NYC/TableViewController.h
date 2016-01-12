@@ -11,6 +11,8 @@
 #import "DAO.h"
 #import "PizzaPlaceInfoViewController.h"
 #import "PizzaPlaceDirectionsViewController.h"
+//#import "AppDelegate.h"
+#import "MethodManager.h"
 
 @interface TableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -19,5 +21,9 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+// for use of the avAudioPlayer & Menu Button
+//@property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) MethodManager *methodManager;
 
 @end

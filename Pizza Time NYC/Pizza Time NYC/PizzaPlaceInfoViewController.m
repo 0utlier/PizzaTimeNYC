@@ -52,9 +52,9 @@
 
 // Main initial button press
 -(void)optionsButtonPressed:(UIButton *)optionsButton {
-	NSLog(@"PizzaTimebutton was pressed");
-	// this should open the MAP VIEW of Pizza Time
-UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"HomePage"];
+	NSLog(@"optionsButton was pressed");
+	// this should open the options page of Pizza Time
+UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionsPage"];
 	[self.navigationController pushViewController:detailViewController animated:YES];
 
 }

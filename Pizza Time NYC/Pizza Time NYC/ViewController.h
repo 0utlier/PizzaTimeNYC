@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Reachability.h"
 #import <AVFoundation/AVFoundation.h>
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
+#import "MethodManager.h"
 
 @interface ViewController : UIViewController <AVAudioPlayerDelegate>
 
@@ -22,8 +23,9 @@
 @property (nonatomic) Reachability *internetReachability;
 @property (nonatomic) Reachability *wifiReachability;
 
-// for use of the avAudioPlayer
-@property (strong, nonatomic) AppDelegate *appDelegate;
+// for use of the avAudioPlayer & Menu Button
+//@property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) MethodManager *methodManager;
 
 
 @end

@@ -19,11 +19,17 @@ int count;// set the user's [current location] image to 3 separate items
 
 @implementation MapKitViewController
 
+- (void)didReceiveMemoryWarning {
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	userLocationShown = NO;
 	firstTimeLoaded = NO;
-	self.appDelegate = [AppDelegate sharedDelegate];
+//	self.appDelegate = [AppDelegate sharedDelegate];
+	self.methodManager = [MethodManager sharedManager];
 	self.UserLocationProperty = [[MKUserLocation alloc] init];
 	[self createLocationManager];
 	[self createMapView];
@@ -39,7 +45,10 @@ int count;// set the user's [current location] image to 3 separate items
 	[self createSearchBar];
 	[self createLongPressGesture];
 	[self assignLabels];
-	[self assignSounds];
+
+	//unsure if I need to call assignSounds
+//	[self assignSounds];
+	
 	//check for location
 	//	[self currentLocationButtonPressed]; // this slows down the process of showing the user's location
 	//	self.navigationController.hidesBarsOnTap = YES;
@@ -57,6 +66,8 @@ int count;// set the user's [current location] image to 3 separate items
 	}
 }
 
+#pragma mark - CREATE PAGE
+
 - (void)createMapView {
 	self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
 	[self.mapView setShowsUserLocation:YES];
@@ -69,6 +80,17 @@ int count;// set the user's [current location] image to 3 separate items
 	[self.locationManager requestWhenInUseAuthorization];
 	[self.locationManager setDelegate:self];
 	[self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+}
+
+-(void)createLongPressGesture {
+	UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+	[self.mapView addGestureRecognizer:longPressGesture];
+}
+
+-(void)createSearchBar {
+	self.searchBar.delegate = self;
+	[self.view addSubview:self.searchBar];
+	self.searchBar.hidden = YES;
 }
 
 // commented out for TabBar addition // delegate
@@ -105,40 +127,40 @@ int count;// set the user's [current location] image to 3 separate items
 //}
 
 -(void)assignLabels {// and buttons
-	UIButton *speakerButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width -76, 16, 60, 60)];
-	self.speakerButtonMapPage = speakerButtonMapPage;
-	// Add an action in current code file (i.e. target)
-	[self.speakerButtonMapPage addTarget:self
-								  action:@selector(speakerButtonPressed:)
-						forControlEvents:UIControlEventTouchUpInside];
+
+//	[self.view addSubview:[self.appDelegate assignOptionsButton]];
+//	[self.view addSubview:[self.appDelegate assignSpeakerButton]];
+
+//	[self.view addSubview:[self.appDelegate assignSearchButton]];
+	[self.view addSubview:[self.methodManager assignOptionsButton]];
+	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	
-	if (self.appDelegate.sound == YES) {
-		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
-	}
-	else {
-		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
-	}
-	[self.view addSubview:self.speakerButtonMapPage];
+	UIButton *searchButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 60, 60)];
+	// Add an action in current code file (i.e. target)
+	[searchButtonMapPage addTarget:self
+							action:@selector(searchButtonPressed:)
+				  forControlEvents:UIControlEventTouchUpInside];
+	
+	[searchButtonMapPage setBackgroundImage:[UIImage imageNamed:@"search60.png"] forState:UIControlStateNormal];
+	[self.view addSubview:searchButtonMapPage];
+
+
 }
 
 -(void)assignSounds {
-	if (self.appDelegate.audioPlayer.rate == 0.0) {
+	if (self.methodManager.audioPlayer.rate == 0.0) {
 		NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
-		if (!self.appDelegate.audioPlayer) {
-			self.appDelegate.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
+		if (!self.methodManager.audioPlayer) {
+			self.methodManager.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
 		}
-		self.appDelegate.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
+		self.methodManager.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
 	}
 	else {
-		NSLog(@"You've already created the player!");
+//		NSLog(@"You've already created the player!");
 	}
 }
 
--(void)createSearchBar {
-	self.searchBar.delegate = self;
-	[self.view addSubview:self.searchBar];
-	self.searchBar.hidden = YES;
-}
+#pragma mark - SearchBar Delegate
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
 	searchBar.showsCancelButton = YES;
@@ -151,44 +173,14 @@ int count;// set the user's [current location] image to 3 separate items
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
-	[searchBar resignFirstResponder];
-	[searchBar setShowsCancelButton:NO animated:YES];
-	self.searchBar.hidden = YES;
-}
-
-- (void)didReceiveMemoryWarning {
-	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
-}
--(void)findDistance {
-	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
-		double pizzaPlaceLat = (double)pizzaPlace.latitude;
-		double pizzaPlaceLong = (double)pizzaPlace.longitude;
-		
-		// find user's location
-		double userLocationLat = (double)self.UserLocationProperty.coordinate.latitude;
-		double userLocationLong = (double)self.UserLocationProperty.coordinate.longitude;
-		
-		if (self.UserLocationProperty.location.coordinate.latitude == 0.0) {
-			//		NSLog(@"Yea, I have no idea where you are!");
-			userLocationLat = 40.7484;
-			userLocationLong = -73.9857;
-		}
-		CLLocation *pizzaPlaceLocation = [[CLLocation alloc] initWithLatitude:pizzaPlaceLat
-																	longitude:pizzaPlaceLong];
-		
-		CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userLocationLat
-															  longitude:userLocationLong];
-		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocation];
-		//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
-		//	NSLog(@"Calculated Miles %@", [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)]);
-		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
-		//		NSLog(@"distance in miles: %@", distanceFromUser);
-		//convert to float and then assign to pizzaPlaceDistance
-		float distanceFloat = [distanceFromUser floatValue];
-		pizzaPlace.distance = distanceFloat;
-		//		NSLog(@"The distance saved as %f for %@", pizzaPlace.distance, pizzaPlace.name);
-	}
+//	[searchBar resignFirstResponder];
+//	[searchBar setShowsCancelButton:NO animated:YES];
+//	self.searchBar.hidden = YES;
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 self.searchBar.frame = CGRectMake(-320, 16, 320, 44);
+					 }];
+//	[self assignLabels];
 }
 
 #pragma mark - custom Annotations
@@ -299,41 +291,41 @@ int count;// set the user's [current location] image to 3 separate items
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-	MKAnnotationView *aV;
+	MKAnnotationView *annotationView;
 	
-	for (aV in views) {
+	for (annotationView in views) {
 		
 		// Don't pin drop if annotation is user location
-		//		if ([aV.annotation isKindOfClass:[MKUserLocation class]]) {
+		//		if ([annotationView.annotation isKindOfClass:[MKUserLocation class]]) {
 		//			continue;
 		//		}
 		
 		// Check if current annotation is inside visible map rect, else go to next one
-		MKMapPoint point =  MKMapPointForCoordinate(aV.annotation.coordinate);
+		MKMapPoint point =  MKMapPointForCoordinate(annotationView.annotation.coordinate);
 		if (!MKMapRectContainsPoint(self.mapView.visibleMapRect, point)) {
 			continue;
 		}
 		
-		CGRect endFrame = aV.frame;
+		CGRect endFrame = annotationView.frame;
 		
 		// Move annotation out of view
-		aV.frame = CGRectMake(aV.frame.origin.x, aV.frame.origin.y - self.view.frame.size.height, aV.frame.size.width, aV.frame.size.height);
+		annotationView.frame = CGRectMake(annotationView.frame.origin.x, annotationView.frame.origin.y - self.view.frame.size.height, annotationView.frame.size.width, annotationView.frame.size.height);
 		
 		// Animate drop
-		[UIView animateWithDuration:2.5 delay:0.4*[views indexOfObject:aV] options: UIViewAnimationOptionCurveLinear animations:^{
+		[UIView animateWithDuration:2.5 delay:0.4*[views indexOfObject:annotationView] options: UIViewAnimationOptionCurveLinear animations:^{
 			
-			aV.frame = endFrame;
+			annotationView.frame = endFrame;
 			
 			// Animate squash
 		}completion:^(BOOL finished){
 			if (finished) {
 				[UIView animateWithDuration:2.95 animations:^{
-					aV.transform = CGAffineTransformMakeScale(1.0, 0.8);
+					annotationView.transform = CGAffineTransformMakeScale(1.0, 0.8);
 					
 				}completion:^(BOOL finished){
 					if (finished) {
 						[UIView animateWithDuration:0.1 animations:^{
-							aV.transform = CGAffineTransformIdentity;
+							annotationView.transform = CGAffineTransformIdentity;
 						}];
 					}
 				}];
@@ -394,6 +386,37 @@ int count;// set the user's [current location] image to 3 separate items
 	
 }
 
+-(void)findDistance {
+	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
+		double pizzaPlaceLat = (double)pizzaPlace.latitude;
+		double pizzaPlaceLong = (double)pizzaPlace.longitude;
+		
+		// find user's location
+		double userLocationLat = (double)self.UserLocationProperty.coordinate.latitude;
+		double userLocationLong = (double)self.UserLocationProperty.coordinate.longitude;
+		
+		if (self.UserLocationProperty.location.coordinate.latitude == 0.0) {
+			//		NSLog(@"Yea, I have no idea where you are!");
+			userLocationLat = 40.7484;
+			userLocationLong = -73.9857;
+		}
+		CLLocation *pizzaPlaceLocation = [[CLLocation alloc] initWithLatitude:pizzaPlaceLat
+																	longitude:pizzaPlaceLong];
+		
+		CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userLocationLat
+															  longitude:userLocationLong];
+		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocation];
+		//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
+		//	NSLog(@"Calculated Miles %@", [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)]);
+		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
+		//		NSLog(@"distance in miles: %@", distanceFromUser);
+		//convert to float and then assign to pizzaPlaceDistance
+		float distanceFloat = [distanceFromUser floatValue];
+		pizzaPlace.distance = distanceFloat;
+		//		NSLog(@"The distance saved as %f for %@", pizzaPlace.distance, pizzaPlace.name);
+	}
+}
+
 /*
  #pragma mark - Navigation
  
@@ -404,22 +427,72 @@ int count;// set the user's [current location] image to 3 separate items
  }
  */
 
-#pragma mark - ACTIONS
+-(void)checkForLocationServicesEnabled {
+	//check for authorization here
+	if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied)
+	{
+		// set Empire State Building as a location and set pin
+		CLLocationCoordinate2D centerCoordinate;
+		centerCoordinate.latitude = 40.7484;
+		centerCoordinate.longitude = -73.9857;
+		self.UserLocationProperty.coordinate = centerCoordinate;
+		//		NSLog(@"lat = %f, long = %f", centerCoordinate.latitude, centerCoordinate.longitude);
+		
+		// set region of map to focus on Empire State Building
+		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(centerCoordinate, 200, 200);
+		[self.mapView setRegion:region animated:YES];
+		
+		NSLog(@"Location Services Disabled");
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
+														message:@"Is Shredder on your tail? We'll keep your location a secret!"
+													   delegate:self
+											  cancelButtonTitle:@"RUN"
+											  otherButtonTitles:@"Settings", nil];
+		[alert show];
+	}
+	// uncomment following for professional response, instead [to replace the above]
+	
+	/*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
+	 message:@"To re-enable, please go to Settings and turn on Location Service for this app."
+	 delegate:self
+	 cancelButtonTitle:@"Cancel"
+	 otherButtonTitles:@"Settings", nil];
+	 [alert show];
+	 */
+}
 
-// this should disable and enable the sound of the app
--(void)speakerButtonPressed:(UIButton *)speakerButton {
-	if (self.appDelegate.sound) {
-//		NSLog(@"sound disabled"); //disable sound
-		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
-		//		self.appDelegate.audioPlayer.rate = 0.0;
+// bring user to settings of Pizza Time (stock settings)
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	//	NSLog(@"%ld", (long)buttonIndex);
+	if (buttonIndex == 1) {
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
 	}
 	else {
-//		NSLog(@"sound enabled"); //enable sound
-		[self.speakerButtonMapPage setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
-		//		self.appDelegate.audioPlayer.rate = 1.0;
+		NSLog(@"User does not want to share location");
+		// enter audio BUMMMMMMMERRRRR
 	}
 }
 
+#pragma mark - ACTIONS
+
+
+// Main initial button press
+-(void)searchButtonPressed:(UIButton *)searchButton {
+	NSLog(@"searchButton was pressed");
+	// this should hide the buttons and present the search bar of Pizza Time
+	//	self.searchBar.hidden = NO;
+	[self.methodManager searchBarPresent];
+	searchButton.hidden = YES;
+	[self.view bringSubviewToFront:self.searchBar];
+	self.searchBar.frame = CGRectMake(-320, 0, 320, 480);
+	self.searchBar.hidden = NO;
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 self.searchBar.frame = CGRectMake(0, 0, 320, 480);
+					 }];
+	[self.searchBar becomeFirstResponder];
+	
+}
 
 // Main initial button press
 -(void)infoButtonPressed { //currently commented out, because StoryBoard is showing the current display correctly
@@ -446,75 +519,12 @@ int count;// set the user's [current location] image to 3 separate items
 	}
 }
 
-// bring user to settings of Pizza Time (stock settings)
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	//	NSLog(@"%ld", (long)buttonIndex);
-	if (buttonIndex == 1) {
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-	}
-	else {
-		NSLog(@"User does not want to share location");
-		// enter audio BUMMMMMMMERRRRR
-	}
-}
-
--(void)checkForLocationServicesEnabled {
-	//check for authorization here
-	if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied)
-	{
-		// set Empire State Building as a location and set pin
-		CLLocationCoordinate2D centerCoordinate;
-		centerCoordinate.latitude = 40.7484;
-		centerCoordinate.longitude = -73.9857;
-		self.UserLocationProperty.coordinate = centerCoordinate;
-		//		NSLog(@"lat = %f, long = %f", centerCoordinate.latitude, centerCoordinate.longitude);
-		// set region of map to focus on Empire State Building
-		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(centerCoordinate, 200, 200);
-		[self.mapView setRegion:region animated:YES];
-		
-		NSLog(@"Location Services Disabled");
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
-														message:@"Is Shredder on your tail? We'll keep your location a secret!"
-													   delegate:self
-											  cancelButtonTitle:@"RUN"
-											  otherButtonTitles:@"Settings", nil];
-		[alert show];
-	}
-	// uncomment following for professional response, instead [to replace the above]
-	
-	/*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
-	 message:@"To re-enable, please go to Settings and turn on Location Service for this app."
-	 delegate:self
-	 cancelButtonTitle:@"Cancel"
-	 otherButtonTitles:@"Settings", nil];
-	 [alert show];
-	 */
-}
-
-// Main initial button press
--(void)searchButtonPressed {
-	NSLog(@"Search button was pressed");
-	// this should unhide the search bar
-	if (self.searchBar.hidden == YES) {
-		self.searchBar.hidden = NO;
-		[self.searchBar becomeFirstResponder];
-	}
-	else {
-		self.searchBar.hidden = YES;
-	}
-	
-}
-
 // Main initial button press
 -(void)addPizzaPlaceButtonPressed{//currently commented out, because StoryBoard is showing the current display correctly
 	NSLog(@"addPizzaPlace button was pressed");
 	// this should open the addPizzaPlace view of Pizza Time
 }
 
--(void)createLongPressGesture {
-	UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-	[self.mapView addGestureRecognizer:longPressGesture];
-}
 
 -(void)handleLongPressGesture:(UIGestureRecognizer*)sender {
 	// This is important if you only want to receive one tap and hold event
