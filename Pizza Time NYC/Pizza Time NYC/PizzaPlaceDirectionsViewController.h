@@ -23,7 +23,6 @@
 @property (nonatomic, retain) PizzaPlace *currentPizzaPlace;
 
 // for use of the avAudioPlayer
-//@property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) MethodManager *methodManager;
 
 @property (weak, nonatomic) IBOutlet UIButton *speakerButtonDirectPage;

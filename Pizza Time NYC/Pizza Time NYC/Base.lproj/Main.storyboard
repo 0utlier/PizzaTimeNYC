@@ -35,40 +35,34 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PIZZA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Yc-u1-oai">
-                                <rect key="frame" x="243" y="80" width="115" height="51"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="42"/>
-                                <color key="textColor" red="0.7475931187" green="0.1525197298" blue="0.086793881990000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRb-Sz-IaQ">
                                 <rect key="frame" x="253" y="473" width="94" height="51"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                 <color key="textColor" red="0.042699507734530365" green="0.39363595804310875" blue="0.7475931187" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jee-V0-deE">
-                                <rect key="frame" x="534" y="80" width="30" height="30"/>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PIZZA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Yc-u1-oai">
+                                <rect key="frame" x="243" y="96" width="115" height="51"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="42"/>
+                                <color key="textColor" red="0.7475931187" green="0.1525197298" blue="0.086793881990000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="6Ed-9g-Zqk" secondAttribute="trailing" id="9zD-Ho-TE4"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="6Ed-9g-Zqk" secondAttribute="bottom" constant="8" id="JLL-Xj-xoo"/>
-                            <constraint firstItem="Jee-V0-deE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="XMg-9e-qcT"/>
                             <constraint firstItem="3Yc-u1-oai" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a4h-vk-Dxx"/>
                             <constraint firstItem="8bY-QK-41z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bPU-ka-8Q7"/>
                             <constraint firstItem="RRb-Sz-IaQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dOK-oc-G45"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RRb-Sz-IaQ" secondAttribute="bottom" constant="76" id="eYH-iK-ZhP"/>
                             <constraint firstItem="3Yc-u1-oai" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="76" id="jrn-eF-8u4"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Jee-V0-deE" secondAttribute="trailing" constant="16" id="nR2-p0-NdZ"/>
                             <constraint firstItem="8bY-QK-41z" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="wgo-3M-WbC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Uko-Xf-OSS"/>
                     <connections>
                         <outlet property="pizzaTimeButton" destination="8bY-QK-41z" id="dXR-zI-x3d"/>
-                        <outlet property="speakerButton" destination="Jee-V0-deE" id="MXh-tu-gpj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -196,30 +190,14 @@
                                 <rect key="frame" x="4" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <tabBar contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lup-FD-qYI">
-                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <tabBarItem title="MAP" image="globe@2x.png" id="2zU-Vi-g9V"/>
-                                    <tabBarItem title="LIST" image="newspaper@2x.png" id="yM0-3h-AqW"/>
-                                </items>
-                            </tabBar>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LP9-Wi-oiV">
-                                <rect key="frame" x="534" y="124" width="30" height="30"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="top" secondItem="meQ-fk-BlY" secondAttribute="bottom" id="0nH-N5-jWq"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="LP9-Wi-oiV" secondAttribute="trailing" constant="16" id="3PD-78-MBt"/>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="width" secondItem="4vK-yZ-6N6" secondAttribute="width" id="7fw-y9-DTt"/>
-                            <constraint firstItem="LP9-Wi-oiV" firstAttribute="top" secondItem="jjP-bI-wuf" secondAttribute="bottom" constant="16" id="JEz-uA-a10"/>
                             <constraint firstItem="jhG-dC-xfO" firstAttribute="top" secondItem="fhv-hj-ahw" secondAttribute="bottom" id="O0z-Ro-fcG"/>
-                            <constraint firstItem="lup-FD-qYI" firstAttribute="width" secondItem="4vK-yZ-6N6" secondAttribute="width" id="Pez-oS-5v8"/>
                             <constraint firstItem="fhv-hj-ahw" firstAttribute="leading" secondItem="4vK-yZ-6N6" secondAttribute="leading" id="VCJ-pV-eup"/>
-                            <constraint firstItem="jhG-dC-xfO" firstAttribute="top" secondItem="lup-FD-qYI" secondAttribute="bottom" id="abW-al-ez1"/>
                             <constraint firstItem="jjP-bI-wuf" firstAttribute="leading" secondItem="4vK-yZ-6N6" secondAttribute="leadingMargin" constant="-16" id="gY5-RQ-Frf"/>
-                            <constraint firstItem="lup-FD-qYI" firstAttribute="centerX" secondItem="4vK-yZ-6N6" secondAttribute="centerX" id="iu8-Iz-ag2"/>
                             <constraint firstAttribute="trailing" secondItem="fhv-hj-ahw" secondAttribute="trailing" id="m3C-nI-YY4"/>
                         </constraints>
                     </view>
@@ -228,7 +206,6 @@
                         <outlet property="addPizzaPlaceButton" destination="UYO-VJ-y1N" id="wlg-EQ-gcT"/>
                         <outlet property="currentLocationButton" destination="z8g-u7-1iC" id="CLw-Eh-SBv"/>
                         <outlet property="infoButton" destination="vmy-37-8yL" id="Brg-Kt-e4Y"/>
-                        <outlet property="mapTabBar" destination="lup-FD-qYI" id="m6W-Y7-5eT"/>
                         <outlet property="mapToolBar" destination="fhv-hj-ahw" id="On6-X3-ZLy"/>
                         <outlet property="searchAddressButton" destination="IzS-rp-faj" id="HnK-VV-eiq"/>
                         <outlet property="searchBar" destination="jjP-bI-wuf" id="DOB-FM-m4m"/>
@@ -661,16 +638,14 @@
         <image name="bank.png" width="26" height="26"/>
         <image name="game_controller.png" width="26" height="26"/>
         <image name="globe.png" width="26" height="26"/>
-        <image name="globe@2x.png" width="1000" height="820"/>
         <image name="newspaper.png" width="26" height="26"/>
-        <image name="newspaper@2x.png" width="1000" height="820"/>
         <image name="pacman.png" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="M3p-Gt-qyx"/>
         <segue reference="P5q-WO-3Y8"/>
         <segue reference="gUh-ch-6Ny"/>
-        <segue reference="pPK-HB-gbA"/>
+        <segue reference="h6G-Eb-vlr"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.7475931187" green="0.090802554839999994" blue="0.13110451170000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>

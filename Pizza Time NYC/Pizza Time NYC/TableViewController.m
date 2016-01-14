@@ -22,29 +22,35 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	//	NSLog(@"Table View Controller loaded!");
+	
 	// instantiate tableView
 	self.tableView.delegate=self;//unsure if necessary
 	self.tableView.dataSource=self;
+	
 	self.methodManager = [MethodManager sharedManager];
-//	self.appDelegate = [AppDelegate sharedDelegate];
 	self.dao = [DAO sharedDAO];
 	[self.dao createPizzaPlaces];
+	self.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+	
 	[self createPizzaCells];
 	[self createSearchBar];
 	// Uncomment the following line to preserve selection between presentations.
 	// self.clearsSelectionOnViewWillAppear = NO;
-	[self assignLabels];
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	[self sortByDistance];
-	//	self.navigationController.hidesBarsOnTap = YES;
 	[self.tableView reloadData];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	[self assignLabels];
 	[self.navigationController setNavigationBarHidden:YES];
 	[self.tableView reloadData];
+//	NSLog(@"realign bools here");
+    [self.view setNeedsDisplay];
 }
+
 
 #pragma mark - CREATE PAGE
 
@@ -66,18 +72,24 @@
 
 -(void)assignLabels {// and buttons
 	
+	[self.methodManager removeBothButtons];
+	if (self.searchButtonTableView) {
+		[self.searchButtonTableView removeFromSuperview];
+	}
+
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
-//	NSLog(@"view has width of %f", self.view.bounds.size.width);
-	UIButton *searchButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 60, 60)];
-	// Add an action in current code file (i.e. target)
-	[searchButtonMapPage addTarget:self
-							 action:@selector(searchButtonPressed:)
-				   forControlEvents:UIControlEventTouchUpInside];
 	
-	[searchButtonMapPage setBackgroundImage:[UIImage imageNamed:@"search60.png"] forState:UIControlStateNormal];
-	[self.view addSubview:searchButtonMapPage];
-
+	UIButton *searchButtonTableView = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 60, 60)];
+	self.searchButtonTableView = searchButtonTableView;
+	// Add an action in current code file (i.e. target)
+	[self.searchButtonTableView addTarget:self
+							  action:@selector(searchButtonPressed:)
+					forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.searchButtonTableView setBackgroundImage:[UIImage imageNamed:@"search60.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.searchButtonTableView];
+	
 }
 
 
@@ -138,9 +150,9 @@
 			UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];//TabBarController
 			//tabBarController.viewControllers = @[detailViewController];
 			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = tabBarController.viewControllers[0];
-						PizzaPlaceDirectionsViewController *pizzaPlaceDirectionsViewController = tabBarController.viewControllers[1];
+			PizzaPlaceDirectionsViewController *pizzaPlaceDirectionsViewController = tabBarController.viewControllers[1];
 			[pizzaPlaceInfoViewController setLabelValues:pizzaPlace];
-						[pizzaPlaceDirectionsViewController setPizzaPlaceProperty:pizzaPlace];
+			[pizzaPlaceDirectionsViewController setPizzaPlaceProperty:pizzaPlace];
 			
 			[self.navigationController pushViewController:tabBarController animated:YES];
 		}
@@ -207,41 +219,47 @@
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
 	searchBar.showsCancelButton = NO;
+	[self searchBarCancelButtonClicked:searchBar];
 	return YES;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
-//	[searchBar resignFirstResponder];
-//	[searchBar setShowsCancelButton:NO animated:YES];
-//		self.searchBar.hidden = YES;
-	// show the buttons again
-//	[self.view bringSubviewToFront:self.searchBar];
-//	self.searchBar.frame = CGRectMake(0, 0, 320, 480);
-	[UIView animateWithDuration:0.66
+	[UIView animateWithDuration:0.66f
 					 animations:^{
-						 self.searchBar.frame = CGRectMake(-320, 16, 320, 44);
+						 // where is the search bar going?
+						 searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.statusBarSize.height, self.view.bounds.size.width, 44);
+						 
+						 // unHide the search button
+						 self.searchButtonTableView.alpha = 1.0;
+						 // unHide the speaker and options buttons
+						 self.methodManager.search = NO;
+						 [self.methodManager searchBarPresent];
+					 }completion:^(BOOL finished) { //when finished, unHide the searchButton
+						 [self.view endEditing:YES];
+						 self.searchBar.hidden = YES;
 					 }];
-//	self.searchBar.hidden = YES;
-//	[self assignLabels];
 }
+
 
 #pragma mark - ACTIONS
 
 // Main initial button press
 -(void)searchButtonPressed:(UIButton *)searchButton {
-	NSLog(@"searchButton was pressed");
+	NSLog(@"searchButtonTable was pressed");
 	// this should hide the buttons and present the search bar of Pizza Time
-//	self.searchBar.hidden = NO;
-//	optionsButton.hidden = YES;
-	searchButton.hidden = YES;
+	self.methodManager.search = YES;
+	[self.methodManager searchBarPresent];
 	[self.view bringSubviewToFront:self.searchBar];
-	self.searchBar.frame = CGRectMake(-320, 0, 320, 480);
+	self.searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.statusBarSize.height, self.view.bounds.size.width, 60);
 	self.searchBar.hidden = NO;
+	// set the search button alpha
+	self.searchButtonTableView.alpha = 0.5;
 	[UIView animateWithDuration:0.66
 					 animations:^{
-						 self.searchBar.frame = CGRectMake(0, 0, 320, 480);
+						 // where is the search bar going?
+						 self.searchBar.frame = CGRectMake(0, self.statusBarSize.height, self.view.bounds.size.width, 60);
+						 self.searchButtonTableView.alpha = 0.0;
 					 }];
 	[self.searchBar becomeFirstResponder];
-
 }
 @end

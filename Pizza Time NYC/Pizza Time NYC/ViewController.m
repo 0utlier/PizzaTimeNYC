@@ -20,9 +20,6 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-//	NSLog(@"%@", [MethodManager sharedManager]);
-//	NSLog(@"%@", [MethodManager sharedManager]);
-//	self.appDelegate = [AppDelegate sharedDelegate];
 	self.methodManager = [MethodManager sharedManager];
 //	[self checkInternet]; //comment back in when ready to fix
 	[self assignLabels];
@@ -32,6 +29,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 	[self.navigationController setNavigationBarHidden:YES];
 	if(firstTimeLoadedHomePage) {
 		// do what occurs first time

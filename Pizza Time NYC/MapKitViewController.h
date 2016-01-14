@@ -14,12 +14,18 @@
 #import "WebViewController.h"
 #import "PizzaPlaceInfoViewController.h"
 #import "PizzaPlaceDirectionsViewController.h"
+#import "MethodManager.h"
 
-@interface MapKitViewController : ViewController <MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate>// in case we want to search for address
+
+@interface MapKitViewController : ViewController <MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITabBarDelegate, UITabBarControllerDelegate>// in case we want to search for address
 
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic,strong) CLLocationManager *locationManager;
+@property (nonatomic, retain) MKUserLocation *UserLocationProperty;
+
+// DAO info and methods
 @property (nonatomic, strong) DAO *dao;
+//@property (strong, nonatomic) MethodManager *methodManager;
 
 
 // TOOL BAR Properties
@@ -29,12 +35,11 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchAddressButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *currentLocationButton;
 
-//@property (weak, nonatomic) IBOutlet UIButton *optionsButtonMapPage;
-@property (weak, nonatomic) IBOutlet UIButton *speakerButtonMapPage;
-
+// search button
+@property (weak, nonatomic) IBOutlet UIButton *searchButtonMapPage;
 
 // TAB BAR Properties
-@property (weak, nonatomic) IBOutlet UITabBar *mapTabBar;
+//@property (weak, nonatomic) IBOutlet UITabBar *mapTabBar;
 
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -42,7 +47,13 @@
 //@property (nonatomic,retain) PizzaPlace *pizzaPlace;// i do not believe I need this
 //@property(nonatomic, retain) NSMutableArray *pizzaPlaceArray; //moved to DAO
 
-@property (nonatomic, retain) MKUserLocation *UserLocationProperty;
+@property CGSize statusBarSize;
 
+
+// for directions given
+@property (nonatomic, retain) PizzaPlace *currentPizzaPlace;
+
+-(void)setPizzaPlaceProperty:(PizzaPlace *)pizzaPlace;
+- (void)setDirectionalValues:(PizzaPlace *)pizzaPlace;
 
 @end

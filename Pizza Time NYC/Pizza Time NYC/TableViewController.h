@@ -16,14 +16,19 @@
 
 @interface TableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
-//@property (nonatomic, retain) MapKitViewController *mapKitViewController; // unsure if I need this
 @property (nonatomic, retain) DAO *dao;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *searchButtonTableView;
+
+// added 1.13.16 attempt to load tabBar at bottom of page without map linking (currently no relationship)
+@property (weak, nonatomic) IBOutlet UITabBar *mapTabBar;
 
 // for use of the avAudioPlayer & Menu Button
 //@property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) MethodManager *methodManager;
+
+@property CGSize statusBarSize;
 
 @end

@@ -8,10 +8,14 @@
 
 #import "MethodManager.h"
 
+
+
 @implementation MethodManager
 //@synthesize someProperty;
 
 #pragma mark Singleton Methods
+
+static AVAudioPlayer *p;
 
 + (id)sharedManager {
 	static MethodManager *sharedMyManager = nil;
@@ -24,9 +28,17 @@
 
 - (id)init {
 	if (self = [super init]) {
-//		someProperty = [[NSString alloc] initWithString:@"Default Property Value"];
+		//		someProperty = [[NSString alloc] initWithString:@"Default Property Value"];
 	}
 	return self;
+}
+
+-(AVAudioPlayer*)audioPlayer{
+	if(p==nil){
+		[self createPlayer];
+	}
+	
+	return p;
 }
 
 - (void)dealloc {
@@ -36,6 +48,9 @@
 #pragma mark CREATE
 
 -(void)createPlayer {
+	//	self.window = [[UIApplication sharedApplication] keyWindow];
+	//	self.topView = self.window.rootViewController.view;
+	
 	//iPod playback will be paused with below statement. Comment out if you wish vibeSwitch to determine sound
 	[[AVAudioSession sharedInstance]
 	 setCategory: AVAudioSessionCategoryPlayback
@@ -43,12 +58,12 @@
 	
 	// set song to background
 	NSString *backgroundMusic = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
-	self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusic] error:NULL];
+	p = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusic] error:NULL];
 	//	self.audioPlayer.delegate = self;// unsure of warning
-	self.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
+	p.numberOfLoops = -1; // -1 is infinite loops
 	//	[self.audioPlayer play];
-//	self.screenSize = [UIScreen mainScreen].bounds.size;
-//	NSLog(@"%f", self.screenSize.width);
+	//	self.screenSize = [UIScreen mainScreen].bounds.size;
+	//	NSLog(@"%f", self.screenSize.width);
 }
 #pragma mark - Buttons & Actions
 -(UIImage *)playMusic {
@@ -66,6 +81,9 @@
 }
 
 -(UIButton *)assignSpeakerButton {
+	
+	//if(self.speakerButton)return self.speakerButton;
+	
 	UIButton *speakerButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width -76, 16, 60, 60)];
 	[speakerButton addTarget:self
 					  action:@selector(speakerButtonPressed:)
@@ -82,6 +100,13 @@
 }
 
 -(UIButton *)assignOptionsButton {
+	
+	
+	if(self.optionsButton){
+	//	[self.optionsButton removeFromSuperview];
+		return self.optionsButton;
+	}
+	
 	UIButton *optionsButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 30, 16, 60, 60)];
 	// Add an action in current code file (i.e. target)
 	[optionsButton addTarget:self
@@ -93,15 +118,6 @@
 	return self.optionsButton;
 }
 
--(UIButton *)assignSearchButton {//incorrect assigning
-	UIButton *searchButton = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 60, 60)];
-	// Add an action in current code file (i.e. target)
-	[searchButton addTarget:self
-					 action:@selector(searchButtonPressed:)
-		   forControlEvents:UIControlEventTouchUpInside];
-	
-	[searchButton setBackgroundImage:[UIImage imageNamed:@"search60.png"] forState:UIControlStateNormal];		return searchButton;
-}
 
 // this should disable and enable the sound of the app
 -(void)speakerButtonPressed:(UIButton *)speakerButton {
@@ -128,33 +144,29 @@
 	[navigationController pushViewController:detailViewController animated:YES];
 }
 
-// Main initial button press
--(void)searchButtonPressed:(UIButton *)searchButton {
-	NSLog(@"searchButton was pressed");
-	// this should hide the buttons and present the search bar of Pizza Time
-	//	self.searchBar.hidden = NO;
-	//	optionsButton.hidden = YES;
-	searchButton.hidden = YES;
-	
-	
-	UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-	UIView *topView = window.rootViewController.view;
-	//	NSLog(@"current view = %@", topView);
-	
-	[topView bringSubviewToFront:self.searchBar];
-	self.searchBar.frame = CGRectMake(-320, 0, 320, 480);
-	self.searchBar.hidden = NO;
-	[UIView animateWithDuration:0.66
-					 animations:^{
-						 self.searchBar.frame = CGRectMake(0, 0, 320, 480);
-					 }];
-	[self.searchBar becomeFirstResponder];
-	
+-(void)searchBarPresent {
+	if (self.search == YES) {
+		self.speakerButton.alpha = 0.5;  // set this *after* adding it back
+		self.optionsButton.alpha = 0.5;  // set this *after* adding it back
+		[UIView animateWithDuration:0.66f animations:^ {
+			// hide the buttons again, as bar appears
+			self.speakerButton.alpha = 0.0;
+			self.optionsButton.alpha = 0.0;
+		}];
+	}
+	else { // search = NO
+		self.speakerButton.hidden = NO;
+		self.optionsButton.hidden = NO;
+			self.speakerButton.alpha = 1.0;
+			self.optionsButton.alpha = 1.0;
+	}
 }
 
--(void)searchBarPresent {
-	self.optionsButton.hidden = YES;
-	self.speakerButton.hidden = YES;}
-
+-(void) removeBothButtons{
+	if(self.optionsButton)
+		[self.optionsButton removeFromSuperview];
+	if(self.speakerButton)
+		[self.speakerButton removeFromSuperview];
+}
 
 @end

@@ -18,12 +18,16 @@
 
 
 @property (nonatomic)BOOL sound; // silent or loud (NO = 0 = Silent)
+@property (nonatomic)BOOL search; // searching or not (NO = 0 = Not)
 
 @property (nonatomic, strong) UIButton *optionsButton;
 @property (nonatomic, strong) UIButton *speakerButton;
-@property (nonatomic, strong) UIButton *searchBarButton;
+//@property (nonatomic, strong) UIButton *searchBarButton;
 
-@property (nonatomic, strong) UISearchBar *searchBar;
+//@property (nonatomic, strong) UISearchBar *searchBar;
+//@property (nonatomic, strong) UIWindow *window;
+//@property (nonatomic, strong) UIView *topView;
+
 
 
 //@property (nonatomic, retain) NSString *someProperty;
@@ -36,11 +40,13 @@
 
 -(UIButton *)assignOptionsButton;
 -(UIButton *)assignSpeakerButton;
--(UIButton *)assignSearchButton;
+//-(UIButton *)assignSearchButton;
+
+-(void) removeBothButtons;
 
 -(void)searchBarPresent;
 
--(void)searchButtonPressed:(UIButton *)searchButton;
+//-(void)searchButtonPressed:(UIButton *)searchButton;
 
 
 @end
