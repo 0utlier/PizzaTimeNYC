@@ -34,6 +34,7 @@
 		AA7F09B91C42DB3B00AE5B96 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = AA7F09B81C42DB3B00AE5B96 /* menu.png */; };
 		AA7F09BC1C42F6F400AE5B96 /* search60.png in Resources */ = {isa = PBXBuildFile; fileRef = AA7F09BA1C42F6F400AE5B96 /* search60.png */; };
 		AA7F09BD1C42F6F400AE5B96 /* search.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA7F09BB1C42F6F400AE5B96 /* search.jpg */; };
+		AA889A851C48004E00552357 /* search60.2.png in Resources */ = {isa = PBXBuildFile; fileRef = AA889A841C48004E00552357 /* search60.2.png */; };
 		AA8E22881C4174FE0018ABE8 /* speakerCross60.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8E22861C4174FE0018ABE8 /* speakerCross60.png */; };
 		AA8E22891C4174FE0018ABE8 /* speaker60.png in Resources */ = {isa = PBXBuildFile; fileRef = AA8E22871C4174FE0018ABE8 /* speaker60.png */; };
 		AA8E228B1C41B2830018ABE8 /* tmntBikePizza.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA8E228A1C41B2830018ABE8 /* tmntBikePizza.jpg */; };
@@ -121,6 +122,7 @@
 		AA7F09B81C42DB3B00AE5B96 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		AA7F09BA1C42F6F400AE5B96 /* search60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search60.png; sourceTree = "<group>"; };
 		AA7F09BB1C42F6F400AE5B96 /* search.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = search.jpg; sourceTree = "<group>"; };
+		AA889A841C48004E00552357 /* search60.2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search60.2.png; sourceTree = "<group>"; };
 		AA8E22861C4174FE0018ABE8 /* speakerCross60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speakerCross60.png; sourceTree = "<group>"; };
 		AA8E22871C4174FE0018ABE8 /* speaker60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speaker60.png; sourceTree = "<group>"; };
 		AA8E228A1C41B2830018ABE8 /* tmntBikePizza.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tmntBikePizza.jpg; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA889A841C48004E00552357 /* search60.2.png */,
 				AA7F09BA1C42F6F400AE5B96 /* search60.png */,
 				AA7F09BB1C42F6F400AE5B96 /* search.jpg */,
 				AA7F09B81C42DB3B00AE5B96 /* menu.png */,
@@ -536,6 +539,7 @@
 				AAD0FCD61C3F38E00060B05B /* pizzaPepperoni300.png in Resources */,
 				AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */,
 				AA7F09B91C42DB3B00AE5B96 /* menu.png in Resources */,
+				AA889A851C48004E00552357 /* search60.2.png in Resources */,
 				AA8E22891C4174FE0018ABE8 /* speaker60.png in Resources */,
 				99260E071C2DD72200EFB125 /* its pizza time.jpg in Resources */,
 				AA8E22881C4174FE0018ABE8 /* speakerCross60.png in Resources */,

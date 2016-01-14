@@ -19,6 +19,8 @@
 
 @property (nonatomic)BOOL sound; // silent or loud (NO = 0 = Silent)
 @property (nonatomic)BOOL search; // searching or not (NO = 0 = Not)
+@property (nonatomic)BOOL directionsShow; // to load the map with or without directions
+@property (nonatomic)BOOL firstTimeLoaded; // to stop refresh [of map] on initial load
 
 @property (nonatomic, strong) UIButton *optionsButton;
 @property (nonatomic, strong) UIButton *speakerButton;

@@ -72,6 +72,7 @@
 
 -(void)assignLabels {// and buttons
 	
+	// if the button already exists, remove it from the superView
 	[self.methodManager removeBothButtons];
 	if (self.searchButtonTableView) {
 		[self.searchButtonTableView removeFromSuperview];
@@ -87,7 +88,7 @@
 							  action:@selector(searchButtonPressed:)
 					forControlEvents:UIControlEventTouchUpInside];
 	
-	[self.searchButtonTableView setBackgroundImage:[UIImage imageNamed:@"search60.png"] forState:UIControlStateNormal];
+	[self.searchButtonTableView setBackgroundImage:[UIImage imageNamed:@"search60.2.png"] forState:UIControlStateNormal];
 	[self.view addSubview:self.searchButtonTableView];
 	
 }

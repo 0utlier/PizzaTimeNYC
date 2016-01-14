@@ -26,6 +26,7 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 	[self createLocationManager];
 	[self createMapView];
 	[self checkForLocationServicesEnabled]; // originally after "createLocationManager"
+
 	[self setDirectionalValues:self.currentPizzaPlace];
 	[self setEdgesForExtendedLayout:UIRectEdgeNone];
 	[self setAutomaticallyAdjustsScrollViewInsets:NO];

@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "PizzaPlace.h"
+#import "MethodManager.h"
+#import "MapKitViewController.h"
 
 @interface PizzaPlaceInfoViewController : UIViewController
 
 // TAB BAR Properties
 //@property (weak, nonatomic) IBOutlet UITabBar *infoTabBar;
-
+@property (strong, nonatomic) MethodManager *methodManager;
+//@property (strong, nonatomic) MapKitViewController *mapDirections;
+@property (strong, nonatomic) PizzaPlace *currentPizzaPlace;
 /*
 //information on PizzaPlaceInfo
 @property (nonatomic, retain) NSString *name;
@@ -32,6 +36,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *optionsButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *directionsButton;
 
 - (void)setLabelValues:(PizzaPlace*)pizzaPlace;
 

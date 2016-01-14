@@ -21,6 +21,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.methodManager = [MethodManager sharedManager];
+	self.methodManager.firstTimeLoaded = YES;
 //	[self checkInternet]; //comment back in when ready to fix
 	[self assignLabels];
 	[self assignSounds];

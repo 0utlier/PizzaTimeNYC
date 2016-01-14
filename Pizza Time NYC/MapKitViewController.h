@@ -17,7 +17,7 @@
 #import "MethodManager.h"
 
 
-@interface MapKitViewController : ViewController <MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITabBarDelegate, UITabBarControllerDelegate>// in case we want to search for address
+@interface MapKitViewController : ViewController <MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITabBarDelegate, UITabBarControllerDelegate, UIGestureRecognizerDelegate>// in case we want to search for address
 
 @property (nonatomic) MKMapView *mapView;
 @property (nonatomic,strong) CLLocationManager *locationManager;

@@ -16,10 +16,15 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	self.methodManager = [MethodManager sharedManager];
 //	self.optionsButton = [[UIButton alloc]init];
 	[self.optionsButton addTarget:self
 					  action:@selector(optionsButtonPressed:)
 			forControlEvents:UIControlEventTouchUpInside];
+
+	[self.directionsButton addTarget:self
+						   action:@selector(directionsButtonPressed:)
+				 forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -46,6 +51,7 @@
 	
 	UILabel *distanceLabel = (UILabel *)[self.view viewWithTag:203];
 	distanceLabel.text = [NSString stringWithFormat:@"%.2f mi away", pizzaPlace.distance];
+	self.currentPizzaPlace = pizzaPlace;
 }
 
 #pragma mark - ACTIONS
@@ -59,6 +65,18 @@ UIViewController *detailViewController = (UIViewController *)[self.storyboard in
 
 }
 
+// Main initial button press
+-(void)directionsButtonPressed:(UIButton *)directionsButtonPressed {
+	NSLog(@"directionsButton was pressed");
+	// this should open the directions page of Pizza Time
+	MapKitViewController *detailViewController = (MapKitViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"MapKit"];
+// we need this because the bool must be set before the page loads
+	//	detailViewController.directionsShow = YES;
+	self.methodManager.directionsShow = YES;
+	detailViewController.currentPizzaPlace = self.currentPizzaPlace;
+	[self.navigationController pushViewController:detailViewController animated:YES];
+	
+}
 /*
  #pragma mark - Navigation
  

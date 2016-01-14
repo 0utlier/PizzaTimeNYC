@@ -160,7 +160,7 @@
         <!--MAP-->
         <scene sceneID="OqX-WX-h9h">
             <objects>
-                <viewController id="FeS-Td-4QL" customClass="MapKitViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapKit" id="FeS-Td-4QL" customClass="MapKitViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="meQ-fk-BlY"/>
                         <viewControllerLayoutGuide type="bottom" id="jhG-dC-xfO"/>
@@ -279,6 +279,10 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrF-cQ-b9b">
+                                <rect key="frame" x="256" y="285" width="88" height="30"/>
+                                <state key="normal" title="DIRECTIONS"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -304,6 +308,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="INFO" image="bank.png" id="ega-Kl-hAt"/>
                     <connections>
+                        <outlet property="directionsButton" destination="qrF-cQ-b9b" id="haK-mj-lG7"/>
                         <outlet property="optionsButton" destination="GCG-18-x3g" id="NAB-BX-AF8"/>
                     </connections>
                 </viewController>
@@ -642,10 +647,10 @@
         <image name="pacman.png" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="M3p-Gt-qyx"/>
+        <segue reference="WEi-XO-baD"/>
+        <segue reference="mDb-rs-ZVr"/>
+        <segue reference="pPK-HB-gbA"/>
         <segue reference="P5q-WO-3Y8"/>
-        <segue reference="gUh-ch-6Ny"/>
-        <segue reference="h6G-Eb-vlr"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.7475931187" green="0.090802554839999994" blue="0.13110451170000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>
