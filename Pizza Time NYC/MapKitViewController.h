@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#include <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "DAO.h"
@@ -17,43 +18,39 @@
 #import "MethodManager.h"
 
 
-@interface MapKitViewController : ViewController <MKMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, UITabBarDelegate, UITabBarControllerDelegate, UIGestureRecognizerDelegate>// in case we want to search for address
-
-@property (nonatomic) MKMapView *mapView;
-@property (nonatomic,strong) CLLocationManager *locationManager;
-@property (nonatomic, retain) MKUserLocation *UserLocationProperty;
+@interface MapKitViewController : ViewController <MKMapViewDelegate, UISearchBarDelegate, UIGestureRecognizerDelegate>
+//UITabBarDelegate, UITabBarControllerDelegate // removed 1.19.16
+// CLLocationManagerDelegate  // removed 1.21.16
 
 // DAO info and methods
 @property (nonatomic, strong) DAO *dao;
-//@property (strong, nonatomic) MethodManager *methodManager;
+// here is the map
+@property (nonatomic) MKMapView *mapView;
 
-
-// TOOL BAR Properties
+// TOOL BAR Properties (remove them when ready = not being used)
 @property (weak, nonatomic) IBOutlet UIToolbar *mapToolBar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *infoButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addPizzaPlaceButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchAddressButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *currentLocationButton;
 
-// search button
+// current Location button
 @property (weak, nonatomic) IBOutlet UIButton *searchButtonMapPage;
-
-// TAB BAR Properties
-//@property (weak, nonatomic) IBOutlet UITabBar *mapTabBar;
+// search button
+@property (weak, nonatomic) IBOutlet UIButton *currentLocationButtonMapPage;
+// TabBar Buttons on bottom of page
+@property (weak, nonatomic) IBOutlet UIButton *mapButtonMapPage;
+@property (weak, nonatomic) IBOutlet UIButton *listButtonMapPage;
 
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
-//@property (nonatomic,retain) PizzaPlace *pizzaPlace;// i do not believe I need this
-//@property(nonatomic, retain) NSMutableArray *pizzaPlaceArray; //moved to DAO
-
-@property CGSize statusBarSize;
-
-
 // for directions given
 @property (nonatomic, retain) PizzaPlace *currentPizzaPlace;
+@property (nonatomic, retain) MKDirections *directions;
 
--(void)setPizzaPlaceProperty:(PizzaPlace *)pizzaPlace;
-- (void)setDirectionalValues:(PizzaPlace *)pizzaPlace;
 
+-(void)currentLocationButtonPressed;
+-(void)findDistance:(CLLocation *)userLocation; // called in sortByDistance
+-(void)sortByDistanceForClosest;
 @end

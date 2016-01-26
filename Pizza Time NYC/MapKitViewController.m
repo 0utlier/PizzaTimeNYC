@@ -10,16 +10,37 @@
 
 @interface MapKitViewController ()
 
+@property (strong, nonatomic) MethodManager *methodManager;
+
 @end
 
-BOOL userLocationShown; // to stop from reloading user's Location
-//BOOL firstTimeLoaded; // to stop refresh [of map] on initial load
-//BOOL directionsShow; // to load the map with or without directions
-int count;// set the user's [current location] image to 3 separate items
-//BOOL soundMapPage; // silent or loud (NO = 0 = Silent)
+int countMapKit;// set the user's [current location] image to 3 separate items
+BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not showing location)
+/*
+ countMapKit 1.20.16
+ created in MapKit
+ MK VWA +=1
+ MK viewForAnnotation SWITCH statement
+ 
+ userLocationShown 1.20.16
+ created in MapKit
+ MK VDL set NO
+ MK updUsr if YES, return: else, assign YES
+ MK findDistance if not found, NO
+ please check if necessary - MK currentLocPre set YES (maybe because called in other pages)
+ */
 
 @implementation MapKitViewController
-
+/*
+ + (id)sharedManager {
+	static MapKitViewController *sharedMyManager = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+ sharedMyManager = [[self alloc] init];
+	});
+	return sharedMyManager;
+ }
+ */
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
@@ -29,95 +50,68 @@ int count;// set the user's [current location] image to 3 separate items
 	[super viewDidLoad];
 	NSLog(@"Map Page called VDL");
 	userLocationShown = NO;
+	
 	self.methodManager = [MethodManager sharedManager];
-	self.UserLocationProperty = [[MKUserLocation alloc] init];
-	self.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-	
-	[self createLocationManager];
-	[self createMapView];
-	[self checkForLocationServicesEnabled]; // originally after "createLocationManager"
-	//	[self setDirectionalValues:self.currentPizzaPlace];
-	
-	// moved for ESB zoom
 	self.dao = [DAO sharedDAO];
 	[self.dao createPizzaPlaces];
 	
-	//	[self createPizzaPlaces]; // moved to DAO
+	[self createMapView];
+	[self checkForLocationServicesEnabled];
+	
 	[self createPizzaPins];
-	//	[self createToolBar]; // hidden by tabBar
-	//	[self createTabBar]; // hidden by storyBoard version
 	[self createSearchBar];
 	[self createLongPressGesture];
-	
-	//unsure if I need to call assignSounds
-	//	[self assignSounds];
-	
-	//check for location
-	//	[self currentLocationButtonPressed]; // this slows down the process of showing the user's location
-	//	self.navigationController.hidesBarsOnTap = YES;
 	
 }
 
 -(void)viewWillAppear:(BOOL)animated {// find location every time the view appears
 	[super viewWillAppear:animated];
-	count+=1;
-	//	[self assignLabels];
-	[self.navigationController setNavigationBarHidden:YES];
+	//	NSLog(@"locMan = %f", self.locationManager.location.coordinate.latitude);
+	countMapKit+=1; // changes the annotation for self
+	if (self.currentPizzaPlace == NULL) {self.currentPizzaPlace = [[PizzaPlace alloc]init];}
+	
 	NSLog(@"show VWA directions is = %d", self.methodManager.directionsShow);
-	if(!self.methodManager.firstTimeLoaded) {
-		if (!self.methodManager.directionsShow) {
-			[self currentLocationButtonPressed];
-		}
+	[self sortByDistanceForClosest]; // if closest is hit and directionsShown is YES
+	[self setDirectionalValues];
+	
+	if(self.methodManager.firstTimeLoaded) {
+		NSLog(@"Map Page LOADED first time (called first and only once)");
 	}
-	else {
-		if (self.currentPizzaPlace == NULL) {
-			self.currentPizzaPlace = [[PizzaPlace alloc]init];
-		}
-		NSLog(@"Map LOADED first time %@", self.currentPizzaPlace);
-		[self setDirectionalValues:self.currentPizzaPlace];
-		self.methodManager.firstTimeLoaded = NO;
-//		self.methodManager.directionsShow = NO;
+	else { //not the first time here
+		
+		[self currentLocationButtonPressed]; // only call currLoc after first time
 	}
-	[self assignLabels];
+	[self assignButtons];
+	self.methodManager.firstTimeLoaded = NO;
 }
 
-//- (void)viewDidLayoutSubviews {
-//	NSLog(@"layout subview");
-//	[self removeCompass];
-//		}
 
--(void)removeCompass {
-	// Gets array of subviews from the map view (MKMapView)
-	NSArray *mapSubViews = self.mapView.subviews;
-	
-	for (UIView *view in mapSubViews) {
-		// Checks if the view is of class MKCompassView
-		if ([view isKindOfClass:NSClassFromString(@"MKCompassView")]) {
-			// Removes view from mapView
-			[view removeFromSuperview];
-		}
-	}
-	
-}
+-(void)viewDidDisappear:(BOOL)animated {
+	[super viewDidDisappear:YES];
+	// set directions to NO
+	self.methodManager.directionsShow = NO;
+	NSArray *pointsArray = [self.mapView overlays];
+	[self.mapView removeOverlays:pointsArray];}
+
 
 #pragma mark - CREATE PAGE
 
 - (void)createMapView {
-	self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+	self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 49)]; // -49 for the tabBar buttons
 	[self.mapView setShowsUserLocation:YES];
 	[self.mapView setDelegate:self];
 	//disable rotation for compass being hidden // unsure if this is ok
 	//	self.mapView.rotateEnabled = NO;
-	//only works for ios 9
-	//	self.mapView.showsCompass = NO;
+	
+	
+	if ([self.mapView respondsToSelector:@selector(showsCompass)]) {
+		NSLog(@"User is on ios 9");
+		self.mapView.showsCompass = NO;
+	}
+	else {
+		NSLog(@"User is NOT on ios 9");
+	}
 	[self.view addSubview:self.mapView];
-}
-
-- (void)createLocationManager {
-	self.locationManager = [[CLLocationManager alloc]init];
-	[self.locationManager requestWhenInUseAuthorization];
-	[self.locationManager setDelegate:self];
-	[self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 }
 
 -(void)createLongPressGesture {
@@ -127,48 +121,40 @@ int count;// set the user's [current location] image to 3 separate items
 
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
+	self.searchBar.placeholder = @"Search Address";
 	[self.view addSubview:self.searchBar];
 	self.searchBar.hidden = YES;
 }
 
-// commented out for TabBar addition // delegate
+/* // commented out for TabBar addition // delegate
+ -(void)createToolBar {
+	[self.view addSubview:self.mapToolBar];
+	//uncomment following line for programmtic version of toolBar
+ 
+ //	UIToolbar *toolbar = [[UIToolbar alloc] init];
+ //	 toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+ //	 NSMutableArray *items = [[NSMutableArray alloc] init];
+ //	 [items addObject:[[[UIBarButtonItem alloc] initWith....]];
+ //	 [toolbar setItems:items animated:NO];
+ //	 [self.view addSubview:toolbar];
+ 
+	// Add an action for each bar button ITEM
+	self.currentLocationButton.target = self;
+	self.currentLocationButton.action = @selector(currentLocationButtonPressed);
+ 
+	self.searchAddressButton.target = self;
+	self.searchAddressButton.action = @selector(searchButtonPressed);
+ 
+ //uncomment this if infoButton needs to do anything besides open page
+ //	 self.addPizzaPlaceButton.target = self;
+ //	 self.addPizzaPlaceButton.action = @selector(addPizzaPlaceButtonPressed);
+ //
+ //	 self.infoButton.target = self;
+ //	 self.infoButton.action = @selector(infoButtonPressed);}
+	*/
 
-//-(void)createToolBar {
-//	[self.view addSubview:self.mapToolBar];
-//	//uncomment following line for programmtic version of toolBar
-//
-//	/*UIToolbar *toolbar = [[UIToolbar alloc] init];
-//	 toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
-//	 NSMutableArray *items = [[NSMutableArray alloc] init];
-//	 [items addObject:[[[UIBarButtonItem alloc] initWith....]];
-//	 [toolbar setItems:items animated:NO];
-//	 [self.view addSubview:toolbar];*/
-//
-//	// Add an action for each bar button ITEM
-//	self.currentLocationButton.target = self;
-//	self.currentLocationButton.action = @selector(currentLocationButtonPressed);
-//
-//	self.searchAddressButton.target = self;
-//	self.searchAddressButton.action = @selector(searchButtonPressed);
-//
-//	/* //uncomment this if infoButton needs to do anything besides open page
-//	 self.addPizzaPlaceButton.target = self;
-//	 self.addPizzaPlaceButton.action = @selector(addPizzaPlaceButtonPressed);
-//
-//	 self.infoButton.target = self;
-//	 self.infoButton.action = @selector(infoButtonPressed);
-//	 */
-//}
-//
-//-(void)createTabBar {
-//	[self.view addSubview:self.mapTabBar];
-//}
 
-//-(void)setPizzaPlaceProperty:(PizzaPlace *)pizzaPlace {
-//	self.currentPizzaPlace = pizzaPlace;
-//}
-
--(void)assignLabels {// and buttons
+-(void)assignButtons {// and buttons
 	
 	//	NSLog(@"Views Count %lu", (unsigned long)[self.view.subviews count]);
 	
@@ -188,76 +174,135 @@ int count;// set the user's [current location] image to 3 separate items
 								 action:@selector(searchButtonPressed:)
 					   forControlEvents:UIControlEventTouchUpInside];
 	
-	[self.searchButtonMapPage setBackgroundImage:[UIImage imageNamed:@"search60.2.png"] forState:UIControlStateNormal];
+	[self.searchButtonMapPage setBackgroundImage:[UIImage imageNamed:@"MCQMapSEARCH.png"] forState:UIControlStateNormal];
 	[self.view addSubview:self.searchButtonMapPage];
+	
+	
+	UIButton *mapButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 49, self.view.bounds.size.width/2, 49)];
+	self.mapButtonMapPage = mapButtonMapPage;
+	// Add an action in current code file (i.e. target)
+	[self.mapButtonMapPage addTarget:self
+								 action:@selector(mapButtonPressed:)
+					forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.mapButtonMapPage setBackgroundImage:[UIImage imageNamed:@"MCQTabBarMAP.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.mapButtonMapPage];
+	
+	UIButton *listButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height - 49, self.view.bounds.size.width/2, 49)];
+	self.listButtonMapPage = listButtonMapPage;
+	// Add an action in current code file (i.e. target)
+	[self.listButtonMapPage addTarget:self
+							   action:@selector(listButtonPressed:)
+					 forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.listButtonMapPage setBackgroundImage:[UIImage imageNamed:@"MCQTabBarLIST.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.listButtonMapPage];
+	
+	UIButton *currentLocation = [[UIButton alloc]initWithFrame:CGRectMake(8, self.view.bounds.size.height - 49 - 46, 30, 30)];
+	self.currentLocationButtonMapPage = currentLocation;
+	// Add an action in current code file (i.e. target)
+	[self.currentLocationButtonMapPage addTarget:self
+										  action:@selector(currentLocationButtonPressed)
+								forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.currentLocationButtonMapPage setBackgroundImage:[UIImage imageNamed:@"LocationAlphaPizza.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.currentLocationButtonMapPage];
 	
 }
 
-// uncomment if music is not heard on MapKit page
-/*
- -(void)assignSounds {
-	if (self.methodManager.audioPlayer.rate == 0.0) {
- NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
- if (!self.methodManager.audioPlayer) {
- self.methodManager.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
- }
- self.methodManager.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
-	}
-	else {
- //		NSLog(@"You've already created the player!");
-	}
- }
- */
-
 #pragma mark - MKMapViewDelegate
 
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-	self.UserLocationProperty = userLocation;
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation { // if location is off, this does not get called // otherwise, it gets called every update
+	//	NSLog(@"userLoc Lat = %f", userLocation.location.coordinate.latitude);
+	//	NSLog(@"locMan Lat = %f",self.methodManager.locationManager.location.coordinate.latitude);
+	if(![self checkForLocationServicesFound])return;
 	if(userLocationShown) return;
 	NSLog(@"show UL directions is = %d", self.methodManager.directionsShow);
-	if (self.methodManager.directionsShow) {
-		[self.mapView setRegion:[self regionForAnnotations] animated:YES];
-		userLocationShown = YES;
-		self.methodManager.directionsShow = NO;
+	
+	if (self.methodManager.locationManager.location.coordinate.latitude != 0.0 || self.methodManager.locationManager.location.coordinate.longitude != 0.0) {
+		if (self.methodManager.directionsShow) {
+			[self.mapView setRegion:[self regionForAnnotations] animated:NO];
+			self.methodManager.directionsShow = NO;
+		}
+		else {
+			// set the inital map view location to user and use region of 0.05 x 0.05
+			[self.mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
+		}
+		userLocationShown = YES; // we have found and assigned the location
 	}
 	else {
-	// set the inital map view location to user and use region of 0.01 x 0.01
-	[self.mapView setRegion:MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
-	userLocationShown = YES;
-		[self findDistance];
+		NSLog(@"Could not find location didUpdateUser");
 	}
+	[self findDistance:userLocation.location];
 }
 
-// this is being called way otften
+// this is being called way often, unsure if good idea to be calling a method so much
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
 	//	NSLog(@"region did change");
 	[self removeCompass];
 }
 
--(void)findDistance {
+// what calls this?
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+	
+	MKPolylineRenderer  *routeLineRenderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
+	routeLineRenderer.strokeColor = [UIColor redColor];
+	routeLineRenderer.lineWidth = 4;
+	return routeLineRenderer;
+}
+
+-(void)removeCompass {
+	// Gets array of subviews from the map view (MKMapView)
+	NSArray *mapSubViews = self.mapView.subviews;
+	
+	for (UIView *view in mapSubViews) {
+		// Checks if the view is of class MKCompassView
+		if ([view isKindOfClass:NSClassFromString(@"MKCompassView")]) {
+			// Removes view from mapView
+			[view removeFromSuperview];
+		}
+	}
+	
+}
+
+// is this getting called?
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+	NSLog(@"there was an error: %@", error);
+}
+
+#pragma mark - Distance & Directions
+
+-(void)findDistance:(CLLocation *)userLocation {
+	if (self.methodManager == NULL || self.dao.pizzaPlaceArray == NULL) {
+		self.methodManager = [MethodManager sharedManager];
+		self.dao = [DAO sharedDAO];
+	}
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
+		// assign pizzaPlace's location
 		double pizzaPlaceLat = (double)pizzaPlace.latitude;
 		double pizzaPlaceLong = (double)pizzaPlace.longitude;
 		
-		// find user's location
-		double userLocationLat = (double)self.UserLocationProperty.coordinate.latitude;
-		double userLocationLong = (double)self.UserLocationProperty.coordinate.longitude;
+		NSLog(@"findDistance lat = %f", userLocation.coordinate.latitude);
+		// assign user's location
+		double userLocationLat = (double)userLocation.coordinate.latitude;
+		double userLocationLong = (double)userLocation.coordinate.longitude;
 		
-		if (self.UserLocationProperty.location.coordinate.latitude == 0.0) {
-			//		NSLog(@"Yea, I have no idea where you are!");
-			userLocationLat = 40.7484;
-			userLocationLong = -73.9857;
+		if (userLocation.coordinate.latitude == 0.0 || userLocation.coordinate.longitude == 0.0) {
+			//					NSLog(@"No idea where user is!");
+			userLocationShown = NO; // added 1.21.16 Not sure if causing trouble
+			userLocationLat = self.methodManager.empireStateBuilding.coordinate.latitude;
+			userLocationLong = self.methodManager.empireStateBuilding.coordinate.longitude;
 		}
 		CLLocation *pizzaPlaceLocation = [[CLLocation alloc] initWithLatitude:pizzaPlaceLat
 																	longitude:pizzaPlaceLong];
 		
-		CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userLocationLat
-															  longitude:userLocationLong];
-		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocation];
-		//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
-		//	NSLog(@"Calculated Miles %@", [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)]);
+		CLLocation *userLocationForDistance = [[CLLocation alloc] initWithLatitude:userLocationLat
+																		 longitude:userLocationLong];
+		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocationForDistance];
+				NSLog(@"%f AND %f", userLocationLat, userLocationLong);
 		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
-		//		NSLog(@"distance in miles: %@", distanceFromUser);
+				NSLog(@"distance in miles: %@ for %@", distanceFromUser, pizzaPlace.name);
+		
 		//convert to float and then assign to pizzaPlaceDistance
 		float distanceFloat = [distanceFromUser floatValue];
 		pizzaPlace.distance = distanceFloat;
@@ -265,22 +310,60 @@ int count;// set the user's [current location] image to 3 separate items
 	}
 }
 
-- (MKCoordinateRegion)regionForAnnotations {//:(MKUserLocation *)annotation { //pizzaPlace:(PizzaPlace*)pizzaPlace {
+-(void)sortByDistanceForClosest {
+	// find top of the array[0] and set it as currentPizzaPlace and then set bool for directions to YES
+	if (self.methodManager == NULL || self.dao.pizzaPlaceArray == NULL) {
+		self.methodManager = [MethodManager sharedManager];
+		self.dao = [DAO sharedDAO];
+		[self.dao createPizzaPlaces];
+	}
+	NSLog(@"location manager in sortByDistance = %f", 	self.methodManager.locationManager.location.coordinate.latitude);
+	if (!self.methodManager.searchSubmit) { // not submitting search
+		[self findDistance:self.methodManager.locationManager.location];
+	}
+	NSSortDescriptor *distanceSorter = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
+	[self.dao.pizzaPlaceArray sortUsingDescriptors:[NSArray arrayWithObject:distanceSorter]];
+	//		NSLog(@"array ORDERED = %@", self.dao.pizzaPlaceArray);
 	
+	// if finding directions, set current Pizza to closest
+	if (self.methodManager.directionsShow) {
+		if(!self.methodManager.closestPP)return;
+		//		NSLog(@"%@", [[self.dao.pizzaPlaceArray objectAtIndex:0]name]);
+		self.currentPizzaPlace = [self.dao.pizzaPlaceArray objectAtIndex:0];
+		self.methodManager.closestPP = NO;
+	}
+	
+}
+
+- (MKCoordinateRegion)regionForAnnotations { // being called for directions
+	// closest pizza place
+	if (self.currentPizzaPlace.latitude == 0.0 || self.currentPizzaPlace.longitude == 0.0) {
+		[self sortByDistanceForClosest];
+	}
 	CLLocationDegrees minLat = self.currentPizzaPlace.latitude;
 	CLLocationDegrees minLon = self.currentPizzaPlace.longitude;
-	CLLocationDegrees maxLat = self.UserLocationProperty.coordinate.latitude;
-	CLLocationDegrees maxLon = self.UserLocationProperty.coordinate.longitude;
+	CLLocationDegrees maxLat = self.methodManager.locationManager.location.coordinate.latitude;
+	CLLocationDegrees maxLon = self.methodManager.locationManager.location.coordinate.longitude;
+	CLLocationDegrees tempForSwap;
 	
-	if (self.UserLocationProperty.coordinate.latitude < minLat) {
-		minLat = self.UserLocationProperty.coordinate.latitude;
-		maxLat = self.currentPizzaPlace.latitude;
+	if (maxLat == 0.0 || maxLon == 0.0) {
+		maxLat = self.methodManager.empireStateBuilding.coordinate.latitude;
+		maxLon = self.methodManager.empireStateBuilding.coordinate.longitude;
 	}
-	if (self.UserLocationProperty.coordinate.longitude < minLon) {
-		minLon = self.UserLocationProperty.coordinate.longitude;
-		maxLon = self.currentPizzaPlace.longitude;
+	if (maxLat < minLat) {
+		tempForSwap = minLat;
+		minLat = maxLat;
+		maxLat = tempForSwap;
+		//		minLat = self.UserLocationProperty.coordinate.latitude;
+		//		maxLat = self.currentPizzaPlace.latitude;
 	}
-	//	MKCoordinateSpan span = MKCoordinateSpanMake(fabs(maxLat - minLat),fabs(maxLon - minLon));//absolute values
+	if (maxLon < minLon) {
+		tempForSwap = minLon;
+		minLon = maxLon;
+		maxLon = tempForSwap;
+		//		minLon = self.UserLocationProperty.coordinate.longitude;
+		//		maxLon = self.currentPizzaPlace.longitude;
+	}
 	MKCoordinateSpan span = MKCoordinateSpanMake((maxLat - minLat)*1.3,(maxLon - minLon)*1.3);
 	//	NSLog(@"lat = %f\nLong = %f", span.latitudeDelta, span.longitudeDelta);
 	
@@ -289,49 +372,130 @@ int count;// set the user's [current location] image to 3 separate items
 	return MKCoordinateRegionMake(center, span);
 }
 
--(void)setDirectionalValues:(PizzaPlace *)pizzaPlace {
+-(void)setDirectionalValues { //:(PizzaPlace *)pizzaPlace {
 	NSLog(@"show DV directions is = %d", self.methodManager.directionsShow);
 	if (!self.methodManager.directionsShow) {
 		NSLog(@"not looking for directions");
 	}
-	else {
-		NSLog(@"WE ARE looking for directions");
-// i do not know if i need this
-		//		[self createAnnotation:pizzaPlace];
-//			NSLog(@"I need to find directions for %@", pizzaPlace.name);
-		MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(pizzaPlace.latitude, pizzaPlace.longitude) addressDictionary:nil];
+	
+	else { // show directions
+		NSLog(@"WE ARE looking for directionsor %@", self.currentPizzaPlace.name);
+		MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.currentPizzaPlace.latitude, self.currentPizzaPlace.longitude) addressDictionary:nil];
 		// create a MKMapItem with coordinates of pizza place
 		MKMapItem *pizzaPlaceLocation = [[MKMapItem alloc]initWithPlacemark:placemark];
 		MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-		[request setSource:[MKMapItem mapItemForCurrentLocation]];
+		
+		NSLog(@"user location lat = %f", self.methodManager.locationManager.location.coordinate.latitude);
+		NSLog(@"user location long = %f", self.methodManager.locationManager.location.coordinate.longitude);
+		
+		if (self.methodManager.locationManager.location.coordinate.latitude != 0.0 || self.methodManager.locationManager.location.coordinate.longitude != 0.0) {
+			MKPlacemark *userPlaceMark = [[MKPlacemark alloc]initWithCoordinate:CLLocationCoordinate2DMake(self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude) addressDictionary:nil];
+			[request setSource:[[MKMapItem alloc] initWithPlacemark:userPlaceMark]];
+			
+			//			[request setSource:[MKMapItem mapItemForCurrentLocation]]; // removed 1.19.16 - please test again
+		}
+		else {
+			// no user location found = set Empire State Building as current location
+			MKPlacemark *empirePlacemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.methodManager.empireStateBuilding.coordinate.latitude, self.methodManager.empireStateBuilding.coordinate.longitude) addressDictionary:nil];
+			MKMapItem *empireLocation = [[MKMapItem alloc]initWithPlacemark:empirePlacemark];
+			
+			[request setSource:empireLocation];
+		}
+		
 		[request setDestination:pizzaPlaceLocation];
 		[request setTransportType:MKDirectionsTransportTypeWalking]; // This can be limited to automobile and walking directions.
 		[request setRequestsAlternateRoutes:YES]; // Gives you several route options.
-		MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
-		[directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-			if (!error) {
-				for (MKRoute *route in [response routes]) {
-					[self.mapView addOverlay:[route polyline] level:MKOverlayLevelAboveRoads]; // Draws the route above roads, but below labels.
-					NSLog(@"STEPS : %@", [route.steps objectAtIndex:0]);
-					//				MKRoute *route = [[response routes] objectAtIndex:0];
-					//				NSLog(@"distance = %f miles",route.distance/1609.344); //in meters (converted to miles)
-					NSLog(@"ETA = %f Min",route.expectedTravelTime/60);// in seconds (converted to minutes)
-					// You can also get turn-by-turn steps, distance, advisory notices, ETA, etc by accessing various route properties.
-				}
-			}
-		}];
-//		[self setEdgesForExtendedLayout:UIRectEdgeNone];
-//		[self setAutomaticallyAdjustsScrollViewInsets:NO];
+		self.directions = [[MKDirections alloc] initWithRequest:request];
+		[self calculateDirectionsWithRequest:request numberOfRetries:0];
+		//		[self.directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+		//			if (!error) {
+		//				for (MKRoute *route in [response routes]) {
+		//					[self.mapView addOverlay:[route polyline] level:MKOverlayLevelAboveRoads]; // Draws the route above roads, but below labels.
+		//					NSLog(@"STEPS : %@", [route.steps objectAtIndex:0]);
+		//				MKRoute *route = [[response routes] objectAtIndex:0];
+		//				NSLog(@"distance = %f miles",route.distance/1609.344); //in meters (converted to miles)
+		//					NSLog(@"ETA = %f Min",route.expectedTravelTime/60);// in seconds (converted to minutes)
+		// You can also get turn-by-turn steps, distance, advisory notices, ETA, etc by accessing various route properties.
+		//				}
+		//			}
+		//			else if (error && ![self.directions isCalculating]){				// most likely call upon reachability
+		//
+		/* // loggin the errors, but not with much info [at least when internet is off]
+		 NSLog(@"%@", error.userInfo[NSLocalizedDescriptionKey]);
+		 NSLog(@"Domain: %@", error.domain);
+		 NSLog(@"Error Code: %ld", error.code);
+		 NSLog(@"Description: %@", [error localizedDescription]);
+		 NSLog(@"Reason: %@", [error localizedFailureReason]);
+		 NSLog(@"%@",[error localizedRecoverySuggestion]);
+		 */
+		//				NSLog(@"error, but probably internet conneciton = %@", error);
+		//				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot Connect To Internet"
+		//																message:@"Are you using an iPod Touch?"
+		//															   delegate:self
+		//													  cancelButtonTitle:@"It's OK"
+		//													  otherButtonTitles:@"Settings", nil];
+		//				[alert show];
+		//			}
+		//			else if ([self.directions isCalculating]) {
+		//				// try to call again
+		//				self.directions = [[MKDirections alloc] initWithRequest:request];
+		//			}
+		//		}];
+		//		[self setEdgesForExtendedLayout:UIRectEdgeNone];
+		//		[self setAutomaticallyAdjustsScrollViewInsets:NO];
+		
 	}
 }
 
--(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+- (void)calculateDirectionsWithRequest:(MKDirectionsRequest *)request numberOfRetries:(int)numberOfRetries {
 	
-	MKPolylineRenderer  * routeLineRenderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
+	if (numberOfRetries > 4) {
+		return;
+	}
+	else {
+		numberOfRetries++;
+	}
 	
-	routeLineRenderer.strokeColor = [UIColor redColor];
-	routeLineRenderer.lineWidth = 4;
-	return routeLineRenderer;
+	self.directions = [[MKDirections alloc] initWithRequest:request];
+	[self.directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+		if (!error) {
+			for (MKRoute *route in [response routes]) {
+				[self.mapView addOverlay:[route polyline] level:MKOverlayLevelAboveRoads]; // Draws the route above roads, but below labels.
+				//					NSLog(@"STEPS : %@", [route.steps objectAtIndex:0]);
+				//				MKRoute *route = [[response routes] objectAtIndex:0];
+				//				NSLog(@"distance = %f miles",route.distance/1609.344); //in meters (converted to miles)
+				//					NSLog(@"ETA = %f Min",route.expectedTravelTime/60);// in seconds (converted to minutes)
+				// You can also get turn-by-turn steps, distance, advisory notices, ETA, etc by accessing various route properties.
+			}
+		}
+		else if (error && ![self.directions isCalculating] && error.code != 1){				// most likely call upon reachability
+			
+			/* // loggin the errors, but not with much info [at least when internet is off]
+			 NSLog(@"%@", error.userInfo[NSLocalizedDescriptionKey]);
+			 NSLog(@"Domain: %@", error.domain);
+			 NSLog(@"Error Code: %ld", error.code);
+			 NSLog(@"Description: %@", [error localizedDescription]);
+			 NSLog(@"Reason: %@", [error localizedFailureReason]);
+			 NSLog(@"%@",[error localizedRecoverySuggestion]);
+			 */
+			NSLog(@"error, but probably internet conneciton = %@", error);
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot Connect To Internet"
+															message:@"Are you using an iPod Touch?"
+														   delegate:self
+												  cancelButtonTitle:@"It's OK"
+												  otherButtonTitles:@"Settings", nil];
+			[alert show];
+		}
+		else {
+			// try to call again
+			MapKitViewController *mapKit = self;
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+				[mapKit calculateDirectionsWithRequest:request numberOfRetries:numberOfRetries];
+			});
+			//			[self calculateDirectionsWithRequest:request numberOfRetries:numberOfRetries];
+		}
+	}];
+	
 }
 
 /*
@@ -344,28 +508,32 @@ int count;// set the user's [current location] image to 3 separate items
  }
  */
 
--(void)checkForLocationServicesEnabled {
-	//check for authorization here
-	if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied)
-	{
+#pragma mark - Location Services
+
+-(BOOL)checkForLocationServicesEnabled {	// authorized or NOT
+	if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied && self.methodManager.userLocAuth == NO)
+	{// authorization not given
 		// set Empire State Building as a location and set pin
-		CLLocationCoordinate2D centerCoordinate;
-		centerCoordinate.latitude = 40.7484;
-		centerCoordinate.longitude = -73.9857;
-		self.UserLocationProperty.coordinate = centerCoordinate;
-		//		NSLog(@"lat = %f, long = %f", centerCoordinate.latitude, centerCoordinate.longitude);
-		
-		// set region of map to focus on Empire State Building
-		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(centerCoordinate, 200, 200);
-		[self.mapView setRegion:region animated:YES];
-		
+		if (self.methodManager.directionsShow) {
+			NSLog(@"showing directions, please do set region");
+			[self.mapView setRegion:[self regionForAnnotations] animated:NO];
+		}
+		else {
+			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
+			[self.mapView setRegion:region animated:YES];
+		}
 		NSLog(@"Location Services Disabled");
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Disabled"
-														message:@"Is Shredder on your tail? We'll keep your location a secret!"
+														message:@"We have set your location as the Empire State Building, until you enable your location!"
 													   delegate:self
-											  cancelButtonTitle:@"RUN"
+											  cancelButtonTitle:@"Stay Hidden!"
 											  otherButtonTitles:@"Settings", nil];
 		[alert show];
+		return FALSE;
+	}
+	else {
+		// everything is good, continue
+		return TRUE;
 	}
 	// uncomment following for professional response, instead [to replace the above]
 	
@@ -378,29 +546,129 @@ int count;// set the user's [current location] image to 3 separate items
 	 */
 }
 
-// bring user to settings of Pizza Time (stock settings)
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	//	NSLog(@"%ld", (long)buttonIndex);
-	if (buttonIndex == 1) {
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+-(BOOL)checkForLocationServicesFound { // do not check on initial load, before allowed use the bool
+	self.methodManager = [MethodManager sharedManager];
+	//	if (userLocationShown) {
+	//		NSLog(@"UserLocationShown is true in cesFOUND");
+	//	}
+	/* // removed because locMan is created much earlier now in MM
+	 if (self.methodManager.firstTimeLoaded) {
+		NSLog(@"do not check locServFound first time");
+		// everything is good, continue
+		return TRUE;
 	}
-	else {
-		NSLog(@"User does not want to share location");
-		// enter audio BUMMMMMMMERRRRR
-	}
+	else {	// check bool
+	*/
+		if (!self.methodManager.userLocRemind) {
+			NSLog(@"skip me please - do not remind about not found");
+			// everything is good, continue
+			return TRUE;
+		}
+		else {
+			if (self.methodManager.locationManager.location.coordinate.latitude != 0.0 || self.methodManager.locationManager.location.coordinate.longitude != 0.0) {
+				//		NSLog(@"we are finding the location...do nothing?");
+				// everything is good, continue
+				return TRUE;
+			}
+			else {
+				NSLog(@"we are NOT finding the location... ESB");
+				// no user location found = set Empire State Building as current location
+				if (self.methodManager.directionsShow) {
+					NSLog(@"showing directions, please do set region to them");
+					[self.mapView setRegion:[self regionForAnnotations] animated:NO];
+				}
+				else {
+					MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
+					[self.mapView setRegion:region animated:YES];
+				}
+				NSLog(@"Location Services Not Working");
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Cannot Find You"
+																message:@"We have set your location as the Empire State Building, until you enable your location!"
+															   delegate:self
+													  cancelButtonTitle:@"Cool"
+													  otherButtonTitles:@"Remind Me", nil];
+				[alert show];
+				return FALSE;
+			}
+		}
+//	}
 }
 
+// bring user to settings of Pizza Time (stock settings)
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	// 1 // found
+	if ([alertView.title isEqualToString:@"Location Service Cannot Find You"]) {
+		if (buttonIndex == 1) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+			NSLog(@"user opened the settings");
+		}
+		else {
+			NSLog(@"user does not care - set bool");
+			self.methodManager.userLocRemind = NO;
+		}
+	}
+	// 2 // autho
+	else if ([alertView.title isEqualToString:@"Location Service Disabled"]) {
+		//	NSLog(@"%ld", (long)buttonIndex);
+		if (buttonIndex == 1) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+		}
+		else {
+			NSLog(@"User does not want to share location - PLEASE set bool to not prompt again and again");
+			// enter audio BUMMMMMMMERRRRR
+			self.methodManager.userLocAuth = YES;
+		}
+	}
+	// 3 // internet
+	else if ([alertView.title isEqualToString:@"Cannot Connect To Internet"]) {
+		//	NSLog(@"%ld", (long)buttonIndex);
+		if (buttonIndex == 1) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+		}
+		else {
+			NSLog(@"User does not want to use the internet - PLEASE set bool to not prompt again and again");
+			// enter audio BUMMMMMMMERRRRR
+		}
+	}
+	// 4 and any other //
+	else {
+		if (buttonIndex == 1) {
+			NSLog(@"Please do something here - there is a problem with alertView");
+		}
+		else {
+			NSLog(@"Please do something here - there is a problem with alertView options");
+		}
+	}
+}
+/*
+- (void) createManhattan {
+ NSArray *coordinateData = [NSArray alloc]initWithObjects:@(-74.0207291,40.6985354), (-73.9730072,40.70979200000001), (-73.9668274,40.7410143), (-73.9215088,40.7909394), (-73.7882996,40.8002962), (-73.8102722,40.8595252), (-73.9215088,40.8989819), (-74.0093994,40.7610408), (-74.0207291,40.6985354), nil];
+}
+
+int coordsLen = [coordinateData count];
+CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D) * coordsLen);
+for (int i=0; i < coordsLen; i++)
+{
+	YourCustomObj *coordObj = (YourCustomObj *)[coordinateData objectAtIndex:i];
+	coords[i] = CLLocationCoordinate2DMake(coordObj.latitude, coordObj.longitude);
+}
+MKPolygon *polygon = [MKPolygon polygonWithCoordinates:coords count:coordsLen];
+free(coords);
+[mapView addOverlay:polygon];
+*/
+
 #pragma mark - Custom Annotations
+
 -(void)createPizzaPins {
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		pizzaPlace.image = @"TwoBrosPizzaLogo.jpg";
 		pizzaPlace.url = @"http://www.2brospizza.com/";
 		[self createAnnotation:pizzaPlace];
-		//		[self findDistance:pizzaPlace];
 	}
 	//	NSLog(@"PizzaPlaceArray:%@", self.dao.pizzaPlaceArray);
 	
 }
+
 - (void)createAnnotation:(PizzaPlace *)pizzaPlace
 {
 	CLLocationCoordinate2D centerCoordinate;
@@ -456,32 +724,34 @@ int count;// set the user's [current location] image to 3 separate items
 		
 		MKAnnotationView *customPinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
 		if (annotation == mapView.userLocation){
-			switch (count%3) {
+			switch (countMapKit%3) {
 				case 0:
 					//					NSLog(@"count is 0 - set bike");
-					customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
-					count +=1;
+					//					customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
+					customPinView.image = [UIImage imageNamed:@"MCQMapBIKE29.png"];
+					customPinView.centerOffset = CGPointMake(0,-customPinView.frame.size.height*0.5);
+					countMapKit +=1;
 					break;
 				case 1:
 					//					NSLog(@"Count is 1 - set board");
-					customPinView.image = [UIImage imageNamed:@"skateboard29.png"];
-					count +=1;
+					customPinView.image = [UIImage imageNamed:@"skateBoardAlpha30.png"];
+					countMapKit +=1;
 					break;
 				case 2:
 					//					NSLog(@"Count is 2 - set walker");
-					customPinView.image = [UIImage imageNamed:@"walk29.png"];
-					count +=1;
+					customPinView.image = [UIImage imageNamed:@"walkAlpha30.png"];
+					countMapKit +=1;
 					break;
 				default:
 					NSLog(@"Count is DEFAULT - decide what to do");
 					customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
-					count +=1;
+					countMapKit +=1;
 					break;
 			}
 			customPinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		}
 		else{
-			customPinView.image = [UIImage imageNamed:@"Icon-Small.png"];
+			customPinView.image = [UIImage imageNamed:@"MCQMapSLICE29.png"];
 			customPinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		}
 		//			customPinView.animatesDrop = NO;
@@ -542,54 +812,30 @@ int count;// set the user's [current location] image to 3 separate items
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
-{		PizzaPlaceInfoViewController *detailViewController = (PizzaPlaceInfoViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"PizzaPlaceInfoViewController"];
+{
+	//	PizzaPlaceInfoViewController *detailViewController = (PizzaPlaceInfoViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"PizzaPlaceInfoViewController"];
 	
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		if ([pizzaPlace.name isEqualToString:view.annotation.title]) {
 			//			NSLog(@"my annotation %@ and my location %@",view.annotation.title, pizzaPlace.name);
-			
-			// Pass the selected object to the new view controller.
-			// Push the view controller.
-			
-			UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];//TabBarController
-			//tabBarController.viewControllers = @[detailViewController];
-			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = tabBarController.viewControllers[0];
-			PizzaPlaceDirectionsViewController *pizzaPlaceDirectionsViewController = tabBarController.viewControllers[1];
+			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = self.tabBarController.viewControllers[PPINFOPAGE];
 			[pizzaPlaceInfoViewController setLabelValues:pizzaPlace];
-			[pizzaPlaceDirectionsViewController setPizzaPlaceProperty:pizzaPlace];
 			
-			//			[self.navigationController pushViewController:tabBarController animated:YES];
-			[detailViewController setLabelValues:pizzaPlace];
-//						[self setPizzaPlaceProperty:pizzaPlace];
 			self.currentPizzaPlace = pizzaPlace;
 			NSLog(@"pizza is %@, and self.pizza is %@", pizzaPlace.name, self.currentPizzaPlace.name);
-			self.methodManager.directionsShow = YES;
-			[self.navigationController pushViewController:detailViewController animated:YES];
+			self.methodManager.directionsShow = NO;
+			[self.tabBarController setSelectedIndex:PPINFOPAGE];
 		}
 		else if ([view.annotation.title isEqualToString:@"Current Location"])
 		{
-			NSLog(@"user clicked on self");
-			//maybe have questions [via alert]: "what do you want to know about yourself?"
-			//maybe link to personal/profile page
+			NSLog(@"user clicked on self, show two options");
+			//maybe link to personal/profile page & add PP in current location
 			return;
 		}
 		
 	}
 }
-//
-//-(void)setPizzaPlaceProperty:(PizzaPlace *)pizzaPlace {
-//	self.currentPizzaPlace = pizzaPlace;
-//}
 
-
-//-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-//{
-//	NSLog(@"Location: %f, %f",
-//		  userLocation.location.coordinate.latitude,
-//		  userLocation.location.coordinate.longitude);
-//	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 250, 250);
-////	[self.mapView setRegion:region animated:YES];
-//}
 
 
 #pragma mark - SearchBar Delegate
@@ -606,20 +852,42 @@ int count;// set the user's [current location] image to 3 separate items
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
-	[UIView animateWithDuration:0.66f
-					 animations:^{
-						 // where is the search bar going?
-						 searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.statusBarSize.height, self.view.bounds.size.width, 44);
-						 
-						 // unHide the search button
-						 self.searchButtonMapPage.alpha = 1.0;
-						 // unHide the speaker and options buttons
-						 self.methodManager.search = NO;
-						 [self.methodManager searchBarPresent];
-					 }completion:^(BOOL finished) { //when finished, unHide the searchButton
-						 [self.view endEditing:YES];
-						 self.searchBar.hidden = YES;
-					 }];
+	[UIView animateWithDuration:0.66f animations:^{
+		// where is the search bar going?
+		searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.methodManager.statusBarSize.height, self.view.bounds.size.width, 44);
+		
+		// unHide the search button
+		self.searchButtonMapPage.alpha = 1.0;
+		// unHide the speaker and options buttons
+		self.methodManager.searching = NO;
+		[self.methodManager searchBarPresent];
+	}completion:^(BOOL finished) { //when finished, unHide the searchButton
+		[self.view endEditing:YES];
+		self.searchBar.hidden = YES;
+	}];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)theSearchBar
+{
+	// keep the animation and actions of dismissing the search bar
+	[self searchBarCancelButtonClicked:(UISearchBar *) self.searchBar];
+	// add searchSubmit set to YES here (and NO at the bottom) if update to closest is necessary [for size of annotation on map]
+	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+	[geocoder geocodeAddressString:theSearchBar.text completionHandler:^(NSArray *placemarks, NSError *error) {
+		//Error checking
+		
+		CLPlacemark *placemark = [placemarks objectAtIndex:0];
+		MKCoordinateRegion region;
+		region.center = [(CLCircularRegion *)placemark.region center];
+		MKCoordinateSpan span;
+		double radius = [(CLCircularRegion *)placemark.region radius]/1000;
+		
+		NSLog(@"[searchBarSearchButtonClicked] Radius is %f", radius);
+		span.latitudeDelta = radius / 112.0;
+		region.span = span;
+		// add annotation pin for result? //ensure it goes away after the map is left
+		[self.mapView setRegion:region animated:YES];
+	}];
 }
 
 
@@ -629,59 +897,78 @@ int count;// set the user's [current location] image to 3 separate items
 -(void)searchButtonPressed:(UIButton *)searchButton {
 	NSLog(@"searchButtonMapKit was pressed");
 	// this should hide the buttons and present the search bar of Pizza Time
-	self.methodManager.search = YES;
+	self.methodManager.searching = YES;
 	[self.methodManager searchBarPresent];
 	[self.view bringSubviewToFront:self.searchBar];
-	self.searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.statusBarSize.height, self.view.bounds.size.width, 44);
+	self.searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.methodManager.statusBarSize.height, self.view.bounds.size.width, 44);
 	self.searchBar.hidden = NO;
 	// set the search button alpha
 	self.searchButtonMapPage.alpha = 0.5;
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the search bar going?
-						 self.searchBar.frame = CGRectMake(0, self.statusBarSize.height, self.view.bounds.size.width, 44);
+						 self.searchBar.frame = CGRectMake(0, self.methodManager.statusBarSize.height, self.view.bounds.size.width, 44);
 						 self.searchButtonMapPage.alpha = 0.0;
 					 }];
 	[self.searchBar becomeFirstResponder];
 }
 
-// Main initial button press
--(void)infoButtonPressed { //currently commented out, because StoryBoard is showing the current display correctly
-	NSLog(@"info button was pressed");
-	// this should open the Info Page of Pizza Time
+-(void)mapButtonPressed:(UIButton *)mapButton {
+	NSLog(@"refresh the mapView here");
+	[self currentLocationButtonPressed];
 }
 
-// Main initial button press
--(void)addPizzaPlaceButtonPressed{//currently commented out, because StoryBoard is showing the current display correctly
-	NSLog(@"addPizzaPlace button was pressed");
-	// this should open the addPizzaPlace view of Pizza Time
+-(void)listButtonPressed:(UIButton *)listButton {
+	//	NSLog(@"open and present the listView here");
+	[self.tabBarController setSelectedIndex:LISTPAGE];
 }
 
 // Main initial button press
 -(void)currentLocationButtonPressed {
 	NSLog(@"Current Location button was pressed");
-	// this should zoom in on current location again
+	// this should zoom in on current location again, if not found = ESB
 	
-	[self checkForLocationServicesEnabled];
-	if([CLLocationManager authorizationStatus]!=kCLAuthorizationStatusDenied)
-	{
+	if (![self checkForLocationServicesEnabled]) return;
+	if (![self checkForLocationServicesFound]) return;
+	
+	// we ARE authorized
+	if (self.methodManager.locationManager.location.coordinate.latitude != 0.0 || self.methodManager.locationManager.location.coordinate.longitude != 0.0) { // location has value
+		if (self.methodManager.directionsShow) {
+			NSLog(@"showing directions, please set region to them");
+			[self.mapView setRegion:[self regionForAnnotations] animated:NO];
+		}
+		else {// not directions, just show userLocation
+			[self.mapView setRegion:MKCoordinateRegionMake(self.methodManager.locationManager.location.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
+		}
+		// removed after locationManager moved to methodManager
+		//			self.methodManager.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+		// we have found the user
+		userLocationShown = YES;
 		
-		[self.mapView setRegion:MKCoordinateRegionMake(self.UserLocationProperty.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
-		
-		self.locationManager.delegate = self;
-		self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-		userLocationShown = NO;
-		
-		[self.locationManager startUpdatingLocation];
+		[self.methodManager.locationManager startUpdatingLocation];
+		[self findDistance:self.methodManager.locationManager.location];
 	}
-	userLocationShown = YES;
+	else {
+		userLocationShown = NO;
+		[self findDistance:self.methodManager.empireStateBuilding];
+		if (self.methodManager.directionsShow) {
+			NSLog(@"showing directions, please set region with annotations");
+			[self.mapView setRegion:[self regionForAnnotations] animated:NO];
+		}
+		else {
+			// set region of map to focus on Empire State Building
+			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
+			[self.mapView setRegion:region animated:YES];
+		}
+	}
 }
 
 -(void)handleLongPressGesture:(UIGestureRecognizer*)sender {
 	// This is important if you only want to receive one tap and hold event
 	if (sender.state == UIGestureRecognizerStateEnded)
 	{
-		[self.mapView removeGestureRecognizer:sender];
+		// removed 1.15.16 thinking this is why only 1
+		//		[self.mapView removeGestureRecognizer:sender];
 	}
 	else
 	{
@@ -702,6 +989,8 @@ int count;// set the user's [current location] image to 3 separate items
 		[annotation setTitle:@"You Found Me"]; //You can set the subtitle too
 		[annotation setSubtitle:@"Are you my mother?"];
 		[self.mapView addAnnotation:annotation];
+		// this will be the two options ken wants
+		NSLog(@"found new PP with lat = %f and long = %f", locCoord.latitude, locCoord.longitude);
 		//If we keep this, add the values to an array of places, so that it will not only reload next time, it can be added to the dataBase
 		
 	}

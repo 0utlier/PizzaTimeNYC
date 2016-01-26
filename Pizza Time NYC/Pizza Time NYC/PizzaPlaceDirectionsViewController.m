@@ -35,6 +35,7 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 }
 
 -(void)viewWillAppear:(BOOL)animated {// find location every time the view appears
+	[super viewWillAppear:YES];
 	[self.navigationController setNavigationBarHidden:YES];
 	if(firstTimeLoadedDirections) {
 		[self currentLocationButtonPressed];
@@ -91,7 +92,7 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 								  action:@selector(speakerButtonPressed:)
 						   forControlEvents:UIControlEventTouchUpInside];
 	
-	if (self.methodManager.sound == YES) {
+	if (self.methodManager.userLocRemind == YES) {// sound, changed
 		[self.speakerButtonDirectPage setBackgroundImage:[self.methodManager playMusic] forState:UIControlStateNormal];
 	}
 	else {
@@ -241,7 +242,7 @@ BOOL firstTimeLoadedDirections; // to stop refresh [of map] on initial load
 
 // this should disable and enable the sound of the app
 -(void)speakerButtonPressed:(UIButton *)speakerButton {
-	if (self.methodManager.sound) {
+	if (self.methodManager.userLocRemind == YES) {// sound, changed
 		//		NSLog(@"sound disabled"); //disable sound
 		[self.speakerButtonDirectPage setBackgroundImage:[self.methodManager stopMusic] forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 0.0;

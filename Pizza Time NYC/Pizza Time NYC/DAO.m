@@ -128,18 +128,18 @@
 		nn1723_broad.longitude = -73.982533;
 		
 		nn201_34thSt.address = @"201 E 34th St New York NY 10016";
-		nn201_34thSt.street = @"201 E 34th st";
+		nn201_34thSt.street = @"201 E 34th St";
 		nn201_34thSt.city = @"New York NY";
 		nn201_34thSt.zip = 10016;
 		nn201_34thSt.latitude = 40.745733;
 		nn201_34thSt.longitude = -73.977664;
 		
-		nn151_43rdSt.address = @"201 E 34th St New York NY 10016";
-		nn151_43rdSt.street = @"201 E 34th st";
+		nn151_43rdSt.address = @"151 E 43rd St, New York, NY 10017";
+		nn151_43rdSt.street = @"151 E 43rd St";
 		nn151_43rdSt.city = @"New York NY";
-		nn151_43rdSt.zip = 10016;
-		nn151_43rdSt.latitude = 40.745733;
-		nn151_43rdSt.longitude = -73.977664;
+		nn151_43rdSt.zip = 10017;
+		nn151_43rdSt.latitude = 40.751694;
+		nn151_43rdSt.longitude = -73.974272;
 		
 		nn71_2ndAve.address = @"71 2nd Ave, New York, NY 10003";
 		nn71_2ndAve.street = @"71 2nd Ave";

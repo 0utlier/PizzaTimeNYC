@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MethodManager.h"
 
 @interface AddNewPlace : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *optionsButtonTemp;
 
 @end

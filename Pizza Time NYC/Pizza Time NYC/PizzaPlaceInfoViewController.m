@@ -7,6 +7,7 @@
 //
 
 #import "PizzaPlaceInfoViewController.h"
+#import "MapKitViewController.h"
 
 @interface PizzaPlaceInfoViewController ()
 
@@ -17,6 +18,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.methodManager = [MethodManager sharedManager];
+//	self.mapKitController = [MapKitViewController sharedManager];
 //	self.optionsButton = [[UIButton alloc]init];
 	[self.optionsButton addTarget:self
 					  action:@selector(optionsButtonPressed:)
@@ -28,6 +30,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:YES];
 	[self.navigationController setNavigationBarHidden:NO];
 }
 
@@ -60,22 +63,18 @@
 -(void)optionsButtonPressed:(UIButton *)optionsButton {
 	NSLog(@"optionsButton was pressed");
 	// this should open the options page of Pizza Time
-UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionsPage"];
-	[self.navigationController pushViewController:detailViewController animated:YES];
+	[self.tabBarController setSelectedIndex:OPTIONSPAGE];
 
 }
 
 // Main initial button press
 -(void)directionsButtonPressed:(UIButton *)directionsButtonPressed {
 	NSLog(@"directionsButton was pressed");
-	// this should open the directions page of Pizza Time
-	MapKitViewController *detailViewController = (MapKitViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"MapKit"];
-// we need this because the bool must be set before the page loads
-	//	detailViewController.directionsShow = YES;
 	self.methodManager.directionsShow = YES;
-	detailViewController.currentPizzaPlace = self.currentPizzaPlace;
-	[self.navigationController pushViewController:detailViewController animated:YES];
-	
+	MapKitViewController *mapKitViewController = self.tabBarController.viewControllers[MAPPAGE];
+	mapKitViewController.currentPizzaPlace = self.currentPizzaPlace;
+	[self.tabBarController setSelectedIndex:MAPPAGE];
+
 }
 /*
  #pragma mark - Navigation

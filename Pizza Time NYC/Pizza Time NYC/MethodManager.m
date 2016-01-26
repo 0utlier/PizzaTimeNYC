@@ -7,13 +7,20 @@
 //
 
 #import "MethodManager.h"
-
+#import "MapKitViewController.h"
+AppDelegate *appDelegate;
 
 
 @implementation MethodManager
-//@synthesize someProperty;
 
-#pragma mark Singleton Methods
+BOOL sound; // silent or loud (NO = 0 = Silent)
+/*
+ sound 1.20.16
+ created in MM
+ [not initialized, but assumed YES]
+ VC VWA if, set NO
+ */
+#pragma mark - Singleton Methods
 
 static AVAudioPlayer *p;
 
@@ -28,7 +35,6 @@ static AVAudioPlayer *p;
 
 - (id)init {
 	if (self = [super init]) {
-		//		someProperty = [[NSString alloc] initWithString:@"Default Property Value"];
 	}
 	return self;
 }
@@ -45,7 +51,7 @@ static AVAudioPlayer *p;
 	// Should never be called, but just here for clarity really.
 }
 
-#pragma mark CREATE
+#pragma mark - CREATE
 
 -(void)createPlayer {
 	//	self.window = [[UIApplication sharedApplication] keyWindow];
@@ -59,37 +65,56 @@ static AVAudioPlayer *p;
 	// set song to background
 	NSString *backgroundMusic = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
 	p = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusic] error:NULL];
-	//	self.audioPlayer.delegate = self;// unsure of warning
 	p.numberOfLoops = -1; // -1 is infinite loops
-	//	[self.audioPlayer play];
-	//	self.screenSize = [UIScreen mainScreen].bounds.size;
 	//	NSLog(@"%f", self.screenSize.width);
 }
-#pragma mark - Buttons & Actions
+
+- (void)createLocationManager {
+	self.locationManager = [[CLLocationManager alloc]init];
+	[self.locationManager requestWhenInUseAuthorization];
+	[self.locationManager setDelegate:self];
+//	[self.locationManager setDistanceFilter:kCLDistanceFilterNone ]; //whenever we move
+	[self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+}
+
+- (void)createEmpireStateBuilding {
+	// Use Empire State Building as current location
+	self.empireStateBuilding = [[CLLocation alloc]initWithLatitude:40.7484 longitude:-73.9857];
+//	CLLocationCoordinate2D centerCoordinate;
+//	centerCoordinate.latitude = 40.7484;
+//	centerCoordinate.longitude = -73.9857;
+//	CLLocation *centerLocation =[[CLLocation alloc]initWithLatitude:40.7484 longitude:-73.9857];
+//	self.empireStateBuilding.coordinate = centerCoordinate;
+}
+
+
+#pragma mark - Buttons
+
 -(UIImage *)playMusic {
 	[self.audioPlayer play];
-	self.sound = YES;
-	UIImage *speakerButtonImage = [UIImage imageNamed:@"speaker60.png"];
+	sound = YES;
+	UIImage *speakerButtonImage = [UIImage imageNamed:@"MCQMapSOUND.png"];
 	return speakerButtonImage;	// [maybe] set the image here
 }
 
 -(UIImage *)stopMusic {
 	[self.audioPlayer stop];
-	self.sound = NO;
-	UIImage *speakerButtonImage = [UIImage imageNamed:@"speakerCross60.png"];
+	sound = NO;
+	UIImage *speakerButtonImage = [UIImage imageNamed:@"MCQMapSOUNDNOT.png"];
 	return speakerButtonImage;	// [maybe] set the image here
 }
 
 -(UIButton *)assignSpeakerButton {
 	
-	//if(self.speakerButton)return self.speakerButton;
+	if(self.speakerButton)return self.speakerButton;
 	
 	UIButton *speakerButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width -76, 16, 60, 60)];
+	// Add an action in current code file (i.e. target)
 	[speakerButton addTarget:self
 					  action:@selector(speakerButtonPressed:)
 			forControlEvents:UIControlEventTouchUpInside];
 	
-	if (self.sound == YES) {
+	if (sound == YES) {
 		[speakerButton setBackgroundImage:self.playMusic forState:UIControlStateNormal];
 	}
 	else {
@@ -102,10 +127,7 @@ static AVAudioPlayer *p;
 -(UIButton *)assignOptionsButton {
 	
 	
-	if(self.optionsButton){
-	//	[self.optionsButton removeFromSuperview];
-		return self.optionsButton;
-	}
+	if(self.optionsButton)return self.optionsButton;
 	
 	UIButton *optionsButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 30, 16, 60, 60)];
 	// Add an action in current code file (i.e. target)
@@ -113,15 +135,16 @@ static AVAudioPlayer *p;
 					  action:@selector(optionsButtonPressed:)
 			forControlEvents:UIControlEventTouchUpInside];
 	
-	[optionsButton setBackgroundImage:[UIImage imageNamed:@"menu.png"] forState:UIControlStateNormal];
+	[optionsButton setBackgroundImage:[UIImage imageNamed:@"MCQMapOPTIONS.png"] forState:UIControlStateNormal];
 	self.optionsButton = optionsButton;
 	return self.optionsButton;
 }
 
+#pragma mark - Actions
 
 // this should disable and enable the sound of the app
 -(void)speakerButtonPressed:(UIButton *)speakerButton {
-	if (self.sound) {
+	if (sound) {
 		//		NSLog(@"sound disabled"); //disable sound
 		[speakerButton setBackgroundImage:self.stopMusic forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 0.0;
@@ -132,20 +155,21 @@ static AVAudioPlayer *p;
 		//		self.appDelegate.audioPlayer.rate = 1.0;
 	}
 }
+
 // Main initial button press
 -(void)optionsButtonPressed:(UIButton *)optionsButton {
 	NSLog(@"optionsButton was pressed");
+	self.directionsShow = NO;
+	
 	// this should open the options page of Pizza Time
 	AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-	UINavigationController *navigationController = (UINavigationController *)delegate.window.rootViewController;
-	UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-	
-	UIViewController *detailViewController = (UIViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"OptionsPage"];
-	[navigationController pushViewController:detailViewController animated:YES];
+    UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
+	[tabBarController setSelectedIndex:OPTIONSPAGE];
+
 }
 
 -(void)searchBarPresent {
-	if (self.search == YES) {
+	if (self.searching == YES) {
 		self.speakerButton.alpha = 0.5;  // set this *after* adding it back
 		self.optionsButton.alpha = 0.5;  // set this *after* adding it back
 		[UIView animateWithDuration:0.66f animations:^ {
@@ -154,19 +178,21 @@ static AVAudioPlayer *p;
 			self.optionsButton.alpha = 0.0;
 		}];
 	}
-	else { // search = NO
+	else { // searching == NO
 		self.speakerButton.hidden = NO;
 		self.optionsButton.hidden = NO;
-			self.speakerButton.alpha = 1.0;
-			self.optionsButton.alpha = 1.0;
+		self.speakerButton.alpha = 1.0;
+		self.optionsButton.alpha = 1.0;
 	}
 }
 
--(void) removeBothButtons{
+-(void)removeBothButtons {
 	if(self.optionsButton)
 		[self.optionsButton removeFromSuperview];
 	if(self.speakerButton)
 		[self.speakerButton removeFromSuperview];
 }
+
+
 
 @end

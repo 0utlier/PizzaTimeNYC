@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		990B5EC11C4CB9B6000BF1B5 /* MCQMapSLICE.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EBF1C4CB9B6000BF1B5 /* MCQMapSLICE.png */; };
+		990B5EC21C4CB9B6000BF1B5 /* MCQMapBIKE.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EC01C4CB9B6000BF1B5 /* MCQMapBIKE.png */; };
+		990B5EC51C4CC003000BF1B5 /* MCQMapSLICE29.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EC31C4CC003000BF1B5 /* MCQMapSLICE29.png */; };
+		990B5EC61C4CC003000BF1B5 /* MCQMapBIKE29.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EC41C4CC003000BF1B5 /* MCQMapBIKE29.png */; };
 		99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 99260DFE1C2DD36800EFB125 /* PizzaPlace.m */; };
 		99260E021C2DD4AA00EFB125 /* GW eating a slice.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */; };
 		99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99260E031C2DD4DD00EFB125 /* Images.xcassets */; };
@@ -21,6 +25,7 @@
 		99D629811C2F690700B49E26 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D629801C2F690700B49E26 /* WebViewController.m */; };
 		AA3E83B41C456E0300C12D35 /* MethodManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3E83B31C456E0300C12D35 /* MethodManager.m */; };
 		AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4B39B31C3DD8750086DB81 /* Main.storyboard */; };
+		AA62186D1C502E9400F759DA /* LocationAlphaPizza.png in Resources */ = {isa = PBXBuildFile; fileRef = AA62186C1C502E9400F759DA /* LocationAlphaPizza.png */; };
 		AA71E9091C2B32E400FA48F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9081C2B32E400FA48F6 /* main.m */; };
 		AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90B1C2B32E500FA48F6 /* AppDelegate.m */; };
 		AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90E1C2B32E500FA48F6 /* ViewController.m */; };
@@ -45,6 +50,27 @@
 		AAA7C1ED1C402B6E00EE8B43 /* speakerCross30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7C1EB1C402B6E00EE8B43 /* speakerCross30.png */; };
 		AAA7C1EF1C40315300EE8B43 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */; };
 		AAA7C1F11C40326E00EE8B43 /* pizzaMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */; };
+		AAAAA15B1C502289009EC685 /* skateBoardAlpha30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAAA15A1C502289009EC685 /* skateBoardAlpha30.png */; };
+		AAAAA15D1C50235C009EC685 /* walkAlpha30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAAA15C1C50235C009EC685 /* walkAlpha30.png */; };
+		AAAC93971C498A1E00D3AC6B /* MCQMapOPTIONS.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC93951C498A1E00D3AC6B /* MCQMapOPTIONS.png */; };
+		AAAC93981C498A1E00D3AC6B /* MCQMapSOUND.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC93961C498A1E00D3AC6B /* MCQMapSOUND.png */; };
+		AAAC939A1C498B2400D3AC6B /* MCQMapSEARCH.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC93991C498B2400D3AC6B /* MCQMapSEARCH.png */; };
+		AAAC939C1C499B7600D3AC6B /* MCQMapSOUNDNOT.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC939B1C499B7600D3AC6B /* MCQMapSOUNDNOT.png */; };
+		AAAC939F1C499ECE00D3AC6B /* MCQTabBarLIST.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC939D1C499ECE00D3AC6B /* MCQTabBarLIST.png */; };
+		AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAP.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAP.png */; };
+		AAB11A701C51ABA50058BC9C /* AddNewPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */; };
+		AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */; };
+		AAB67BF51C4EA2AF0087F151 /* dollarBill60.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF41C4EA2AF0087F151 /* dollarBill60.png */; };
+		AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */; };
+		AAB67BF91C4EA6840087F151 /* dollarBill60Alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF81C4EA6840087F151 /* dollarBill60Alpha.png */; };
+		AAB67BFB1C4EA7320087F151 /* dollarBillAlpha60.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */; };
+		AAB67C501C4EED540087F151 /* MCQSliceLEFTb.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb.png */; };
+		AAB67C511C4EED540087F151 /* MCQSliceRIGHTb.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb.png */; };
+		AAB67C521C4EED540087F151 /* MCQSliceLEFTt.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt.png */; };
+		AAB67C531C4EED540087F151 /* MCQSliceBOTTOM.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM.png */; };
+		AAB67C541C4EED540087F151 /* MCQSliceRIGHTt.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt.png */; };
+		AAB67C551C4EED540087F151 /* MCQSliceTOP.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4F1C4EED540087F151 /* MCQSliceTOP.png */; };
+		AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png */; };
 		AACB1BC11C3AFEFA0069E947 /* MapsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AACB1BC01C3AFEFA0069E947 /* MapsIcon.png */; };
 		AACB1BC31C3B0EA50069E947 /* globe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AACB1BC21C3B0EA50069E947 /* globe@2x.png */; };
 		AACB1BC51C3B1AB00069E947 /* newspaper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AACB1BC41C3B1AB00069E947 /* newspaper@2x.png */; };
@@ -81,6 +107,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		990B5EBF1C4CB9B6000BF1B5 /* MCQMapSLICE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICE.png; sourceTree = "<group>"; };
+		990B5EC01C4CB9B6000BF1B5 /* MCQMapBIKE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapBIKE.png; sourceTree = "<group>"; };
+		990B5EC31C4CC003000BF1B5 /* MCQMapSLICE29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICE29.png; sourceTree = "<group>"; };
+		990B5EC41C4CC003000BF1B5 /* MCQMapBIKE29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapBIKE29.png; sourceTree = "<group>"; };
 		99260DFD1C2DD36800EFB125 /* PizzaPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PizzaPlace.h; path = "Pizza Time NYC/PizzaPlace.h"; sourceTree = "<group>"; };
 		99260DFE1C2DD36800EFB125 /* PizzaPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PizzaPlace.m; path = "Pizza Time NYC/PizzaPlace.m"; sourceTree = "<group>"; };
 		99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "GW eating a slice.jpg"; sourceTree = "<group>"; };
@@ -100,6 +130,7 @@
 		AA3E83B21C456E0300C12D35 /* MethodManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodManager.h; sourceTree = "<group>"; };
 		AA3E83B31C456E0300C12D35 /* MethodManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodManager.m; sourceTree = "<group>"; };
 		AA4B39B41C3DD8750086DB81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AA62186C1C502E9400F759DA /* LocationAlphaPizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocationAlphaPizza.png; sourceTree = "<group>"; };
 		AA71E9041C2B32E400FA48F6 /* Pizza Time NYC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pizza Time NYC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA71E9081C2B32E400FA48F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA71E90A1C2B32E500FA48F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -135,6 +166,28 @@
 		AAA7C1EB1C402B6E00EE8B43 /* speakerCross30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speakerCross30.png; sourceTree = "<group>"; };
 		AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pizzaMusic.mp3; sourceTree = "<group>"; };
+		AAAAA15A1C502289009EC685 /* skateBoardAlpha30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skateBoardAlpha30.png; sourceTree = "<group>"; };
+		AAAAA15C1C50235C009EC685 /* walkAlpha30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walkAlpha30.png; sourceTree = "<group>"; };
+		AAAC93951C498A1E00D3AC6B /* MCQMapOPTIONS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapOPTIONS.png; sourceTree = "<group>"; };
+		AAAC93961C498A1E00D3AC6B /* MCQMapSOUND.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSOUND.png; sourceTree = "<group>"; };
+		AAAC93991C498B2400D3AC6B /* MCQMapSEARCH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSEARCH.png; sourceTree = "<group>"; };
+		AAAC939B1C499B7600D3AC6B /* MCQMapSOUNDNOT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSOUNDNOT.png; sourceTree = "<group>"; };
+		AAAC939D1C499ECE00D3AC6B /* MCQTabBarLIST.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQTabBarLIST.png; sourceTree = "<group>"; };
+		AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQTabBarMAP.png; sourceTree = "<group>"; };
+		AAB11A6E1C51ABA50058BC9C /* AddNewPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewPlace.h; sourceTree = "<group>"; };
+		AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewPlace.m; sourceTree = "<group>"; };
+		AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dollarBill.jpg; sourceTree = "<group>"; };
+		AAB67BF41C4EA2AF0087F151 /* dollarBill60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollarBill60.png; sourceTree = "<group>"; };
+		AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizza29Alpha.png; sourceTree = "<group>"; };
+		AAB67BF81C4EA6840087F151 /* dollarBill60Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollarBill60Alpha.png; sourceTree = "<group>"; };
+		AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollarBillAlpha60.png; sourceTree = "<group>"; };
+		AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTb.png; sourceTree = "<group>"; };
+		AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTb.png; sourceTree = "<group>"; };
+		AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTt.png; sourceTree = "<group>"; };
+		AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceBOTTOM.png; sourceTree = "<group>"; };
+		AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTt.png; sourceTree = "<group>"; };
+		AAB67C4F1C4EED540087F151 /* MCQSliceTOP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceTOP.png; sourceTree = "<group>"; };
+		AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQpizzaTimeLOGO.png; sourceTree = "<group>"; };
 		AACB1BC01C3AFEFA0069E947 /* MapsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MapsIcon.png; sourceTree = "<group>"; };
 		AACB1BC21C3B0EA50069E947 /* globe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe@2x.png"; sourceTree = "<group>"; };
 		AACB1BC41C3B1AB00069E947 /* newspaper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newspaper@2x.png"; sourceTree = "<group>"; };
@@ -268,6 +321,7 @@
 				AA9FDF501C3DE7BE00303E48 /* PizzaPlaceDirectionsViewController */,
 				AA8E228F1C41B30A0018ABE8 /* OptionsPage */,
 				AA3E83B51C456E1C00C12D35 /* MethodManager */,
+				AAB11A711C51ACFA0058BC9C /* AddNewPlace */,
 				AA4B39B31C3DD8750086DB81 /* Main.storyboard */,
 				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
 				AA71E9161C2B32E500FA48F6 /* Assets.xcassets */,
@@ -284,6 +338,31 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA62186C1C502E9400F759DA /* LocationAlphaPizza.png */,
+				AAAAA15C1C50235C009EC685 /* walkAlpha30.png */,
+				AAAAA15A1C502289009EC685 /* skateBoardAlpha30.png */,
+				AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png */,
+				AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb.png */,
+				AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb.png */,
+				AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt.png */,
+				AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM.png */,
+				AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt.png */,
+				AAB67C4F1C4EED540087F151 /* MCQSliceTOP.png */,
+				AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */,
+				AAB67BF81C4EA6840087F151 /* dollarBill60Alpha.png */,
+				AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */,
+				AAB67BF41C4EA2AF0087F151 /* dollarBill60.png */,
+				AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */,
+				990B5EC31C4CC003000BF1B5 /* MCQMapSLICE29.png */,
+				990B5EC41C4CC003000BF1B5 /* MCQMapBIKE29.png */,
+				990B5EBF1C4CB9B6000BF1B5 /* MCQMapSLICE.png */,
+				990B5EC01C4CB9B6000BF1B5 /* MCQMapBIKE.png */,
+				AAAC939D1C499ECE00D3AC6B /* MCQTabBarLIST.png */,
+				AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAP.png */,
+				AAAC939B1C499B7600D3AC6B /* MCQMapSOUNDNOT.png */,
+				AAAC93991C498B2400D3AC6B /* MCQMapSEARCH.png */,
+				AAAC93951C498A1E00D3AC6B /* MCQMapOPTIONS.png */,
+				AAAC93961C498A1E00D3AC6B /* MCQMapSOUND.png */,
 				AA889A841C48004E00552357 /* search60.2.png */,
 				AA7F09BA1C42F6F400AE5B96 /* search60.png */,
 				AA7F09BB1C42F6F400AE5B96 /* search.jpg */,
@@ -382,6 +461,15 @@
 				AA9FDF4E1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m */,
 			);
 			name = PizzaPlaceDirectionsViewController;
+			sourceTree = "<group>";
+		};
+		AAB11A711C51ACFA0058BC9C /* AddNewPlace */ = {
+			isa = PBXGroup;
+			children = (
+				AAB11A6E1C51ABA50058BC9C /* AddNewPlace.h */,
+				AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */,
+			);
+			name = AddNewPlace;
 			sourceTree = "<group>";
 		};
 		AACB1BC91C3B218E0069E947 /* TableViewController */ = {
@@ -521,39 +609,64 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				990B5EC11C4CB9B6000BF1B5 /* MCQMapSLICE.png in Resources */,
 				AAA7C1F11C40326E00EE8B43 /* pizzaMusic.mp3 in Resources */,
+				AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */,
+				AAAAA15B1C502289009EC685 /* skateBoardAlpha30.png in Resources */,
+				AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAP.png in Resources */,
 				99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */,
 				AACB1BC31C3B0EA50069E947 /* globe@2x.png in Resources */,
 				AACDE93F1C3D8DDD004EF963 /* skateboard.jpeg in Resources */,
+				990B5EC51C4CC003000BF1B5 /* MCQMapSLICE29.png in Resources */,
 				AACDE9431C3D8EBD004EF963 /* walk29.png in Resources */,
 				AA7F09BD1C42F6F400AE5B96 /* search.jpg in Resources */,
+				AAAC93981C498A1E00D3AC6B /* MCQMapSOUND.png in Resources */,
 				AACB1BC11C3AFEFA0069E947 /* MapsIcon.png in Resources */,
+				990B5EC21C4CB9B6000BF1B5 /* MCQMapBIKE.png in Resources */,
+				AAB67C531C4EED540087F151 /* MCQSliceBOTTOM.png in Resources */,
 				AAA7C1ED1C402B6E00EE8B43 /* speakerCross30.png in Resources */,
+				AAB67C521C4EED540087F151 /* MCQSliceLEFTt.png in Resources */,
+				AAB67C501C4EED540087F151 /* MCQSliceLEFTb.png in Resources */,
 				99260E0A1C2DD9B500EFB125 /* its pizza time resized.png in Resources */,
 				AA71E91A1C2B32E500FA48F6 /* LaunchScreen.storyboard in Resources */,
 				AA8E22911C41B3930018ABE8 /* tmntBikePizza.gif in Resources */,
+				AAAC939C1C499B7600D3AC6B /* MCQMapSOUNDNOT.png in Resources */,
+				AAB67C541C4EED540087F151 /* MCQSliceRIGHTt.png in Resources */,
 				AAD0FCD31C3F32240060B05B /* pizzaWholePepperoni.png in Resources */,
 				99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */,
+				AAAC939F1C499ECE00D3AC6B /* MCQTabBarLIST.png in Resources */,
 				AAD0FCD01C3F31860060B05B /* pizzaPepperoni.jpeg in Resources */,
+				AAAC93971C498A1E00D3AC6B /* MCQMapOPTIONS.png in Resources */,
+				AAB67BFB1C4EA7320087F151 /* dollarBillAlpha60.png in Resources */,
 				AACDE9501C3DBF7A004EF963 /* pacman@2x.png in Resources */,
 				AAD0FCD61C3F38E00060B05B /* pizzaPepperoni300.png in Resources */,
 				AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */,
 				AA7F09B91C42DB3B00AE5B96 /* menu.png in Resources */,
 				AA889A851C48004E00552357 /* search60.2.png in Resources */,
+				AA62186D1C502E9400F759DA /* LocationAlphaPizza.png in Resources */,
+				AAB67C511C4EED540087F151 /* MCQSliceRIGHTb.png in Resources */,
 				AA8E22891C4174FE0018ABE8 /* speaker60.png in Resources */,
+				AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */,
 				99260E071C2DD72200EFB125 /* its pizza time.jpg in Resources */,
 				AA8E22881C4174FE0018ABE8 /* speakerCross60.png in Resources */,
+				AAB67C551C4EED540087F151 /* MCQSliceTOP.png in Resources */,
+				AAAC939A1C498B2400D3AC6B /* MCQMapSEARCH.png in Resources */,
+				AAB67BF91C4EA6840087F151 /* dollarBill60Alpha.png in Resources */,
 				AA8E228B1C41B2830018ABE8 /* tmntBikePizza.jpg in Resources */,
+				AAAAA15D1C50235C009EC685 /* walkAlpha30.png in Resources */,
 				AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */,
 				AACDE9541C3DC225004EF963 /* bank@2x.png in Resources */,
 				99260E081C2DD72200EFB125 /* pizza time all turtles.jpg in Resources */,
 				AAD0FCD41C3F32240060B05B /* pizzaFullSliceRemove.jpg in Resources */,
 				AA7F09BC1C42F6F400AE5B96 /* search60.png in Resources */,
+				AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png in Resources */,
 				AACB1BC51C3B1AB00069E947 /* newspaper@2x.png in Resources */,
 				AACDE9521C3DC1F1004EF963 /* game_controller@2x.png in Resources */,
 				999E74171C337D5F0030099A /* animatedBike29.jpg in Resources */,
+				990B5EC61C4CC003000BF1B5 /* MCQMapBIKE29.png in Resources */,
 				AAA7C1EC1C402B6E00EE8B43 /* speaker30.png in Resources */,
 				999E74151C337C030030099A /* Icon-Small.png in Resources */,
+				AAB67BF51C4EA2AF0087F151 /* dollarBill60.png in Resources */,
 				AACDE9411C3D8E59004EF963 /* skateboard29.png in Resources */,
 				99260E021C2DD4AA00EFB125 /* GW eating a slice.jpg in Resources */,
 			);
@@ -580,6 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAB11A701C51ABA50058BC9C /* AddNewPlace.m in Sources */,
 				AACB1BCC1C3B28F30069E947 /* DAO.m in Sources */,
 				AA71E9151C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld in Sources */,
 				99D629811C2F690700B49E26 /* WebViewController.m in Sources */,
@@ -735,11 +849,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Pizza Time NYC/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -748,11 +863,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Pizza Time NYC/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -7,10 +7,16 @@
 //
 
 #import "TableViewController.h"
+#import "MapKitViewController.h"
 
 @interface TableViewController ()
+@property (nonatomic, retain) MapKitViewController *mapKit;
 
 @end
+
+BOOL isRefreshIconsOverlap;
+BOOL isRefreshAnimating;
+
 
 @implementation TableViewController
 
@@ -24,32 +30,38 @@
 	//	NSLog(@"Table View Controller loaded!");
 	
 	// instantiate tableView
-	self.tableView.delegate=self;//unsure if necessary
+	self.tableView.delegate=self;
 	self.tableView.dataSource=self;
 	
 	self.methodManager = [MethodManager sharedManager];
+	self.methodManager.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
 	self.dao = [DAO sharedDAO];
 	[self.dao createPizzaPlaces];
-	self.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
 	
 	[self createPizzaCells];
 	[self createSearchBar];
 	// Uncomment the following line to preserve selection between presentations.
-	// self.clearsSelectionOnViewWillAppear = NO;
+	//		self.clearsSelectionOnViewWillAppear = NO;
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	[self sortByDistance];
+	//		self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	if (self.methodManager.firstTimeLoaded) {
+		self.mapKit = self.tabBarController.viewControllers[MAPPAGE];
+		[self.mapKit sortByDistanceForClosest];
+	}
+	[self createRefreshControl];
 	[self.tableView reloadData];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self assignLabels];
 	[self.navigationController setNavigationBarHidden:YES];
 	[self.tableView reloadData];
-//	NSLog(@"realign bools here");
-    [self.view setNeedsDisplay];
+	//	NSLog(@"realign bools here");
+	// i am unsure of why i need this 1.19.16
+	[self.view setNeedsDisplay];
+	[self assignLabels];
 }
+
 
 
 #pragma mark - CREATE PAGE
@@ -66,6 +78,7 @@
 
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
+	self.searchBar.placeholder = @"Search Address";
 	[self.view addSubview:self.searchBar];
 	self.searchBar.hidden = YES;
 }
@@ -77,7 +90,9 @@
 	if (self.searchButtonTableView) {
 		[self.searchButtonTableView removeFromSuperview];
 	}
-
+	
+	//	[self.methodManager assignMapButton];
+	//	[self.methodManager assignListButton];
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	
@@ -85,11 +100,32 @@
 	self.searchButtonTableView = searchButtonTableView;
 	// Add an action in current code file (i.e. target)
 	[self.searchButtonTableView addTarget:self
-							  action:@selector(searchButtonPressed:)
-					forControlEvents:UIControlEventTouchUpInside];
+								   action:@selector(searchButtonPressed:)
+						 forControlEvents:UIControlEventTouchUpInside];
 	
-	[self.searchButtonTableView setBackgroundImage:[UIImage imageNamed:@"search60.2.png"] forState:UIControlStateNormal];
+	[self.searchButtonTableView setBackgroundImage:[UIImage imageNamed:@"MCQMapSEARCH.png"] forState:UIControlStateNormal];
 	[self.view addSubview:self.searchButtonTableView];
+	
+	UIButton *mapButtonListPage = [[UIButton alloc]initWithFrame:CGRectMake(0, self.view.bounds.size.height - 49, self.view.bounds.size.width/2, 49)];
+	self.mapButtonListPage = mapButtonListPage;
+	// Add an action in current code file (i.e. target)
+	[self.mapButtonListPage addTarget:self
+							   action:@selector(mapButtonPressed:)
+					 forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.mapButtonListPage setBackgroundImage:[UIImage imageNamed:@"MCQTabBarMAP.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.mapButtonListPage];
+	
+	UIButton *listButtonListPage = [[UIButton alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height - 49, self.view.bounds.size.width/2, 49)];
+	self.listButtonListPage = listButtonListPage;
+	// Add an action in current code file (i.e. target)
+	[self.listButtonListPage addTarget:self
+								action:@selector(listButtonPressed:)
+					  forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.listButtonListPage setBackgroundImage:[UIImage imageNamed:@"MCQTabBarLIST.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.listButtonListPage];
+	
 	
 }
 
@@ -140,22 +176,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	//	PizzaPlaceInfoViewController *detailViewController = (PizzaPlaceInfoViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"PizzaPlaceInfoViewController"];
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		if ([pizzaPlace.name isEqualToString:[[self.dao.pizzaPlaceArray objectAtIndex:indexPath.row]name]]) {
 			//			NSLog(@"User selected the PP = %@ and wanted %@", [[self.dao.pizzaPlaceArray objectAtIndex:indexPath.row]name], pizzaPlace.name);
 			
 			// Pass the selected object to the new view controller.
 			// Push the view controller.
-			
-			UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];//TabBarController
-			//tabBarController.viewControllers = @[detailViewController];
-			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = tabBarController.viewControllers[0];
-			PizzaPlaceDirectionsViewController *pizzaPlaceDirectionsViewController = tabBarController.viewControllers[1];
+
+			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = self.tabBarController.viewControllers[PPINFOPAGE];
 			[pizzaPlaceInfoViewController setLabelValues:pizzaPlace];
-			[pizzaPlaceDirectionsViewController setPizzaPlaceProperty:pizzaPlace];
-			
-			[self.navigationController pushViewController:tabBarController animated:YES];
+			[self.tabBarController setSelectedIndex:PPINFOPAGE];
 		}
 	}
 	//[self.tabBarController showViewController:detailViewController sender:NULL];
@@ -206,10 +236,6 @@
  }
  */
 
--(void)sortByDistance {
-	NSSortDescriptor *mySorter = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
-	[self.dao.pizzaPlaceArray sortUsingDescriptors:[NSArray arrayWithObject:mySorter]];
-}
 
 #pragma mark - SearchBar Delegate
 
@@ -228,17 +254,225 @@
 	[UIView animateWithDuration:0.66f
 					 animations:^{
 						 // where is the search bar going?
-						 searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.statusBarSize.height, self.view.bounds.size.width, 44);
+						 searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.methodManager.statusBarSize.height, self.view.bounds.size.width, 44);
 						 
 						 // unHide the search button
 						 self.searchButtonTableView.alpha = 1.0;
 						 // unHide the speaker and options buttons
-						 self.methodManager.search = NO;
+						 self.methodManager.searching = NO;
 						 [self.methodManager searchBarPresent];
 					 }completion:^(BOOL finished) { //when finished, unHide the searchButton
 						 [self.view endEditing:YES];
 						 self.searchBar.hidden = YES;
 					 }];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)theSearchBar
+{
+	// keep the animation and actions of dismissing the search bar
+	[self searchBarCancelButtonClicked:(UISearchBar *) self.searchBar];
+	self.methodManager.searchSubmit = YES; //searching for address
+	NSLog(@"self.methodManager.searchSubmit = YES");
+	NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
+	
+	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+	[geocoder geocodeAddressString:theSearchBar.text completionHandler:^(NSArray *placemarks, NSError *error) {		//Error checking
+		
+		
+		CLPlacemark *placemark = [placemarks objectAtIndex:0];
+		CLLocation *resultLocation = placemark.location;
+//		NSLog(@"result's lat %f",resultLocation.coordinate.latitude);
+
+		// set the distance of the PPs, then sort by
+		[self.mapKit findDistance:resultLocation];
+		NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
+		[self.mapKit sortByDistanceForClosest];
+		self.methodManager.searchSubmit = NO; // no longer searching for address
+		NSLog(@"self.methodManager.searchSubmit = NO");
+
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.tableView reloadData];
+			NSLog(@"search finished and reloaded");
+		});
+	}];
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+	NSLog(@"table view does update the user location");
+}
+
+#pragma mark - REFRESH CONTROL
+- (void)createRefreshControl
+{
+	// Programmatically inserting a UIRefreshControl
+	self.refreshControl = [[UIRefreshControl alloc] init];
+	
+	// Setup the loading view, which will hold the moving graphics
+	self.refreshLoadingView = [[UIView alloc] initWithFrame:self.refreshControl.bounds];
+	self.refreshLoadingView.backgroundColor = [UIColor clearColor];
+	
+	// Setup the color view, which will display the rainbowed background
+	self.refreshColorView = [[UIView alloc] initWithFrame:self.refreshControl.bounds];
+	self.refreshColorView.backgroundColor = [UIColor clearColor];
+	self.refreshColorView.alpha = 0.30;
+	
+	// Create the graphic image views
+	self.pizzaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pizza29Alpha.png"]];
+	self.dollarImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarBillAlpha60.png"]];
+	
+	// Add the graphics to the loading view
+	[self.refreshLoadingView addSubview:self.dollarImage];
+	[self.refreshLoadingView addSubview:self.pizzaImage];
+	
+	// Clip so the graphics don't stick out
+	self.refreshLoadingView.clipsToBounds = YES;
+	
+	// Hide the original spinner icon
+	self.refreshControl.tintColor = [UIColor clearColor];
+	
+	// Add the loading and colors views to our refresh control
+	[self.refreshControl addSubview:self.refreshColorView];
+	[self.refreshControl addSubview:self.refreshLoadingView];
+	
+	// Initalize flags
+	isRefreshIconsOverlap = NO;
+	isRefreshAnimating = NO;
+	
+	// When activated, invoke our refresh function
+	[self.refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+	
+	// not mentioned in the tutorial, but added by 0utlier
+	[self.tableView addSubview:self.refreshControl];
+}
+
+- (void)refresh:(id)sender{ // ??? this needs refreshing haha
+	NSLog(@"begin = %f", self.methodManager.locationManager.location.coordinate.latitude);
+	// -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
+	NSLog(@"after = %f", self.methodManager.locationManager.location.coordinate.latitude);
+	self.mapKit = self.tabBarController.viewControllers[MAPPAGE];
+	[self.mapKit sortByDistanceForClosest];
+	[self.tableView reloadData];
+	// This is where you'll make requests to an API, reload data, or process information
+	double delayInSeconds = 3.0;
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		NSLog(@"DONE");
+		
+		// When done requesting/reloading/processing invoke endRefreshing, to close the control
+		[self.refreshControl endRefreshing];
+	});
+	// -- FINISHED SOMETHING AWESOME, WOO! --
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	// Get the current size of the refresh controller
+	CGRect refreshBounds = self.refreshControl.bounds;
+	
+	// Distance the table has been pulled >= 0
+	CGFloat pullDistance = MAX(0.0, -self.refreshControl.frame.origin.y);
+	
+	// Half the width of the table
+	CGFloat midX = self.tableView.frame.size.width / 2.0;
+	
+	// Calculate the width and height of our graphics
+	CGFloat compassHeight = self.pizzaImage.bounds.size.height;
+	CGFloat compassHeightHalf = compassHeight / 2.0;
+	
+	CGFloat compassWidth = self.pizzaImage.bounds.size.width;
+	CGFloat compassWidthHalf = compassWidth / 2.0;
+	
+	CGFloat spinnerHeight = self.dollarImage.bounds.size.height;
+	CGFloat spinnerHeightHalf = spinnerHeight / 2.0;
+	
+	CGFloat spinnerWidth = self.dollarImage.bounds.size.width;
+	CGFloat spinnerWidthHalf = spinnerWidth / 2.0;
+	
+	// Calculate the pull ratio, between 0.0-1.0
+	CGFloat pullRatio = MIN( MAX(pullDistance, 0.0), 100.0) / 100.0;
+	
+	// Set the Y coord of the graphics, based on pull distance
+	CGFloat compassY = pullDistance / 2.0 - compassHeightHalf;
+	CGFloat spinnerY = pullDistance / 2.0 - spinnerHeightHalf;
+	
+	// Calculate the X coord of the graphics, adjust based on pull ratio
+	CGFloat compassX = (midX + compassWidthHalf) - (compassWidth * pullRatio);
+	CGFloat spinnerX = (midX - spinnerWidth - spinnerWidthHalf) + (spinnerWidth * pullRatio);
+	
+	// When the compass and spinner overlap, keep them together
+	if (fabs(compassX - spinnerX) < 1.0) {
+		isRefreshIconsOverlap = YES;
+	}
+	
+	// If the graphics have overlapped or we are refreshing, keep them together
+	if (isRefreshIconsOverlap || self.refreshControl.isRefreshing) {
+		compassX = midX - compassWidthHalf;
+		spinnerX = midX - spinnerWidthHalf;
+	}
+	
+	// Set the graphic's frames
+	CGRect pizzaFrame = self.pizzaImage.frame;
+	pizzaFrame.origin.x = compassX;
+	pizzaFrame.origin.y = compassY;
+	
+	CGRect dollarFrame = self.dollarImage.frame;
+	dollarFrame.origin.x = spinnerX;
+	dollarFrame.origin.y = spinnerY;
+	
+	self.pizzaImage.frame = pizzaFrame;
+	self.dollarImage.frame = dollarFrame;
+	
+	// Set the encompassing view's frames
+	refreshBounds.size.height = pullDistance;
+	
+	self.refreshColorView.frame = refreshBounds;
+	self.refreshLoadingView.frame = refreshBounds;
+	
+	// If we're refreshing and the animation is not playing, then play the animation
+	if (self.refreshControl.isRefreshing && !isRefreshAnimating) {
+		[self animateRefreshView];
+	}
+	
+	//	NSLog(@"pullDistance: %.1f, pullRatio: %.1f, midX: %.1f, isRefreshing: %i", pullDistance, pullRatio, midX, self.refreshControl.isRefreshing);
+}
+
+- (void)animateRefreshView
+{
+	// Background color to loop through for our color view
+	NSArray *colorArray = @[[UIColor redColor],[UIColor blueColor],[UIColor purpleColor],[UIColor cyanColor],[UIColor orangeColor],[UIColor magentaColor]];
+	static int colorIndex = 0;
+	
+	// Flag that we are animating
+	isRefreshAnimating = YES;
+	
+	[UIView animateWithDuration:0.3
+						  delay:0
+						options:UIViewAnimationOptionCurveLinear
+					 animations:^{
+						 // Rotate the spinner by M_PI_2 = PI/2 = 90 degrees
+						 [self.dollarImage setTransform:CGAffineTransformRotate(self.dollarImage.transform, M_PI_2)];
+       
+						 // Change the background color
+						 self.refreshColorView.backgroundColor = [colorArray objectAtIndex:colorIndex];
+						 colorIndex = (colorIndex + 1) % colorArray.count;
+					 }
+					 completion:^(BOOL finished) {
+						 // If still refreshing, keep spinning, else reset
+						 if (self.refreshControl.isRefreshing) {
+							 [self animateRefreshView];
+						 }else{
+							 [self resetAnimation];
+						 }
+					 }];
+}
+
+- (void)resetAnimation
+{
+	// Reset our flags and background color
+	isRefreshAnimating = NO;
+	isRefreshIconsOverlap = NO;
+	self.refreshColorView.backgroundColor = [UIColor clearColor];
 }
 
 
@@ -248,19 +482,35 @@
 -(void)searchButtonPressed:(UIButton *)searchButton {
 	NSLog(@"searchButtonTable was pressed");
 	// this should hide the buttons and present the search bar of Pizza Time
-	self.methodManager.search = YES;
+	self.methodManager.searching = YES;
 	[self.methodManager searchBarPresent];
 	[self.view bringSubviewToFront:self.searchBar];
-	self.searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.statusBarSize.height, self.view.bounds.size.width, 60);
+	self.searchBar.frame = CGRectMake(-(self.view.bounds.size.width), self.methodManager.statusBarSize.height, self.view.bounds.size.width, 44);
 	self.searchBar.hidden = NO;
 	// set the search button alpha
 	self.searchButtonTableView.alpha = 0.5;
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the search bar going?
-						 self.searchBar.frame = CGRectMake(0, self.statusBarSize.height, self.view.bounds.size.width, 60);
+						 self.searchBar.frame = CGRectMake(0, self.methodManager.statusBarSize.height, self.view.bounds.size.width, 44);
 						 self.searchButtonTableView.alpha = 0.0;
 					 }];
 	[self.searchBar becomeFirstResponder];
 }
+
+-(void)mapButtonPressed:(UIButton *)mapButton {
+	NSLog(@"open and present the mapView here");
+//	MapKitViewController *detailViewController = (MapKitViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"mapKit"];
+//	[self.navigationController pushViewController:self.methodManager.mapKitViewController animated:YES];
+//	self.navigationController.viewControllers = @[self.navigationController.viewControllers[0], self.methodManager.mapKitViewController];
+//	[self.navigationController popToViewController:self.methodManager.mapKitViewController animated:YES];
+//[self.navigationController pushViewController:detailViewController animated:YES];
+	[self.tabBarController setSelectedIndex:MAPPAGE];
+}
+
+-(void)listButtonPressed:(UIButton *)listButton {
+	NSLog(@"refresh the listView here");
+	[self.tableView reloadData];
+}
+
 @end

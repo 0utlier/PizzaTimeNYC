@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MapKitViewController.h"
+#import <CoreLocation/CoreLocation.h>
 #import "DAO.h"
 #import "PizzaPlaceInfoViewController.h"
 #import "PizzaPlaceDirectionsViewController.h"
-//#import "AppDelegate.h"
 #import "MethodManager.h"
+@class MapKitViewController;
 
-@interface TableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface TableViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, retain) DAO *dao;
 
@@ -22,13 +22,18 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *searchButtonTableView;
 
-// added 1.13.16 attempt to load tabBar at bottom of page without map linking (currently no relationship)
-@property (weak, nonatomic) IBOutlet UITabBar *mapTabBar;
+@property (weak, nonatomic) IBOutlet UIButton *mapButtonListPage;
+@property (weak, nonatomic) IBOutlet UIButton *listButtonListPage;
 
 // for use of the avAudioPlayer & Menu Button
-//@property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) MethodManager *methodManager;
 
-@property CGSize statusBarSize;
+// refresh control
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) UIView *refreshLoadingView;
+@property (strong, nonatomic) UIView *refreshColorView;
+@property (strong, nonatomic) UIImageView *dollarImage;
+@property (strong, nonatomic) UIImageView *pizzaImage;
+
 
 @end
