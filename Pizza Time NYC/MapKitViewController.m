@@ -650,7 +650,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	// 4 // (hold gesture) add pizza OR set current
 	else if ([alertView.title isEqualToString:@"ADD NEW PLACE"]) {
 		if (buttonIndex == 1) {
-//			NSLog(@"Add new pizzaPlace to this location"); // add
+			//			NSLog(@"Add new pizzaPlace to this location"); // add
 			// create a method to use self.
 			[self.tabBarController setSelectedIndex:ADDPAGE];
 		}
@@ -671,7 +671,20 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			NSLog(@"Selected cancel");
 		}
 	}
-	// 5 and any other //
+	// 5 // (current location tapped) add pizza OR open progile
+	else if ([alertView.title isEqualToString:@"ADD A NEW PLACE"]) {
+		if (buttonIndex == 1) {
+			//			NSLog(@"Add new pizzaPlace to this location"); // add
+			[self.tabBarController setSelectedIndex:ADDPAGE];
+		}
+		else if (buttonIndex == 2)		{
+			NSLog(@"OPEN PROFILE PAGE"); // current location
+		}
+		else { //cancel
+			NSLog(@"Selected cancel");
+		}
+	}
+	// 6 and any other //
 	else {
 		if (buttonIndex == 1) {
 			NSLog(@"Please do something here - there is a problem with alertView response");
@@ -868,7 +881,15 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		else if ([view.annotation.title isEqualToString:@"Current Location"])
 		{
 			NSLog(@"user clicked on self, show two options");
+			self.newAddress = self.methodManager.locationManager.location.coordinate;
 			//maybe link to personal/profile page & add PP in current location
+			UIAlertView *alert = [[UIAlertView alloc]
+								  initWithTitle:@"ADD A NEW PLACE"
+								  message:@"Did you find a new Dollar Pizza?"
+								  delegate:self
+								  cancelButtonTitle:@"Cancel"
+								  otherButtonTitles:@"ADD NEW", @"PROFILE", nil];
+			[alert show];
 			return;
 		}
 		
