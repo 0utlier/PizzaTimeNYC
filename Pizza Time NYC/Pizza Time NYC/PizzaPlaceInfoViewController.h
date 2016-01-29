@@ -13,9 +13,6 @@
 @interface PizzaPlaceInfoViewController : UIViewController
 
 // TAB BAR Properties
-//@property (weak, nonatomic) IBOutlet UITabBar *infoTabBar;
-@property (strong, nonatomic) MethodManager *methodManager;
-//@property (strong, nonatomic) MapKitViewController *mapDirections;
 @property (strong, nonatomic) PizzaPlace *currentPizzaPlace;
 /*
 //information on PizzaPlaceInfo
@@ -33,11 +30,10 @@
 @property float distance;
 */
 
-@property (weak, nonatomic) IBOutlet UIButton *optionsButton;
+//@property (weak, nonatomic) IBOutlet UIButton *optionsButton; // removed for MM buttons
 
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;
 
-//@property (strong, nonatomic) MapKitViewController *mapKitController;
 
 - (void)setLabelValues:(PizzaPlace*)pizzaPlace;
 

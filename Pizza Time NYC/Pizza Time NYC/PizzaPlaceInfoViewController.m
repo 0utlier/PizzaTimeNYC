@@ -11,6 +11,9 @@
 
 @interface PizzaPlaceInfoViewController ()
 
+// for use of the avAudioPlayer & Menu Button
+@property (strong, nonatomic) MethodManager *methodManager;
+
 @end
 
 @implementation PizzaPlaceInfoViewController
@@ -18,11 +21,6 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.methodManager = [MethodManager sharedManager];
-//	self.mapKitController = [MapKitViewController sharedManager];
-//	self.optionsButton = [[UIButton alloc]init];
-	[self.optionsButton addTarget:self
-					  action:@selector(optionsButtonPressed:)
-			forControlEvents:UIControlEventTouchUpInside];
 
 	[self.directionsButton addTarget:self
 						   action:@selector(directionsButtonPressed:)
@@ -31,12 +29,18 @@
 
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:YES];
-	[self.navigationController setNavigationBarHidden:NO];
+//	[self.navigationController setNavigationBarHidden:NO];
+	[self assignLabels];
 }
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
+}
+
+-(void)assignLabels {// and buttons
+	[self.view addSubview:[self.methodManager assignOptionsButton]];
+	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 }
 
 - (void)setLabelValues:(PizzaPlace*)pizzaPlace {
@@ -58,14 +62,6 @@
 }
 
 #pragma mark - ACTIONS
-
-// Main initial button press
--(void)optionsButtonPressed:(UIButton *)optionsButton {
-	NSLog(@"optionsButton was pressed");
-	// this should open the options page of Pizza Time
-	[self.tabBarController setSelectedIndex:OPTIONSPAGE];
-
-}
 
 // Main initial button press
 -(void)directionsButtonPressed:(UIButton *)directionsButtonPressed {

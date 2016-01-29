@@ -14,7 +14,6 @@
 #import "PizzaPlace.h"
 #import "WebViewController.h"
 #import "PizzaPlaceInfoViewController.h"
-#import "PizzaPlaceDirectionsViewController.h"
 #import "MethodManager.h"
 
 
@@ -23,7 +22,8 @@
 // CLLocationManagerDelegate  // removed 1.21.16
 
 // DAO info and methods
-@property (nonatomic, strong) DAO *dao;
+//@property (nonatomic, strong) DAO *dao; // in viewController
+
 // here is the map
 @property (nonatomic) MKMapView *mapView;
 

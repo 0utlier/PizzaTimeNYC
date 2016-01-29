@@ -11,6 +11,8 @@
 @interface MapKitViewController ()
 
 @property (strong, nonatomic) MethodManager *methodManager;
+@property (strong, nonatomic) DAO *dao;
+@property CLLocationCoordinate2D newAddress; // used for handleLongPress
 
 @end
 
@@ -53,7 +55,8 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	
 	self.methodManager = [MethodManager sharedManager];
 	self.dao = [DAO sharedDAO];
-	[self.dao createPizzaPlaces];
+//	[self.dao createPizzaPlaces];
+	NSLog(@"my array is 3 full = %@", self.dao.pizzaPlaceArray);
 	
 	[self createMapView];
 	[self checkForLocationServicesEnabled];
@@ -83,6 +86,10 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	}
 	[self assignButtons];
 	self.methodManager.firstTimeLoaded = NO;
+	if (!self.methodManager.directionsShow) {
+		MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.methodManager.locationManager.location.coordinate radius:500];
+		[self.mapView addOverlay:circle];
+	}
 }
 
 
@@ -102,7 +109,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	[self.mapView setDelegate:self];
 	//disable rotation for compass being hidden // unsure if this is ok
 	//	self.mapView.rotateEnabled = NO;
-	
 	
 	if ([self.mapView respondsToSelector:@selector(showsCompass)]) {
 		NSLog(@"User is on ios 9");
@@ -244,11 +250,22 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 
 // what calls this?
 -(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
-	
-	MKPolylineRenderer  *routeLineRenderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
-	routeLineRenderer.strokeColor = [UIColor redColor];
-	routeLineRenderer.lineWidth = 4;
-	return routeLineRenderer;
+	if (self.methodManager.directionsShow) { // show lines directions
+		MKPolylineRenderer  *routeLineRenderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
+		routeLineRenderer.strokeColor = [UIColor redColor];
+		routeLineRenderer.lineWidth = 4;
+		return routeLineRenderer;
+		
+	}
+	else { // show radius for user
+		MKCircleRenderer *circleView = [[MKCircleRenderer alloc] initWithCircle:overlay];
+		UIColor* clr = [[UIColor alloc]initWithRed:255.0/255.0 green:201.0/255.0 blue:153.0/255.0 alpha:1.0];
+//		circleView.strokeColor = [[UIColor brownColor] colorWithAlphaComponent:0.4];
+		circleView.strokeColor = clr;
+		circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.6];
+		return circleView;
+		
+	}
 }
 
 -(void)removeCompass {
@@ -282,7 +299,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		double pizzaPlaceLat = (double)pizzaPlace.latitude;
 		double pizzaPlaceLong = (double)pizzaPlace.longitude;
 		
-		NSLog(@"findDistance lat = %f", userLocation.coordinate.latitude);
+		//		NSLog(@"findDistance lat = %f", userLocation.coordinate.latitude);
 		// assign user's location
 		double userLocationLat = (double)userLocation.coordinate.latitude;
 		double userLocationLong = (double)userLocation.coordinate.longitude;
@@ -299,9 +316,9 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		CLLocation *userLocationForDistance = [[CLLocation alloc] initWithLatitude:userLocationLat
 																		 longitude:userLocationLong];
 		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocationForDistance];
-				NSLog(@"%f AND %f", userLocationLat, userLocationLong);
+		//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
 		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
-				NSLog(@"distance in miles: %@ for %@", distanceFromUser, pizzaPlace.name);
+		//		NSLog(@"distance in miles: %@ for %@", distanceFromUser, pizzaPlace.name);
 		
 		//convert to float and then assign to pizzaPlaceDistance
 		float distanceFloat = [distanceFromUser floatValue];
@@ -508,7 +525,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
  }
  */
 
-#pragma mark - Location Services
+#pragma mark - Location Services & AlertView
 
 -(BOOL)checkForLocationServicesEnabled {	// authorized or NOT
 	if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied && self.methodManager.userLocAuth == NO)
@@ -556,47 +573,47 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		NSLog(@"do not check locServFound first time");
 		// everything is good, continue
 		return TRUE;
+	 }
+	 else {	// check bool
+	 */
+	if (!self.methodManager.userLocRemind) {
+		NSLog(@"skip me please - do not remind about not found");
+		// everything is good, continue
+		return TRUE;
 	}
-	else {	// check bool
-	*/
-		if (!self.methodManager.userLocRemind) {
-			NSLog(@"skip me please - do not remind about not found");
+	else {
+		if (self.methodManager.locationManager.location.coordinate.latitude != 0.0 || self.methodManager.locationManager.location.coordinate.longitude != 0.0) {
+			//		NSLog(@"we are finding the location...do nothing?");
 			// everything is good, continue
 			return TRUE;
 		}
 		else {
-			if (self.methodManager.locationManager.location.coordinate.latitude != 0.0 || self.methodManager.locationManager.location.coordinate.longitude != 0.0) {
-				//		NSLog(@"we are finding the location...do nothing?");
-				// everything is good, continue
-				return TRUE;
+			NSLog(@"we are NOT finding the location... ESB");
+			// no user location found = set Empire State Building as current location
+			if (self.methodManager.directionsShow) {
+				NSLog(@"showing directions, please do set region to them");
+				[self.mapView setRegion:[self regionForAnnotations] animated:NO];
 			}
 			else {
-				NSLog(@"we are NOT finding the location... ESB");
-				// no user location found = set Empire State Building as current location
-				if (self.methodManager.directionsShow) {
-					NSLog(@"showing directions, please do set region to them");
-					[self.mapView setRegion:[self regionForAnnotations] animated:NO];
-				}
-				else {
-					MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
-					[self.mapView setRegion:region animated:YES];
-				}
-				NSLog(@"Location Services Not Working");
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Cannot Find You"
-																message:@"We have set your location as the Empire State Building, until you enable your location!"
-															   delegate:self
-													  cancelButtonTitle:@"Cool"
-													  otherButtonTitles:@"Remind Me", nil];
-				[alert show];
-				return FALSE;
+				MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
+				[self.mapView setRegion:region animated:YES];
 			}
+			NSLog(@"Location Services Not Working");
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service Cannot Find You"
+															message:@"We have set your location as the Empire State Building, until you enable your location!"
+														   delegate:self
+												  cancelButtonTitle:@"Cool"
+												  otherButtonTitles:@"Remind Me", nil];
+			[alert show];
+			return FALSE;
 		}
-//	}
+	}
+	//	}
 }
 
 // bring user to settings of Pizza Time (stock settings)
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	// 1 // found
+	// 1 // location not found
 	if ([alertView.title isEqualToString:@"Location Service Cannot Find You"]) {
 		if (buttonIndex == 1) {
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
@@ -607,7 +624,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			self.methodManager.userLocRemind = NO;
 		}
 	}
-	// 2 // autho
+	// 2 // location not authorized
 	else if ([alertView.title isEqualToString:@"Location Service Disabled"]) {
 		//	NSLog(@"%ld", (long)buttonIndex);
 		if (buttonIndex == 1) {
@@ -619,7 +636,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			self.methodManager.userLocAuth = YES;
 		}
 	}
-	// 3 // internet
+	// 3 // internet troubles
 	else if ([alertView.title isEqualToString:@"Cannot Connect To Internet"]) {
 		//	NSLog(@"%ld", (long)buttonIndex);
 		if (buttonIndex == 1) {
@@ -630,32 +647,56 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			// enter audio BUMMMMMMMERRRRR
 		}
 	}
-	// 4 and any other //
+	// 4 // (hold gesture) add pizza OR set current
+	else if ([alertView.title isEqualToString:@"ADD NEW PLACE"]) {
+		if (buttonIndex == 1) {
+//			NSLog(@"Add new pizzaPlace to this location"); // add
+			// create a method to use self.
+			[self.tabBarController setSelectedIndex:ADDPAGE];
+		}
+		else if (buttonIndex == 2)		{
+			NSLog(@"Set this location as current"); // current location
+			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.newAddress, 800, 800);
+			// add annotation pin for result? //ensure it goes away after the map is left
+			[self.mapView setRegion:region animated:YES];
+			MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.newAddress radius:300];
+			[self.mapView addOverlay:circle];
+			CLLocation *newLocation = [[CLLocation alloc]initWithLatitude:self.newAddress.latitude longitude:self.newAddress.longitude];
+			self.methodManager.searchSubmit = YES; //setting new address
+			[self findDistance:newLocation];
+			[self sortByDistanceForClosest];
+			self.methodManager.searchSubmit = NO; // no longer setting new address
+		}
+		else { //cancel
+			NSLog(@"Selected cancel");
+		}
+	}
+	// 5 and any other //
 	else {
 		if (buttonIndex == 1) {
-			NSLog(@"Please do something here - there is a problem with alertView");
+			NSLog(@"Please do something here - there is a problem with alertView response");
 		}
 		else {
-			NSLog(@"Please do something here - there is a problem with alertView options");
+			NSLog(@"Please do something here - there is a problem with alertView response");
 		}
 	}
 }
 /*
-- (void) createManhattan {
+ - (void) createManhattan {
  NSArray *coordinateData = [NSArray alloc]initWithObjects:@(-74.0207291,40.6985354), (-73.9730072,40.70979200000001), (-73.9668274,40.7410143), (-73.9215088,40.7909394), (-73.7882996,40.8002962), (-73.8102722,40.8595252), (-73.9215088,40.8989819), (-74.0093994,40.7610408), (-74.0207291,40.6985354), nil];
-}
-
-int coordsLen = [coordinateData count];
-CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D) * coordsLen);
-for (int i=0; i < coordsLen; i++)
-{
+ }
+ 
+ int coordsLen = [coordinateData count];
+ CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D) * coordsLen);
+ for (int i=0; i < coordsLen; i++)
+ {
 	YourCustomObj *coordObj = (YourCustomObj *)[coordinateData objectAtIndex:i];
 	coords[i] = CLLocationCoordinate2DMake(coordObj.latitude, coordObj.longitude);
-}
-MKPolygon *polygon = [MKPolygon polygonWithCoordinates:coords count:coordsLen];
-free(coords);
-[mapView addOverlay:polygon];
-*/
+ }
+ MKPolygon *polygon = [MKPolygon polygonWithCoordinates:coords count:coordsLen];
+ free(coords);
+ [mapView addOverlay:polygon];
+ */
 
 #pragma mark - Custom Annotations
 
@@ -813,8 +854,6 @@ free(coords);
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-	//	PizzaPlaceInfoViewController *detailViewController = (PizzaPlaceInfoViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"PizzaPlaceInfoViewController"];
-	
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		if ([pizzaPlace.name isEqualToString:view.annotation.title]) {
 			//			NSLog(@"my annotation %@ and my location %@",view.annotation.title, pizzaPlace.name);
@@ -927,7 +966,9 @@ free(coords);
 -(void)currentLocationButtonPressed {
 	NSLog(@"Current Location button was pressed");
 	// this should zoom in on current location again, if not found = ESB
-	
+	NSArray *pointsArray = [self.mapView overlays];
+	[self.mapView removeOverlays:pointsArray];
+
 	if (![self checkForLocationServicesEnabled]) return;
 	if (![self checkForLocationServicesFound]) return;
 	
@@ -939,13 +980,13 @@ free(coords);
 		}
 		else {// not directions, just show userLocation
 			[self.mapView setRegion:MKCoordinateRegionMake(self.methodManager.locationManager.location.coordinate, MKCoordinateSpanMake(0.05f, 0.05f)) animated:YES];
+			MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.methodManager.locationManager.location.coordinate radius:500];
+			[self.mapView addOverlay:circle];
 		}
-		// removed after locationManager moved to methodManager
-		//			self.methodManager.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
 		// we have found the user
 		userLocationShown = YES;
-		
-		[self.methodManager.locationManager startUpdatingLocation];
+		// moved to MM 1.27.16
+		//		[self.methodManager.locationManager startUpdatingLocation];
 		[self findDistance:self.methodManager.locationManager.location];
 	}
 	else {
@@ -965,33 +1006,47 @@ free(coords);
 
 -(void)handleLongPressGesture:(UIGestureRecognizer*)sender {
 	// This is important if you only want to receive one tap and hold event
-	if (sender.state == UIGestureRecognizerStateEnded)
+	if (sender.state == UIGestureRecognizerStateBegan)
 	{
+		//		NSLog(@"longPress state began");
 		// removed 1.15.16 thinking this is why only 1
 		//		[self.mapView removeGestureRecognizer:sender];
 	}
-	else
-	{
+	else if (sender.state == UIGestureRecognizerStateEnded){
+		UIAlertView *alert = [[UIAlertView alloc]
+							  initWithTitle:@"ADD NEW PLACE"
+							  message:@"Did you find a new Dollar Pizza?"
+							  delegate:self
+							  cancelButtonTitle:@"Cancel"
+							  otherButtonTitles:@"ADD NEW", @"Set as my Current Location", nil];
+		[alert show];
+		
 		// Here we get the CGPoint for the touch and convert it to latitude and longitude coordinates to display on the map
 		CGPoint point = [sender locationInView:self.mapView];
-		CLLocationCoordinate2D locCoord = [self.mapView convertPoint:point toCoordinateFromView:self.mapView];
+		self.newAddress = [self.mapView convertPoint:point toCoordinateFromView:self.mapView];
 		// Then all you have to do is create the annotation and add it to the map
 		//		MKAnnotation *dropPin = [[MKAnnotation	alloc] init];
-		//		dropPin.latitude = [NSNumber numberWithDouble:locCoord.latitude];
-		//		dropPin.longitude = [NSNumber numberWithDouble:locCoord.longitude];
+		//		dropPin.latitude = [NSNumber numberWithDouble:newAddress.latitude];
+		//		dropPin.longitude = [NSNumber numberWithDouble:newAddress.longitude];
 		//		[self.mapView addAnnotation:dropPin];
 		
-		CLLocationCoordinate2D centerCoordinate;
-		centerCoordinate.latitude = (CLLocationDegrees)locCoord.latitude;
-		centerCoordinate.longitude = (CLLocationDegrees)locCoord.longitude;
+		// removed 1.27.16 - my code not necessary
+		//		CLLocationCoordinate2D centerCoordinate;
+		//		centerCoordinate.latitude = (CLLocationDegrees)newAddress.latitude;
+		//		centerCoordinate.longitude = (CLLocationDegrees)newAddress.longitude;
 		MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-		[annotation setCoordinate:centerCoordinate];
+		[annotation setCoordinate:self.newAddress];
 		[annotation setTitle:@"You Found Me"]; //You can set the subtitle too
 		[annotation setSubtitle:@"Are you my mother?"];
 		[self.mapView addAnnotation:annotation];
 		// this will be the two options ken wants
-		NSLog(@"found new PP with lat = %f and long = %f", locCoord.latitude, locCoord.longitude);
+		NSLog(@"found new PP with lat = %f and long = %f", self.newAddress.latitude, self.newAddress.longitude);
 		//If we keep this, add the values to an array of places, so that it will not only reload next time, it can be added to the dataBase
+		/*
+		 save the newAddress as a property
+		 (currentSelection or currentAddress - to be used with search as well)
+		 then in response to uilertview, use property to create place or set as current address
+		 */
 		
 	}
 }

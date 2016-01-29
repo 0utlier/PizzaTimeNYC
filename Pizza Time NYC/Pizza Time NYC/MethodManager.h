@@ -42,6 +42,7 @@
  searchSubmit 1.26.16
  created in MM
  TV searchSubmit YES for distance(checked), NO after
+ MK searchSubmit YES for distance(checked), NO after
  
  directionsShow 1.21.16
  created in MM

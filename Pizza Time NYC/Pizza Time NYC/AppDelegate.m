@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
@@ -19,7 +20,15 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+	[Parse enableLocalDatastore];
+ 
+	// Initialize Parse.
+	[Parse setApplicationId:@"NLAQXfcYujYfkDsKgXWORO43zpNGL3AixEKyySo1"
+				  clientKey:@"lkcffBSUCUInJOwJx4KHwvc7OrTjo8j02e1LCZBJ"];
+ 
+	// [Optional] Track statistics around application opens.
+	[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+	
 	MethodManager *methodManager = [[MethodManager alloc]init];
 	[methodManager createPlayer];
 	return YES;

@@ -11,6 +11,104 @@
 @implementation DAO
 
 
+-(void) downloadParse {
+	// unsure of what to type to return here
+	// check if object exists, if so, update,
+	// if not, create
+	// ?iterate through and create PP instance for place
+	PFQuery *query = [PFQuery queryWithClassName:@"PizzaPlaceParse"];
+	//	[query whereKey:@"playerName" equalTo:@"Dan Stemkoski"];
+	
+	// Sorts the results in ascending order by the score field
+	[query orderByAscending:@"zip"];
+	[query findObjectsInBackgroundWithBlock:^(NSArray *parseArray, NSError *error) {
+		if (!error) {
+			// The find succeeded.
+			NSLog(@"Successfully retrieved %lu pizzaPlaces.", (unsigned long)parseArray.count);
+			// Do something with the found objects
+			PizzaPlace *pizzaPlace = nil;
+			for (PFObject *pizzaPlaceParse in parseArray) {
+				
+				pizzaPlace = [[PizzaPlace alloc]init]; // allocate the new instance
+				// assign its values from the objects
+				pizzaPlace.name = pizzaPlaceParse[@"name"];
+				pizzaPlace.address = pizzaPlaceParse[@"address"];
+				pizzaPlace.city = pizzaPlaceParse[@"city"];
+				pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
+				pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
+				pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
+				
+				//					NSLog(@"%@", pizzaPlace.name);
+				//					NSLog(@"%f", pizzaPlace.latitude);
+				[self.pizzaPlaceArray addObject:pizzaPlace];
+				[pizzaPlaceParse pinInBackground]; // this is for local Storage
+				//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
+			}
+		}
+		else {
+			// Log details of the failure
+			NSLog(@"Error: %@ %@", error, [error userInfo]);
+		}
+	}];
+}
+
+- (NSMutableArray *) pizzaPlaceArray {
+	if (!_pizzaPlaceArray) {
+		_pizzaPlaceArray = [NSMutableArray new];
+	}
+	return _pizzaPlaceArray;
+}
+
+-(void) fromLocalData {
+	PFQuery *query = [PFQuery queryWithClassName:@"PizzaPlaceParse"];
+	[query fromLocalDatastore];
+	[query findObjectsInBackgroundWithBlock:^(NSArray *parseArray, NSError *error) {
+		if (!error) {
+			// The find succeeded.
+			NSLog(@"Successfully retrieved %lu pizzaPlaces.", (unsigned long)parseArray.count);
+			// Do something with the found objects
+			PizzaPlace *pizzaPlace = nil;
+			for (PFObject *pizzaPlaceParse in parseArray) {
+				
+				pizzaPlace = [[PizzaPlace alloc]init]; // allocate the new instance
+				// assign its values from the objects
+				pizzaPlace.name = pizzaPlaceParse[@"name"];
+				pizzaPlace.address = pizzaPlaceParse[@"address"];
+				pizzaPlace.city = pizzaPlaceParse[@"city"];
+				pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
+				pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
+				pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
+				
+				//					NSLog(@"%@", pizzaPlace.name);
+				//					NSLog(@"%f", pizzaPlace.latitude);
+				[self.pizzaPlaceArray addObject:pizzaPlace];
+				//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
+			}
+		}
+		else {
+			// Log details of the failure
+			NSLog(@"Error: %@ %@", error, [error userInfo]);
+		}
+		if (parseArray == nil || parseArray.count == 0) {
+			[self downloadParse];
+		}
+	}];
+}
+
+-(void) saveParse {
+	
+	PFObject *testObjectPizza = [PFObject objectWithClassName:@"PizzaPlaceParse"];
+	testObjectPizza[@"name"] = @"Two Bros 32 St. Marks";
+	testObjectPizza[@"address"] = @"32 Saint Marks Place New York NY 10003";
+	testObjectPizza[@"street"] = @"32 Saint Marks Place";
+	testObjectPizza[@"city"] = @"New York NY";
+	testObjectPizza[@"zip"] = @10003;
+	testObjectPizza[@"latitude"] =	@40.728677;
+	testObjectPizza[@"longitude"] =	@-73.988488;
+	[testObjectPizza saveInBackground];
+	
+}
+
 -(void)createPizzaPlaces
 {
 	if (!self.pizzaPlaceArray) {// if data has not loaded, load. Else, ...
@@ -150,7 +248,7 @@
 		// do not forget to add to array
 		
 		
-		self.pizzaPlaceArray = [[NSMutableArray alloc]initWithArray:@[tb32_stMarks, tb542_9thAve, tb601_6thAve, tb557_8thAve, tb31_46thSt, tb755_6thAve, tb319_6thAve, vinnyVincenz, nn1723_broad, nn201_34thSt, nn151_43rdSt]];
+		//		self.pizzaPlaceArray = [[NSMutableArray alloc]initWithArray:@[tb32_stMarks, tb542_9thAve, tb601_6thAve, tb557_8thAve, tb31_46thSt, tb755_6thAve, tb319_6thAve, vinnyVincenz, nn1723_broad, nn201_34thSt, nn151_43rdSt]];
 		//			NSLog(@"PizzaPlaceArray:%@", self.pizzaPlaceArray);
 	}
 	else

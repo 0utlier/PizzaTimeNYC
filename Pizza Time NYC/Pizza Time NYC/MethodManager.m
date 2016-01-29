@@ -71,7 +71,14 @@ static AVAudioPlayer *p;
 
 - (void)createLocationManager {
 	self.locationManager = [[CLLocationManager alloc]init];
-	[self.locationManager requestWhenInUseAuthorization];
+	if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+//		NSLog(@"User is on ios 8 or 9");
+		[self.locationManager requestWhenInUseAuthorization];
+		[self.locationManager startUpdatingLocation];
+	}
+	else {
+		NSLog(@"User's iOS < iOS 8 or 9");
+	}
 	[self.locationManager setDelegate:self];
 //	[self.locationManager setDistanceFilter:kCLDistanceFilterNone ]; //whenever we move
 	[self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];

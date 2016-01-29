@@ -25,6 +25,7 @@
 		99D629811C2F690700B49E26 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D629801C2F690700B49E26 /* WebViewController.m */; };
 		AA3E83B41C456E0300C12D35 /* MethodManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3E83B31C456E0300C12D35 /* MethodManager.m */; };
 		AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4B39B31C3DD8750086DB81 /* Main.storyboard */; };
+		AA56719C1C5B1E0100D40F67 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA56719B1C5B1E0100D40F67 /* Parse.framework */; };
 		AA62186D1C502E9400F759DA /* LocationAlphaPizza.png in Resources */ = {isa = PBXBuildFile; fileRef = AA62186C1C502E9400F759DA /* LocationAlphaPizza.png */; };
 		AA71E9091C2B32E400FA48F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9081C2B32E400FA48F6 /* main.m */; };
 		AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90B1C2B32E500FA48F6 /* AppDelegate.m */; };
@@ -45,7 +46,6 @@
 		AA8E228B1C41B2830018ABE8 /* tmntBikePizza.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA8E228A1C41B2830018ABE8 /* tmntBikePizza.jpg */; };
 		AA8E228E1C41B2BF0018ABE8 /* OptionsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8E228D1C41B2BF0018ABE8 /* OptionsPage.m */; };
 		AA8E22911C41B3930018ABE8 /* tmntBikePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA8E22901C41B3920018ABE8 /* tmntBikePizza.gif */; };
-		AA9FDF4F1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9FDF4E1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m */; };
 		AAA7C1EC1C402B6E00EE8B43 /* speaker30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7C1EA1C402B6E00EE8B43 /* speaker30.png */; };
 		AAA7C1ED1C402B6E00EE8B43 /* speakerCross30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7C1EB1C402B6E00EE8B43 /* speakerCross30.png */; };
 		AAA7C1EF1C40315300EE8B43 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */; };
@@ -59,6 +59,8 @@
 		AAAC939F1C499ECE00D3AC6B /* MCQTabBarLIST.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC939D1C499ECE00D3AC6B /* MCQTabBarLIST.png */; };
 		AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAP.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAP.png */; };
 		AAB11A701C51ABA50058BC9C /* AddNewPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */; };
+		AAB54B8B1C5AB575003A7C59 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB54B891C5AB575003A7C59 /* Bolts.framework */; };
+		AAB54B8F1C5ABDA9003A7C59 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB54B8E1C5ABDA9003A7C59 /* libsqlite3.0.tbd */; };
 		AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */; };
 		AAB67BF51C4EA2AF0087F151 /* dollarBill60.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF41C4EA2AF0087F151 /* dollarBill60.png */; };
 		AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */; };
@@ -130,6 +132,7 @@
 		AA3E83B21C456E0300C12D35 /* MethodManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodManager.h; sourceTree = "<group>"; };
 		AA3E83B31C456E0300C12D35 /* MethodManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodManager.m; sourceTree = "<group>"; };
 		AA4B39B41C3DD8750086DB81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AA56719B1C5B1E0100D40F67 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Pizza Time NYC/Parse.framework"; sourceTree = "<group>"; };
 		AA62186C1C502E9400F759DA /* LocationAlphaPizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocationAlphaPizza.png; sourceTree = "<group>"; };
 		AA71E9041C2B32E400FA48F6 /* Pizza Time NYC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pizza Time NYC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA71E9081C2B32E400FA48F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -160,8 +163,6 @@
 		AA8E228C1C41B2BF0018ABE8 /* OptionsPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsPage.h; sourceTree = "<group>"; };
 		AA8E228D1C41B2BF0018ABE8 /* OptionsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsPage.m; sourceTree = "<group>"; };
 		AA8E22901C41B3920018ABE8 /* tmntBikePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = tmntBikePizza.gif; sourceTree = "<group>"; };
-		AA9FDF4D1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PizzaPlaceDirectionsViewController.h; sourceTree = "<group>"; };
-		AA9FDF4E1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PizzaPlaceDirectionsViewController.m; sourceTree = "<group>"; };
 		AAA7C1EA1C402B6E00EE8B43 /* speaker30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speaker30.png; sourceTree = "<group>"; };
 		AAA7C1EB1C402B6E00EE8B43 /* speakerCross30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speakerCross30.png; sourceTree = "<group>"; };
 		AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -176,6 +177,8 @@
 		AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQTabBarMAP.png; sourceTree = "<group>"; };
 		AAB11A6E1C51ABA50058BC9C /* AddNewPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewPlace.h; sourceTree = "<group>"; };
 		AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewPlace.m; sourceTree = "<group>"; };
+		AAB54B891C5AB575003A7C59 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		AAB54B8E1C5ABDA9003A7C59 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dollarBill.jpg; sourceTree = "<group>"; };
 		AAB67BF41C4EA2AF0087F151 /* dollarBill60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollarBill60.png; sourceTree = "<group>"; };
 		AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizza29Alpha.png; sourceTree = "<group>"; };
@@ -214,6 +217,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA56719C1C5B1E0100D40F67 /* Parse.framework in Frameworks */,
+				AAB54B8F1C5ABDA9003A7C59 /* libsqlite3.0.tbd in Frameworks */,
+				AAB54B8B1C5AB575003A7C59 /* Bolts.framework in Frameworks */,
 				AAA7C1EF1C40315300EE8B43 /* AVFoundation.framework in Frameworks */,
 				AA71E93E1C2B486A00FA48F6 /* MapKit.framework in Frameworks */,
 			);
@@ -288,6 +294,7 @@
 		AA71E8FB1C2B32E400FA48F6 = {
 			isa = PBXGroup;
 			children = (
+				AA56719B1C5B1E0100D40F67 /* Parse.framework */,
 				AA71E9061C2B32E400FA48F6 /* Pizza Time NYC */,
 				AA71E9231C2B32E500FA48F6 /* Pizza Time NYCTests */,
 				AA71E92E1C2B32E500FA48F6 /* Pizza Time NYCUITests */,
@@ -318,18 +325,16 @@
 				99447E3B1C31B00D00260B8E /* InfoPage */,
 				998B96871C32052900DC8EB7 /* Apple Reachability */,
 				AACDE94E1C3DAB54004EF963 /* PizzaPlaceInfoViewController */,
-				AA9FDF501C3DE7BE00303E48 /* PizzaPlaceDirectionsViewController */,
 				AA8E228F1C41B30A0018ABE8 /* OptionsPage */,
 				AA3E83B51C456E1C00C12D35 /* MethodManager */,
 				AAB11A711C51ACFA0058BC9C /* AddNewPlace */,
 				AA4B39B31C3DD8750086DB81 /* Main.storyboard */,
 				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
-				AA71E9161C2B32E500FA48F6 /* Assets.xcassets */,
-				AA71E91B1C2B32E500FA48F6 /* Info.plist */,
 				AA71E9071C2B32E400FA48F6 /* Supporting Files */,
-				AA71E93D1C2B486A00FA48F6 /* MapKit.framework */,
-				AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */,
+				AAB54B8D1C5AB57F003A7C59 /* Frameworks */,
+				AA71E91B1C2B32E500FA48F6 /* Info.plist */,
 				99260E031C2DD4DD00EFB125 /* Images.xcassets */,
+				AA71E9161C2B32E500FA48F6 /* Assets.xcassets */,
 				AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */,
 			);
 			path = "Pizza Time NYC";
@@ -454,15 +459,6 @@
 			name = OptionsPage;
 			sourceTree = "<group>";
 		};
-		AA9FDF501C3DE7BE00303E48 /* PizzaPlaceDirectionsViewController */ = {
-			isa = PBXGroup;
-			children = (
-				AA9FDF4D1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.h */,
-				AA9FDF4E1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m */,
-			);
-			name = PizzaPlaceDirectionsViewController;
-			sourceTree = "<group>";
-		};
 		AAB11A711C51ACFA0058BC9C /* AddNewPlace */ = {
 			isa = PBXGroup;
 			children = (
@@ -470,6 +466,17 @@
 				AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */,
 			);
 			name = AddNewPlace;
+			sourceTree = "<group>";
+		};
+		AAB54B8D1C5AB57F003A7C59 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AAB54B8E1C5ABDA9003A7C59 /* libsqlite3.0.tbd */,
+				AA71E93D1C2B486A00FA48F6 /* MapKit.framework */,
+				AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */,
+				AAB54B891C5AB575003A7C59 /* Bolts.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		AACB1BC91C3B218E0069E947 /* TableViewController */ = {
@@ -507,8 +514,8 @@
 			buildConfigurationList = AA71E9341C2B32E500FA48F6 /* Build configuration list for PBXNativeTarget "Pizza Time NYC" */;
 			buildPhases = (
 				AA71E9001C2B32E400FA48F6 /* Sources */,
-				AA71E9011C2B32E400FA48F6 /* Frameworks */,
 				AA71E9021C2B32E400FA48F6 /* Resources */,
+				AA71E9011C2B32E400FA48F6 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -705,7 +712,6 @@
 				AACDE94D1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.m in Sources */,
 				AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */,
 				99447E3A1C31B00200260B8E /* InfoPage.m in Sources */,
-				AA9FDF4F1C3DE78800303E48 /* PizzaPlaceDirectionsViewController.m in Sources */,
 				998B96861C32052300DC8EB7 /* Reachability.m in Sources */,
 				AA71E9091C2B32E400FA48F6 /* main.m in Sources */,
 				AA3E83B41C456E0300C12D35 /* MethodManager.m in Sources */,
@@ -780,6 +786,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -802,6 +809,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lsqlite3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -824,6 +832,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -839,6 +848,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-lsqlite3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -851,10 +861,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pizza",
+					Time,
+					NYC,
+					"$(PROJECT_DIR)/Pizza",
+					Time,
+					NYC,
+				);
 				INFOPLIST_FILE = "Pizza Time NYC/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.7;
+				OTHER_LDFLAGS = "-lsqlite3";
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -865,10 +885,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pizza",
+					Time,
+					NYC,
+					"$(PROJECT_DIR)/Pizza",
+					Time,
+					NYC,
+				);
 				INFOPLIST_FILE = "Pizza Time NYC/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.7;
+				OTHER_LDFLAGS = "-lsqlite3";
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

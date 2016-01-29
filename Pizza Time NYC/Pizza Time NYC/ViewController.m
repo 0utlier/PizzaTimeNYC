@@ -13,6 +13,7 @@
 
 // for use of the avAudioPlayer & Menu Button
 @property (strong, nonatomic) MethodManager *methodManager;
+@property (strong, nonatomic) DAO *dao;
 
 @end
 
@@ -40,20 +41,24 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	self.methodManager.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
 	[self.methodManager createLocationManager];
 	[self.methodManager createEmpireStateBuilding];
+	self.dao = [DAO sharedDAO];
+	[self.dao fromLocalData];
 	//	[self checkInternet]; //comment back in when ready to fix
 	[self buildNumberInfo];
+	UIImageView *pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
+	pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
+	[self.view addSubview:pizzaTimeLogo];
 
-	[self assignLabels];
-	[self assignSounds];
-	[self assignColors];
 	[self assignSlices];
 	
 }
 
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self.navigationController setNavigationBarHidden:YES];
+//	[self.navigationController setNavigationBarHidden:YES]; // removed 1.26.16 no more nav bar to worry about
+	[self assignLabels];
 	countHomePage+=1;
+	[self assignColors];
 	if(firstTimeLoadedHomePage) {
 		// do what occurs AFTER first time
 	}
@@ -69,11 +74,19 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:YES];
+//	[self.pizzaTimeLogo removeFromSuperview];
+}
+
 -(void)assignLabels {// and buttons
-	
-	UIImageView *pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
-	pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
-	[self.view addSubview:pizzaTimeLogo];
+
+	[self.view addSubview:[self.methodManager assignSpeakerButton]];
+
+//	self.pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
+//	self.pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
+//	[self.view addSubview:self.pizzaTimeLogo];
+
 	//	UIImage *pizzaButtonImage = [UIImage imageNamed:@"pizzaPepperoni300.png"];
 	//	[self.pizzaTimeButton setBackgroundImage:pizzaButtonImage forState:UIControlStateNormal];
 	//
@@ -89,7 +102,6 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	
 	//remove the optionsButton, since we are on the options page
 	//	[self.view addSubview:[self.methodManager assignOptionsButton]];
-	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	
 	// Add an action in current code file (i.e. target)
 	//	[self.pizzaTimeButton addTarget:self
@@ -126,75 +138,62 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 }
 
 -(void)assignSlices {
-	CGSize screenSize = self.view.bounds.size;
+	self.screenSize = self.view.bounds.size;
 	
-	UIButton *leftB = [[UIButton alloc]initWithFrame:CGRectMake((screenSize.width/6), (screenSize.height/4)*3, screenSize.width/3, screenSize.height/6)];
+	self.leftB = [[UIButton alloc]initWithFrame:CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6)];
 	// Add an action in current code file (i.e. target)
-	[leftB addTarget:self
-			  action:@selector(leftBPressed:)
-	forControlEvents:UIControlEventTouchUpInside];
-	[leftB setBackgroundImage:[UIImage imageNamed:@"MCQSliceLEFTb.png"] forState:UIControlStateNormal];
-	[self.view addSubview:leftB];
+	[self.leftB addTarget:self
+				   action:@selector(leftBPressed:)
+		 forControlEvents:UIControlEventTouchUpInside];
+	[self.leftB setBackgroundImage:[UIImage imageNamed:@"MCQSliceLEFTb.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.leftB];
 	
 	
-	UIButton *rightB = [[UIButton alloc]initWithFrame:CGRectMake((screenSize.width/2), (screenSize.height/4)*3, screenSize.width/3, screenSize.height/6)];
+	self.rightB = [[UIButton alloc]initWithFrame:CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6)];
 	// Add an action in current code file (i.e. target)
-	[rightB addTarget:self
-			   action:@selector(rightBPressed:)
-	 forControlEvents:UIControlEventTouchUpInside];
-	[rightB setBackgroundImage:[UIImage imageNamed:@"MCQSliceRIGHTb.png"] forState:UIControlStateNormal];
-	[self.view addSubview:rightB];
+	[self.rightB addTarget:self
+					action:@selector(rightBPressed:)
+		  forControlEvents:UIControlEventTouchUpInside];
+	[self.rightB setBackgroundImage:[UIImage imageNamed:@"MCQSliceRIGHTb.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.rightB];
 	
 	
-	UIButton *leftT = [[UIButton alloc]initWithFrame:CGRectMake((screenSize.width/6), (screenSize.height/4)*3 - (screenSize.height/6), screenSize.width/3, screenSize.height/6)];
+	self.leftT = [[UIButton alloc]initWithFrame:CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6)];
 	// Add an action in current code file (i.e. target)
-	[leftT addTarget:self
-			  action:@selector(leftTPressed:)
-	forControlEvents:UIControlEventTouchUpInside];
-	[leftT setBackgroundImage:[UIImage imageNamed:@"MCQSliceLEFTt.png"] forState:UIControlStateNormal];
-	[self.view addSubview:leftT];
+	[self.leftT addTarget:self
+				   action:@selector(leftTPressed:)
+		 forControlEvents:UIControlEventTouchUpInside];
+	[self.leftT setBackgroundImage:[UIImage imageNamed:@"MCQSliceLEFTt.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.leftT];
 	
 	
-	UIButton *rightT = [[UIButton alloc]initWithFrame:CGRectMake((screenSize.width/2), (screenSize.height/4)*3 - (screenSize.height/6), screenSize.width/3, screenSize.height/6)];
+	self.rightT = [[UIButton alloc]initWithFrame:CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6)];
 	// Add an action in current code file (i.e. target)
-	[rightT addTarget:self
-			   action:@selector(rightTPressed:)
-	 forControlEvents:UIControlEventTouchUpInside];
-	[rightT setBackgroundImage:[UIImage imageNamed:@"MCQSliceRIGHTt.png"] forState:UIControlStateNormal];
-	[self.view addSubview:rightT];
+	[self.rightT addTarget:self
+					action:@selector(rightTPressed:)
+		  forControlEvents:UIControlEventTouchUpInside];
+	[self.rightT setBackgroundImage:[UIImage imageNamed:@"MCQSliceRIGHTt.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.rightT];
 	
 	
-	UIButton *top = [[UIButton alloc]initWithFrame:CGRectMake(((screenSize.width/2) - (screenSize.width/6)), (7*(screenSize.height/12) - 15), screenSize.width/3, screenSize.height/6)];
+	self.top = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6)];
 	// Add an action in current code file (i.e. target)
-	[top addTarget:self
-			action:@selector(topPressed:)
-	 forControlEvents:UIControlEventTouchUpInside];
-	[top setBackgroundImage:[UIImage imageNamed:@"MCQSliceTOP.png"] forState:UIControlStateNormal];
-	[self.view addSubview:top];
+	[self.top addTarget:self
+				 action:@selector(topPressed:)
+	   forControlEvents:UIControlEventTouchUpInside];
+	[self.top setBackgroundImage:[UIImage imageNamed:@"MCQSliceTOP.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.top];
 	
 	
-	UIButton *bottom = [[UIButton alloc]initWithFrame:CGRectMake(((screenSize.width/2) - (screenSize.width/6)), (3*(screenSize.height/4) + 15), screenSize.width/3, screenSize.height/6)];
+	self.bottom = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (3*(self.screenSize.height/4) + 15), self.screenSize.width/3, self.screenSize.height/6)];
 	// Add an action in current code file (i.e. target)
-	[bottom addTarget:self
-			   action:@selector(bottomPressed:)
-	 forControlEvents:UIControlEventTouchUpInside];
-	[bottom setBackgroundImage:[UIImage imageNamed:@"MCQSliceBOTTOM.png"] forState:UIControlStateNormal];
-	[self.view addSubview:bottom];
-	
+	[self.bottom addTarget:self
+					action:@selector(bottomPressed:)
+		  forControlEvents:UIControlEventTouchUpInside];
+	[self.bottom setBackgroundImage:[UIImage imageNamed:@"MCQSliceBOTTOM.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.bottom];
 }
 
--(void)assignSounds {
-	if (self.methodManager.audioPlayer.rate == 0.0) {
-		NSString *backgroundMusicPath = [[NSBundle mainBundle]pathForResource:@"pizzaMusic" ofType:@"mp3"];
-		if (!self.methodManager.audioPlayer) {
-			self.methodManager.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:backgroundMusicPath] error:NULL];
-		}
-		self.methodManager.audioPlayer.numberOfLoops = -1; // -1 is infinite loops
-	}
-	else {
-		//		NSLog(@"You've already created the player!");
-	}
-}
 
 -(void)buildNumberInfo {
 	NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -214,13 +213,13 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	// assign background color to change
 	switch (countHomePage%3) {
 		case 0:
-			//					NSLog(@"count is 0 - set orange");
-			self.view.backgroundColor = orangeMCQ;
+			//					NSLog(@"count is 0 - set blue");
+			self.view.backgroundColor = blueMCQ;
 			countHomePage +=1;
 			break;
 		case 1:
-			//					NSLog(@"Count is 1 - set blue");
-			self.view.backgroundColor = blueMCQ;
+			//					NSLog(@"Count is 1 - set orange");
+			self.view.backgroundColor = orangeMCQ;
 			countHomePage +=1;
 			break;
 		case 2:
@@ -243,12 +242,12 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 
 #pragma mark - ACTIONS
 /*
-// Main initial button press
--(void)pizzaTimeButtonPressed:(UIButton *)pizzaTimeButton {
+ // Main initial button press
+ -(void)pizzaTimeButtonPressed:(UIButton *)pizzaTimeButton {
 	NSLog(@"PizzaTimebutton was pressed");
 	// this should open the MAP VIEW of Pizza Time
-}
-*/
+ }
+ */
 
 // this should disable and enable the sound of the app
 //-(void)speakerButtonPressed:(UIButton *)speakerButton {
@@ -265,57 +264,99 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 //}
 
 /*
-// this should show the menu page
--(void)optionsButtonPressed:(UIButton *)optionsButton {
+ // this should show the menu page
+ -(void)optionsButtonPressed:(UIButton *)optionsButton {
 	NSLog(@"optionsButton was pressed");
 	// this should open the options page of Pizza Time
 	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionsPage"];
 	[self.navigationController pushViewController:detailViewController animated:YES];
-}
-*/
+ }
+ */
 
 #pragma mark - ACTIONS Slices
+/*
+ nslog whats opening
+ animate: set new location
+ complete: open page
+ set frame back to original
+ */
+
 -(void)leftBPressed:(UIButton *)leftBButton {
 	//	NSLog(@"Open the LIST");
-//	TableViewController *detailViewController = (TableViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"listView"];
-//	[self.navigationController pushViewController:detailViewController animated:YES];
-	[self.tabBarController setSelectedIndex:LISTPAGE];
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 // where is the button going?
+						 self.leftB.frame = CGRectMake((self.screenSize.width/12)*-1, (self.screenSize.height/6)*5, self.screenSize.width/3, self.screenSize.height/6);
+					 }completion:^(BOOL finished) { //when finished, load the page
+						 [self.tabBarController setSelectedIndex:LISTPAGE];
+						 self.leftB.frame = CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
+					 }];
 }
 
 -(void)rightBPressed:(UIButton *)rightBButton {
 	NSLog(@"Open the FEEDBACK");
-//	[self.tabBarController setSelectedIndex:FEEDBACKPAGE];
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 // where is the button going?
+						 self.rightB.frame = CGRectMake((self.screenSize.width/4)*3, (self.screenSize.height/6)*5, self.screenSize.width/3, self.screenSize.height/6);
+						 //						 self.rightB.alpha = 0.0;
+					 }completion:^(BOOL finished) { //when finished, load the page
+						 //	[self.tabBarController setSelectedIndex:FEEDBACKPAGE];
+						 self.rightB.frame = CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
+					 }];
 }
 
 -(void)leftTPressed:(UIButton *)leftTButton {
 	//	NSLog(@"Open the ABOUT");
 	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"aboutPage"];
-	[self presentViewController:detailViewController animated:YES completion:nil];
-
-	//	[self.navigationController pushViewController:detailViewController animated:YES];
-	//	[self.tabBarController setSelectedIndex:ABOUTPAGE];
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 // where is the button going?
+						 self.leftT.frame = CGRectMake((self.screenSize.width/12)*-1, (self.screenSize.height/3), self.screenSize.width/3, self.screenSize.height/6);
+					 }completion:^(BOOL finished) { //when finished, load the page
+						 [self presentViewController:detailViewController animated:YES completion:nil];
+						 self.leftT.frame = CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6);
+					 }];
+	
+	
 }
 
 -(void)rightTPressed:(UIButton *)rightTButton {
 	NSLog(@"Open the CLOSEST");
 	self.methodManager.directionsShow = YES;
 	self.methodManager.closestPP = YES;
-	[self.tabBarController setSelectedIndex:MAPPAGE];
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 // where is the button going?
+						 self.rightT.frame = CGRectMake((self.screenSize.width/4)*3, (self.screenSize.height/3), self.screenSize.width/3, self.screenSize.height/6);
+					 }completion:^(BOOL finished) { //when finished, load the page
+						 [self.tabBarController setSelectedIndex:MAPPAGE];
+						 self.rightT.frame = CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6);
+					 }];
 }
 
 -(void)topPressed:(UIButton *)topButton {
 	//	NSLog(@"Open the MAP");
-//	MapKitViewController *detailViewController = (MapKitViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"mapKit"];
-//	[self.navigationController pushViewController:self.methodManager.mapKitViewController animated:YES];
 	self.methodManager.directionsShow = NO;
-	[self.tabBarController setSelectedIndex:MAPPAGE];
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 // where is the button going?
+						 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (4*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6);					 }completion:^(BOOL finished) { //when finished, load the page
+							 [self.tabBarController setSelectedIndex:MAPPAGE];
+							 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6);
+						 }];
 }
 
 -(void)bottomPressed:(UIButton *)bottomButton {
-//	NSLog(@"Open the ADD");
-//	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"addPage"];
-//	[self.navigationController pushViewController:detailViewController animated:YES];
-	[self.tabBarController setSelectedIndex:ADDPAGE];
+	//	NSLog(@"Open the ADD");
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 // where is the button going?
+						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (4*(self.screenSize.height/4) + 15), self.screenSize.width/3, self.screenSize.height/6);
+					 }completion:^(BOOL finished) { //when finished, load the page
+						 [self.tabBarController setSelectedIndex:ADDPAGE];
+						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (3*(self.screenSize.height/4) + 15), self.screenSize.width/3, self.screenSize.height/6);
+					 }];
 }
 
 #pragma mark - REACHABILITY

@@ -8,12 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "PizzaPlace.h"
+#import <Parse/Parse.h>
 
 @interface DAO : NSObject
 
 @property(nonatomic, retain) NSMutableArray *pizzaPlaceArray;
 
--(void)createPizzaPlaces;
+- (void)fromLocalData;
+- (void)downloadParse;
+- (void)saveParse;
+
+- (void)createPizzaPlaces;
 + (instancetype)sharedDAO;
 
 
