@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) MethodManager *methodManager;
 @property (strong, nonatomic) DAO *dao;
-@property CLLocationCoordinate2D newAddress; // used for handleLongPress
+@property CLLocationCoordinate2D newAddress; // used for handleLongPress, // maybe use for search, annotation clicking, etc. , which means move to method manager
 
 @end
 
@@ -55,11 +55,11 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	
 	self.methodManager = [MethodManager sharedManager];
 	self.dao = [DAO sharedDAO];
-//	[self.dao createPizzaPlaces];
-	NSLog(@"my array is 3 full = %@", self.dao.pizzaPlaceArray);
+	//	[self.dao createPizzaPlaces]; //removed for parse 1.29.16
+	//	NSLog(@"my array is full = %@", self.dao.pizzaPlaceArray);
 	
 	[self createMapView];
-	[self checkForLocationServicesEnabled];
+	//	[self checkForLocationServicesEnabled]; // this should have the bool used to assign bool
 	
 	[self createPizzaPins];
 	[self createSearchBar];
@@ -73,19 +73,22 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	countMapKit+=1; // changes the annotation for self
 	if (self.currentPizzaPlace == NULL) {self.currentPizzaPlace = [[PizzaPlace alloc]init];}
 	
-	NSLog(@"show VWA directions is = %d", self.methodManager.directionsShow);
+	//	NSLog(@"show VWA directions is = %d", self.methodManager.directionsShow);
 	[self sortByDistanceForClosest]; // if closest is hit and directionsShown is YES
 	[self setDirectionalValues];
+	[self currentLocationButtonPressed];
 	
 	if(self.methodManager.firstTimeLoaded) {
 		NSLog(@"Map Page LOADED first time (called first and only once)");
+		// not needed as of 1.29.16, but kept in case
+		self.methodManager.firstTimeLoaded = NO;
 	}
 	else { //not the first time here
-		
-		[self currentLocationButtonPressed]; // only call currLoc after first time
+		// removed because locMan is being found during viewController 1.29.16
+		//	[self currentLocationButtonPressed]; // only call currLoc after first time
 	}
+	
 	[self assignButtons];
-	self.methodManager.firstTimeLoaded = NO;
 	if (!self.methodManager.directionsShow) {
 		MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.methodManager.locationManager.location.coordinate radius:500];
 		[self.mapView addOverlay:circle];
@@ -111,7 +114,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	//	self.mapView.rotateEnabled = NO;
 	
 	if ([self.mapView respondsToSelector:@selector(showsCompass)]) {
-		NSLog(@"User is on ios 9");
+		//		NSLog(@"User is on ios 9");
 		self.mapView.showsCompass = NO;
 	}
 	else {
@@ -173,7 +176,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	
-	UIButton *searchButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 60, 60)];
+	UIButton *searchButtonMapPage = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 45, 45)];
 	self.searchButtonMapPage = searchButtonMapPage;
 	// Add an action in current code file (i.e. target)
 	[self.searchButtonMapPage addTarget:self
@@ -211,19 +214,19 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 										  action:@selector(currentLocationButtonPressed)
 								forControlEvents:UIControlEventTouchUpInside];
 	
-	[self.currentLocationButtonMapPage setBackgroundImage:[UIImage imageNamed:@"LocationAlphaPizza.png"] forState:UIControlStateNormal];
+	[self.currentLocationButtonMapPage setBackgroundImage:[UIImage imageNamed:@"MCQMapLOCATION.png"] forState:UIControlStateNormal];
 	[self.view addSubview:self.currentLocationButtonMapPage];
 	
 }
 
 #pragma mark - MKMapViewDelegate
 
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation { // if location is off, this does not get called // otherwise, it gets called every update
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation { // if location is off, this does not get called // otherwise, it gets called every update \\ as per 1.29.16, this is not true
 	//	NSLog(@"userLoc Lat = %f", userLocation.location.coordinate.latitude);
 	//	NSLog(@"locMan Lat = %f",self.methodManager.locationManager.location.coordinate.latitude);
-	if(![self checkForLocationServicesFound])return;
+	//	if(![self checkForLocationServicesFound])return; // removing 1.29.16, since this should not get called twice (once from VDL and here)
 	if(userLocationShown) return;
-	NSLog(@"show UL directions is = %d", self.methodManager.directionsShow);
+	//	NSLog(@"show UL directions is = %d", self.methodManager.directionsShow);
 	
 	if (self.methodManager.locationManager.location.coordinate.latitude != 0.0 || self.methodManager.locationManager.location.coordinate.longitude != 0.0) {
 		if (self.methodManager.directionsShow) {
@@ -260,9 +263,9 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	else { // show radius for user
 		MKCircleRenderer *circleView = [[MKCircleRenderer alloc] initWithCircle:overlay];
 		UIColor* clr = [[UIColor alloc]initWithRed:255.0/255.0 green:201.0/255.0 blue:153.0/255.0 alpha:1.0];
-//		circleView.strokeColor = [[UIColor brownColor] colorWithAlphaComponent:0.4];
+		//		circleView.strokeColor = [[UIColor brownColor] colorWithAlphaComponent:0.4];
 		circleView.strokeColor = clr;
-		circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.6];
+		circleView.fillColor = [[UIColor redColor] colorWithAlphaComponent:0.35];
 		return circleView;
 		
 	}
@@ -306,7 +309,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		
 		if (userLocation.coordinate.latitude == 0.0 || userLocation.coordinate.longitude == 0.0) {
 			//					NSLog(@"No idea where user is!");
-			userLocationShown = NO; // added 1.21.16 Not sure if causing trouble
+			userLocationShown = NO;
 			userLocationLat = self.methodManager.empireStateBuilding.coordinate.latitude;
 			userLocationLong = self.methodManager.empireStateBuilding.coordinate.longitude;
 		}
@@ -332,7 +335,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	if (self.methodManager == NULL || self.dao.pizzaPlaceArray == NULL) {
 		self.methodManager = [MethodManager sharedManager];
 		self.dao = [DAO sharedDAO];
-		[self.dao createPizzaPlaces];
 	}
 	NSLog(@"location manager in sortByDistance = %f", 	self.methodManager.locationManager.location.coordinate.latitude);
 	if (!self.methodManager.searchSubmit) { // not submitting search
@@ -390,13 +392,13 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 }
 
 -(void)setDirectionalValues { //:(PizzaPlace *)pizzaPlace {
-	NSLog(@"show DV directions is = %d", self.methodManager.directionsShow);
+	//	NSLog(@"show DV directions is = %d", self.methodManager.directionsShow);
 	if (!self.methodManager.directionsShow) {
-		NSLog(@"not looking for directions");
+//		NSLog(@"not looking for directions");
 	}
 	
 	else { // show directions
-		NSLog(@"WE ARE looking for directionsor %@", self.currentPizzaPlace.name);
+//		NSLog(@"WE ARE looking for directionsor %@", self.currentPizzaPlace.name);
 		MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.currentPizzaPlace.latitude, self.currentPizzaPlace.longitude) addressDictionary:nil];
 		// create a MKMapItem with coordinates of pizza place
 		MKMapItem *pizzaPlaceLocation = [[MKMapItem alloc]initWithPlacemark:placemark];
@@ -409,7 +411,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			MKPlacemark *userPlaceMark = [[MKPlacemark alloc]initWithCoordinate:CLLocationCoordinate2DMake(self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude) addressDictionary:nil];
 			[request setSource:[[MKMapItem alloc] initWithPlacemark:userPlaceMark]];
 			
-			//			[request setSource:[MKMapItem mapItemForCurrentLocation]]; // removed 1.19.16 - please test again
 		}
 		else {
 			// no user location found = set Empire State Building as current location
@@ -611,89 +612,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	//	}
 }
 
-// bring user to settings of Pizza Time (stock settings)
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	// 1 // location not found
-	if ([alertView.title isEqualToString:@"Location Service Cannot Find You"]) {
-		if (buttonIndex == 1) {
-			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-			NSLog(@"user opened the settings");
-		}
-		else {
-			NSLog(@"user does not care - set bool");
-			self.methodManager.userLocRemind = NO;
-		}
-	}
-	// 2 // location not authorized
-	else if ([alertView.title isEqualToString:@"Location Service Disabled"]) {
-		//	NSLog(@"%ld", (long)buttonIndex);
-		if (buttonIndex == 1) {
-			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-		}
-		else {
-			NSLog(@"User does not want to share location - PLEASE set bool to not prompt again and again");
-			// enter audio BUMMMMMMMERRRRR
-			self.methodManager.userLocAuth = YES;
-		}
-	}
-	// 3 // internet troubles
-	else if ([alertView.title isEqualToString:@"Cannot Connect To Internet"]) {
-		//	NSLog(@"%ld", (long)buttonIndex);
-		if (buttonIndex == 1) {
-			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-		}
-		else {
-			NSLog(@"User does not want to use the internet - PLEASE set bool to not prompt again and again");
-			// enter audio BUMMMMMMMERRRRR
-		}
-	}
-	// 4 // (hold gesture) add pizza OR set current
-	else if ([alertView.title isEqualToString:@"ADD NEW PLACE"]) {
-		if (buttonIndex == 1) {
-			//			NSLog(@"Add new pizzaPlace to this location"); // add
-			// create a method to use self.
-			[self.tabBarController setSelectedIndex:ADDPAGE];
-		}
-		else if (buttonIndex == 2)		{
-			NSLog(@"Set this location as current"); // current location
-			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.newAddress, 800, 800);
-			// add annotation pin for result? //ensure it goes away after the map is left
-			[self.mapView setRegion:region animated:YES];
-			MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.newAddress radius:300];
-			[self.mapView addOverlay:circle];
-			CLLocation *newLocation = [[CLLocation alloc]initWithLatitude:self.newAddress.latitude longitude:self.newAddress.longitude];
-			self.methodManager.searchSubmit = YES; //setting new address
-			[self findDistance:newLocation];
-			[self sortByDistanceForClosest];
-			self.methodManager.searchSubmit = NO; // no longer setting new address
-		}
-		else { //cancel
-			NSLog(@"Selected cancel");
-		}
-	}
-	// 5 // (current location tapped) add pizza OR open progile
-	else if ([alertView.title isEqualToString:@"ADD A NEW PLACE"]) {
-		if (buttonIndex == 1) {
-			//			NSLog(@"Add new pizzaPlace to this location"); // add
-			[self.tabBarController setSelectedIndex:ADDPAGE];
-		}
-		else if (buttonIndex == 2)		{
-			NSLog(@"OPEN PROFILE PAGE"); // current location
-		}
-		else { //cancel
-			NSLog(@"Selected cancel");
-		}
-	}
-	// 6 and any other //
-	else {
-		if (buttonIndex == 1) {
-			NSLog(@"Please do something here - there is a problem with alertView response");
-		}
-		else {
-			NSLog(@"Please do something here - there is a problem with alertView response");
-		}
-	}
-}
 /*
  - (void) createManhattan {
  NSArray *coordinateData = [NSArray alloc]initWithObjects:@(-74.0207291,40.6985354), (-73.9730072,40.70979200000001), (-73.9668274,40.7410143), (-73.9215088,40.7909394), (-73.7882996,40.8002962), (-73.8102722,40.8595252), (-73.9215088,40.8989819), (-74.0093994,40.7610408), (-74.0207291,40.6985354), nil];
@@ -878,6 +796,12 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			self.methodManager.directionsShow = NO;
 			[self.tabBarController setSelectedIndex:PPINFOPAGE];
 		}
+		else if ([view.annotation.title isEqualToString:@"You Found Me"])
+		{
+			// maybe set values for ADDPAGE
+			self.newAddress = view.annotation.coordinate;
+			[self.tabBarController setSelectedIndex:ADDPAGE];
+		}
 		else if ([view.annotation.title isEqualToString:@"Current Location"])
 		{
 			NSLog(@"user clicked on self, show two options");
@@ -949,13 +873,106 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		[self.mapView setRegion:region animated:YES];
 	}];
 }
+#pragma mark - UIAlertView
+
+// bring user to settings of Pizza Time (stock settings)
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	
+#pragma mark 1 - Location Not Found
+	// 1 // location not found
+	if ([alertView.title isEqualToString:@"Location Service Cannot Find You"]) {
+		if (buttonIndex == 1) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+			NSLog(@"user opened the settings");
+		}
+		else {
+			NSLog(@"user does not care - set bool");
+			self.methodManager.userLocRemind = NO;
+		}
+	}
+#pragma mark 2 - Location Not Authorized
+	// 2 // location not authorized
+	else if ([alertView.title isEqualToString:@"Location Service Disabled"]) {
+		//	NSLog(@"%ld", (long)buttonIndex);
+		if (buttonIndex == 1) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+		}
+		else {
+			NSLog(@"User does not want to share location - PLEASE set bool to not prompt again and again");
+			// enter audio BUMMMMMMMERRRRR
+			self.methodManager.userLocAuth = YES;
+		}
+	}
+#pragma mark 3 - Cannot Connect Internet
+	// 3 // internet troubles
+	else if ([alertView.title isEqualToString:@"Cannot Connect To Internet"]) {
+		//	NSLog(@"%ld", (long)buttonIndex);
+		if (buttonIndex == 1) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+		}
+		else {
+			NSLog(@"User does not want to use the internet - PLEASE set bool to not prompt again and again");
+			// enter audio BUMMMMMMMERRRRR
+		}
+	}
+#pragma mark 4 - Add New (HOLD)
+	// 4 // (hold gesture) add pizza OR set current
+	else if ([alertView.title isEqualToString:@"ADD NEW PLACE"]) {
+		if (buttonIndex == 1) {
+			//			NSLog(@"Add new pizzaPlace to this location"); // add
+			// create a method to use self.
+			[self.tabBarController setSelectedIndex:ADDPAGE];
+		}
+		else if (buttonIndex == 2)		{
+			NSLog(@"Set this location as current"); // current location
+			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.newAddress, 800, 800);
+			// add annotation pin for result? //ensure it goes away after the map is left
+			[self.mapView setRegion:region animated:YES];
+			if (!self.methodManager.directionsShow) {
+				MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.newAddress radius:300];
+				[self.mapView addOverlay:circle];
+			}
+			CLLocation *newLocation = [[CLLocation alloc]initWithLatitude:self.newAddress.latitude longitude:self.newAddress.longitude];
+			self.methodManager.searchSubmit = YES; //setting new address
+			[self findDistance:newLocation];
+			[self sortByDistanceForClosest];
+			self.methodManager.searchSubmit = NO; // no longer setting new address
+		}
+		else { //cancel
+			NSLog(@"Selected cancel - remove the annotation just added");
+		}
+	}
+#pragma mark 4 - Add New (Current Location)
+	// 5 // (current location tapped) add pizza OR open progile
+	else if ([alertView.title isEqualToString:@"ADD A NEW PLACE"]) {
+		if (buttonIndex == 1) {
+			//			NSLog(@"Add new pizzaPlace to this location"); // add
+			[self.tabBarController setSelectedIndex:ADDPAGE];
+		}
+		else if (buttonIndex == 2)		{
+			NSLog(@"OPEN PROFILE PAGE"); // current location
+		}
+		else { //cancel
+			NSLog(@"Selected cancel");
+		}
+	}
+	// 6 and any other //
+	else {
+		if (buttonIndex == 1) {
+			NSLog(@"Please do something here - there is a problem with alertView response");
+		}
+		else {
+			NSLog(@"Please do something here - there is a problem with alertView response");
+		}
+	}
+}
 
 
 #pragma mark - ACTIONS
 
 // Main initial button press
 -(void)searchButtonPressed:(UIButton *)searchButton {
-	NSLog(@"searchButtonMapKit was pressed");
+//	NSLog(@"searchButtonMapKit was pressed");
 	// this should hide the buttons and present the search bar of Pizza Time
 	self.methodManager.searching = YES;
 	[self.methodManager searchBarPresent];
@@ -989,7 +1006,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	// this should zoom in on current location again, if not found = ESB
 	NSArray *pointsArray = [self.mapView overlays];
 	[self.mapView removeOverlays:pointsArray];
-
+	
 	if (![self checkForLocationServicesEnabled]) return;
 	if (![self checkForLocationServicesFound]) return;
 	
@@ -1006,8 +1023,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		}
 		// we have found the user
 		userLocationShown = YES;
-		// moved to MM 1.27.16
-		//		[self.methodManager.locationManager startUpdatingLocation];
 		[self findDistance:self.methodManager.locationManager.location];
 	}
 	else {

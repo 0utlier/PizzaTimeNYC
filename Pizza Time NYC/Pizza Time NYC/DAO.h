@@ -18,7 +18,7 @@
 - (void)downloadParse;
 - (void)saveParse;
 
-- (void)createPizzaPlaces;
+//- (void)createPizzaPlaces; // removed 1.28.16 replaced by parse
 + (instancetype)sharedDAO;
 
 

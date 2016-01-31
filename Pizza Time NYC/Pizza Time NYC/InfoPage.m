@@ -11,16 +11,19 @@
 @implementation InfoPage
 -(void)viewDidLoad {
 	[super viewDidLoad];
-	UIButton *optionsButtonTemp = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 100, 100)];
-	self.optionsButtonTemp = optionsButtonTemp;
-	[optionsButtonTemp addTarget:self
-							   action:@selector(optionsPressed:)
-	 forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:optionsButtonTemp];
+	
+	UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake((self.view.bounds.size.width/2)-22, 16, 45, 45)];
+	// Add an action in current code file (i.e. target)
+	[backButton addTarget:self
+						action:@selector(backButtonPressed:)
+			  forControlEvents:UIControlEventTouchUpInside];
+	
+	[backButton setBackgroundImage:[UIImage imageNamed:@"MCQppiBACK.png"] forState:UIControlStateNormal];
+	[self.view addSubview:backButton];
 }
 
--(void)optionsPressed:(UIButton *)optionsbutton {
-// return to optionsPage
+-(void)backButtonPressed:(UIButton *)backButton {
+	// return to optionsPage
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

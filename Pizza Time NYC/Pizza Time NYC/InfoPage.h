@@ -10,7 +10,5 @@
 #import "MethodManager.h"
 
 @interface InfoPage : UIViewController
-@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
-@property (weak, nonatomic) IBOutlet UIButton *optionsButtonTemp;
 
 @end

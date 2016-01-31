@@ -32,7 +32,9 @@
 
 //@property (weak, nonatomic) IBOutlet UIButton *optionsButton; // removed for MM buttons
 
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 
 - (void)setLabelValues:(PizzaPlace*)pizzaPlace;

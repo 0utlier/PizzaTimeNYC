@@ -72,7 +72,7 @@ static AVAudioPlayer *p;
 - (void)createLocationManager {
 	self.locationManager = [[CLLocationManager alloc]init];
 	if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-//		NSLog(@"User is on ios 8 or 9");
+		//		NSLog(@"User is on ios 8 or 9");
 		[self.locationManager requestWhenInUseAuthorization];
 		[self.locationManager startUpdatingLocation];
 	}
@@ -80,19 +80,24 @@ static AVAudioPlayer *p;
 		NSLog(@"User's iOS < iOS 8 or 9");
 	}
 	[self.locationManager setDelegate:self];
-//	[self.locationManager setDistanceFilter:kCLDistanceFilterNone ]; //whenever we move
+	//	[self.locationManager setDistanceFilter:kCLDistanceFilterNone ]; //whenever we move
 	[self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 }
 
 - (void)createEmpireStateBuilding {
 	// Use Empire State Building as current location
 	self.empireStateBuilding = [[CLLocation alloc]initWithLatitude:40.7484 longitude:-73.9857];
-//	CLLocationCoordinate2D centerCoordinate;
-//	centerCoordinate.latitude = 40.7484;
-//	centerCoordinate.longitude = -73.9857;
-//	CLLocation *centerLocation =[[CLLocation alloc]initWithLatitude:40.7484 longitude:-73.9857];
-//	self.empireStateBuilding.coordinate = centerCoordinate;
 }
+
+- (void) createOrientation {
+	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+	[[NSNotificationCenter defaultCenter]
+	 addObserver:self
+	 selector:@selector(orientationChanged:)
+	 name:UIDeviceOrientationDidChangeNotification
+	 object:[UIDevice currentDevice]];
+}
+
 
 
 #pragma mark - Buttons
@@ -115,7 +120,7 @@ static AVAudioPlayer *p;
 	
 	if(self.speakerButton)return self.speakerButton;
 	
-	UIButton *speakerButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width -76, 16, 60, 60)];
+	UIButton *speakerButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width -76, 16, 45, 45)];
 	// Add an action in current code file (i.e. target)
 	[speakerButton addTarget:self
 					  action:@selector(speakerButtonPressed:)
@@ -136,7 +141,7 @@ static AVAudioPlayer *p;
 	
 	if(self.optionsButton)return self.optionsButton;
 	
-	UIButton *optionsButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 30, 16, 60, 60)];
+	UIButton *optionsButton = [[UIButton alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 30, 16, 45, 45)];
 	// Add an action in current code file (i.e. target)
 	[optionsButton addTarget:self
 					  action:@selector(optionsButtonPressed:)
@@ -165,14 +170,14 @@ static AVAudioPlayer *p;
 
 // Main initial button press
 -(void)optionsButtonPressed:(UIButton *)optionsButton {
-	NSLog(@"optionsButton was pressed");
+	//	NSLog(@"optionsButton was pressed");
 	self.directionsShow = NO;
 	
 	// this should open the options page of Pizza Time
 	AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
+	UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
 	[tabBarController setSelectedIndex:OPTIONSPAGE];
-
+	
 }
 
 -(void)searchBarPresent {
@@ -200,6 +205,76 @@ static AVAudioPlayer *p;
 		[self.speakerButton removeFromSuperview];
 }
 
+- (void)gifPresent {
+//	AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//	UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
+//	[tabBarController setSelectedIndex:ADDPAGE];
+	self.window = [[UIApplication sharedApplication] keyWindow];
+	UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+															 bundle: nil];
+	UIViewController *detailViewController = (UIViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"GIFPage"];
+	[self.window.rootViewController presentViewController:detailViewController animated:YES completion:nil];
+}
+
+- (void)orientationChanged:(NSNotification *)note
+{
+	
+	//Obtaining the current device orientation
+	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+	
+//	NSLog(@"orienation = %ld", (long)orientation);
+	if (orientation == UIDeviceOrientationLandscapeRight || orientation == UIDeviceOrientationLandscapeLeft) {
+		NSLog(@"turned to side, GIF TIME [if statement]");
+		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
+					return;
+	}
+	else {
+		NSLog(@"turned back to portrat, UNDO the GIF");
+//		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(speakerButtonPressed:) object:nil];
+		[self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+
+	}
+//	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(speakerButtonPressed:) object:nil];
+//	//Responding only to changes in landscape or portrait
+//	currentOrientation = orientation;
+//	[self performSelector:@selector(optionsButtonPressed:) withObject:nil afterDelay:0];
+
+/*
+
+	UIDevice * device = note.object;
+	switch(device.orientation)
+	{
+		case UIDeviceOrientationFaceDown:
+			// start special animation
+			NSLog(@"The iPhone is being held FACE DOWN = scary music");
+//			[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
+			break;
+			
+		case UIDeviceOrientationPortrait:
+			// start special animation
+			NSLog(@"The iPhone is returned to PORTRAIT, options page");
+			[self performSelector:@selector(optionsButtonPressed:) withObject:nil afterDelay:0];
+			break;
+			
+		case UIDeviceOrientationLandscapeRight:
+			// start special animation
+			NSLog(@"The iPhone is tilted to the RIGHT, GIF time");
+			[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
+			// present page with GIF, and 1 to the count
+			break;
+
+		case UIDeviceOrientationLandscapeLeft:
+			// start special animation
+			NSLog(@"The iPhone is tilted to the LEFT, GIF time");
+			[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
+			// present page with GIF, and 1 to the count
+			break;
+
+		default:
+			break;
+	};
+*/
+}
 
 
 @end

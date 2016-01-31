@@ -12,6 +12,7 @@
 #import <MapKit/MapKit.h>
 #import "AppDelegate.h"
 @class MapKitViewController;
+@class ViewController;
 
 @interface MethodManager : NSObject <CLLocationManagerDelegate>
 
@@ -57,8 +58,7 @@
  firstTimeLoaded 1.20.16
  created in MM
  VC initialized as YES
- MK check in VWA
- MK check in locFound
+ MK check in VWA, set to NO at the end
  
  userLocAuth 1.20.16
  created in MM
@@ -84,7 +84,7 @@
 //@property (nonatomic, strong) UIButton *searchBarButton;
 
 //@property (nonatomic, strong) UISearchBar *searchBar;
-//@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UIWindow *window;
 //@property (nonatomic, strong) UIView *topView;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -94,6 +94,7 @@
 + (id)sharedManager;
 
 - (void)createPlayer;
+- (void)createOrientation;
 
 - (void)createLocationManager;
 //- (void)createMapViewController;

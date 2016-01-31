@@ -40,9 +40,9 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	self.methodManager = [MethodManager sharedManager];
 	self.methodManager.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
 	[self.methodManager createLocationManager];
+//	NSLog(@"location manager in VDL VC = %f", self.methodManager.locationManager.location.coordinate.latitude);
 	[self.methodManager createEmpireStateBuilding];
 	self.dao = [DAO sharedDAO];
-	[self.dao fromLocalData];
 	//	[self checkInternet]; //comment back in when ready to fix
 	[self buildNumberInfo];
 	UIImageView *pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
@@ -70,7 +70,12 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 		self.methodManager.userLocRemind = YES;
 		self.methodManager.firstTimeLoaded = YES;
 		self.methodManager.closestPP = NO;
-	}
+		[self.dao downloadParse]; // 1.29.16 download first, pin and then call local data
+		[self.dao fromLocalData];
+		[self.methodManager createOrientation];
+		[[UIDevice currentDevice] setValue:
+		 [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
+									forKey:@"orientation"];	}
 	
 }
 
@@ -78,6 +83,24 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	[super viewWillDisappear:YES];
 //	[self.pizzaTimeLogo removeFromSuperview];
 }
+
+/*
+// I do not think this is doing anything I want it to 1.30.16
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations {
+
+	// Return a bitmask of supported orientations. If you need more,
+	// use bitwise or (see the commented return).
+	return UIInterfaceOrientationMaskPortrait;
+	// return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+}
+
+- (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation {
+	// Return the orientation you'd prefer - this is what it launches to. The
+	// user can still rotate. You don't have to implement this method, in which
+	// case it launches in the current orientation
+	return UIInterfaceOrientationPortrait;
+}
+*/
 
 -(void)assignLabels {// and buttons
 
@@ -207,6 +230,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 
 -(void)assignColors { // is it better to alloc ONLY inside of the case statement, or create all?
 	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
+	// orange HEX = FFCE62
 	UIColor *blueMCQ = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0];
 	UIColor *green = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
 	UIColor *purple = [[UIColor alloc]initWithRed:137.0/255.0 green:12.0/255.0 blue:208.0/255.0 alpha:1.0];

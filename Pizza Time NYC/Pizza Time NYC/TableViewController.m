@@ -28,15 +28,17 @@ BOOL isRefreshAnimating;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	//	NSLog(@"Table View Controller loaded!");
-	
+	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
+	self.view.backgroundColor = orangeMCQ; // this changes the bar where the buttons are
+
 	// instantiate tableView
 	self.tableView.delegate=self;
 	self.tableView.dataSource=self;
+	self.tableView.backgroundColor = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
 	
 	self.methodManager = [MethodManager sharedManager];
 	self.methodManager.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
 	self.dao = [DAO sharedDAO];
-	[self.dao createPizzaPlaces];
 	
 	[self createPizzaCells];
 	[self createSearchBar];
@@ -57,8 +59,7 @@ BOOL isRefreshAnimating;
 	[self.navigationController setNavigationBarHidden:YES];
 	[self.tableView reloadData];
 	//	NSLog(@"realign bools here");
-	// i am unsure of why i need this 1.19.16
-	[self.view setNeedsDisplay];
+	[self.view setNeedsDisplay];	// i am unsure of why i need this 1.19.16, and still on 1.29
 	[self assignLabels];
 }
 
@@ -79,6 +80,16 @@ BOOL isRefreshAnimating;
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
 	self.searchBar.placeholder = @"Search Address";
+	
+	self.searchBar.backgroundColor = [UIColor redColor]; // color of cancel and cursor
+	self.searchBar.barTintColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0]; // color of the bar
+//	self.searchBar.tintColor = [UIColor purpleColor]; // color of 'cancel'
+	
+	UIImageView *searchIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"walkAlpha30.png"]];
+	searchIcon.frame = CGRectMake(10, 10, 24, 24);
+	[self.searchBar addSubview:searchIcon];
+	[[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0]]; // for ALL searchBars, do this. Effects every bar after called
+	
 	[self.view addSubview:self.searchBar];
 	self.searchBar.hidden = YES;
 }
@@ -96,7 +107,7 @@ BOOL isRefreshAnimating;
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	
-	UIButton *searchButtonTableView = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 60, 60)];
+	UIButton *searchButtonTableView = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 45, 45)];
 	self.searchButtonTableView = searchButtonTableView;
 	// Add an action in current code file (i.e. target)
 	[self.searchButtonTableView addTarget:self
@@ -142,6 +153,10 @@ BOOL isRefreshAnimating;
 	return [self.dao.pizzaPlaceArray count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 90;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *CellIdentifier = @"Cell";
@@ -151,23 +166,27 @@ BOOL isRefreshAnimating;
 	if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
-	
+//	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
+	cell.backgroundColor = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
 	// Display pizzaPlace in the table cell
 	PizzaPlace *pizzaPlace = [self.dao.pizzaPlaceArray objectAtIndex:indexPath.row];
 	//	UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
 	//	recipeImageView.image = [UIImage imageNamed:recipe.imageFile];
 	
 	UILabel *nameLabel = (UILabel *)[cell viewWithTag:100];
-	nameLabel.text = pizzaPlace.name;
+	nameLabel.text = [pizzaPlace.name uppercaseString];
+//	nameLabel.textColor = [UIColor redColor];
 	
 	//seperate the address into two lines
 	UILabel *addressLabelTop = (UILabel *)[cell viewWithTag:101];
 	addressLabelTop.text = pizzaPlace.street;
+//	addressLabelTop.textColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0];
 	
 	UILabel *addressLabelBottom = (UILabel *)[cell viewWithTag:102];
 	NSString *secondLineAddress = [pizzaPlace.city stringByAppendingString:[NSString stringWithFormat:@" %ld",(long)pizzaPlace.zip ]];
 	//	NSLog(@"%@", secondLineAddress);
 	addressLabelBottom.text = secondLineAddress;
+//	addressLabelBottom.textColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0];
 	
 	UILabel *distanceLabel = (UILabel *)[cell viewWithTag:103];
 	distanceLabel.text = [NSString stringWithFormat:@"%.2f mi", pizzaPlace.distance];
@@ -272,8 +291,8 @@ BOOL isRefreshAnimating;
 	// keep the animation and actions of dismissing the search bar
 	[self searchBarCancelButtonClicked:(UISearchBar *) self.searchBar];
 	self.methodManager.searchSubmit = YES; //searching for address
-	NSLog(@"self.methodManager.searchSubmit = YES");
-	NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
+//	NSLog(@"self.methodManager.searchSubmit = YES");
+//	NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
 	
 	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
 	[geocoder geocodeAddressString:theSearchBar.text completionHandler:^(NSArray *placemarks, NSError *error) {		//Error checking
@@ -285,10 +304,10 @@ BOOL isRefreshAnimating;
 
 		// set the distance of the PPs, then sort by
 		[self.mapKit findDistance:resultLocation];
-		NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
+//		NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
 		[self.mapKit sortByDistanceForClosest];
 		self.methodManager.searchSubmit = NO; // no longer searching for address
-		NSLog(@"self.methodManager.searchSubmit = NO");
+//		NSLog(@"self.methodManager.searchSubmit = NO");
 
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.tableView reloadData];
@@ -297,10 +316,6 @@ BOOL isRefreshAnimating;
 	}];
 }
 
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-	NSLog(@"table view does update the user location");
-}
 
 #pragma mark - REFRESH CONTROL
 - (void)createRefreshControl
@@ -315,7 +330,7 @@ BOOL isRefreshAnimating;
 	// Setup the color view, which will display the rainbowed background
 	self.refreshColorView = [[UIView alloc] initWithFrame:self.refreshControl.bounds];
 	self.refreshColorView.backgroundColor = [UIColor clearColor];
-	self.refreshColorView.alpha = 0.30;
+	self.refreshColorView.alpha = 0.80;
 	
 	// Create the graphic image views
 	self.pizzaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pizza29Alpha.png"]];
@@ -349,7 +364,6 @@ BOOL isRefreshAnimating;
 - (void)refresh:(id)sender{ // ??? this needs refreshing haha
 	NSLog(@"begin = %f", self.methodManager.locationManager.location.coordinate.latitude);
 	// -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
-	NSLog(@"after = %f", self.methodManager.locationManager.location.coordinate.latitude);
 	self.mapKit = self.tabBarController.viewControllers[MAPPAGE];
 	[self.mapKit sortByDistanceForClosest];
 	[self.tableView reloadData];
@@ -361,6 +375,7 @@ BOOL isRefreshAnimating;
 		
 		// When done requesting/reloading/processing invoke endRefreshing, to close the control
 		[self.refreshControl endRefreshing];
+		NSLog(@"after = %f", self.methodManager.locationManager.location.coordinate.latitude);
 	});
 	// -- FINISHED SOMETHING AWESOME, WOO! --
 }
@@ -499,12 +514,7 @@ BOOL isRefreshAnimating;
 }
 
 -(void)mapButtonPressed:(UIButton *)mapButton {
-	NSLog(@"open and present the mapView here");
-//	MapKitViewController *detailViewController = (MapKitViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"mapKit"];
-//	[self.navigationController pushViewController:self.methodManager.mapKitViewController animated:YES];
-//	self.navigationController.viewControllers = @[self.navigationController.viewControllers[0], self.methodManager.mapKitViewController];
-//	[self.navigationController popToViewController:self.methodManager.mapKitViewController animated:YES];
-//[self.navigationController pushViewController:detailViewController animated:YES];
+//	NSLog(@"open and present the mapView here");
 	[self.tabBarController setSelectedIndex:MAPPAGE];
 }
 

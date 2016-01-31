@@ -12,27 +12,25 @@
 
 
 -(void) downloadParse {
-	// unsure of what to type to return here
-	// check if object exists, if so, update,
-	// if not, create
-	// ?iterate through and create PP instance for place
+	// iterate through and create PP instance for place
 	PFQuery *query = [PFQuery queryWithClassName:@"PizzaPlaceParse"];
-	//	[query whereKey:@"playerName" equalTo:@"Dan Stemkoski"];
 	
-	// Sorts the results in ascending order by the score field
+	// Sorts the results in ascending order by the ZIP field
 	[query orderByAscending:@"zip"];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *parseArray, NSError *error) {
 		if (!error) {
 			// The find succeeded.
-			NSLog(@"Successfully retrieved %lu pizzaPlaces.", (unsigned long)parseArray.count);
+			NSLog(@"Successfully retrieved %lu pizzaPlaces from PARSE DB", (unsigned long)parseArray.count);
 			// Do something with the found objects
 			PizzaPlace *pizzaPlace = nil;
+			self.pizzaPlaceArray = [[NSMutableArray alloc]init]; // removed old one, and replace with new
 			for (PFObject *pizzaPlaceParse in parseArray) {
 				
 				pizzaPlace = [[PizzaPlace alloc]init]; // allocate the new instance
 				// assign its values from the objects
 				pizzaPlace.name = pizzaPlaceParse[@"name"];
 				pizzaPlace.address = pizzaPlaceParse[@"address"];
+				pizzaPlace.street = pizzaPlaceParse[@"street"];
 				pizzaPlace.city = pizzaPlaceParse[@"city"];
 				pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
 				pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
@@ -52,7 +50,7 @@
 	}];
 }
 
-- (NSMutableArray *) pizzaPlaceArray {
+- (NSMutableArray *) pizzaPlaceArray { // every time that pizzaPlaceArray GETS assigned, this gets called
 	if (!_pizzaPlaceArray) {
 		_pizzaPlaceArray = [NSMutableArray new];
 	}
@@ -65,7 +63,7 @@
 	[query findObjectsInBackgroundWithBlock:^(NSArray *parseArray, NSError *error) {
 		if (!error) {
 			// The find succeeded.
-			NSLog(@"Successfully retrieved %lu pizzaPlaces.", (unsigned long)parseArray.count);
+			NSLog(@"Successfully retrieved %lu pizzaPlaces FROM Local", (unsigned long)parseArray.count);
 			// Do something with the found objects
 			PizzaPlace *pizzaPlace = nil;
 			for (PFObject *pizzaPlaceParse in parseArray) {
@@ -74,13 +72,13 @@
 				// assign its values from the objects
 				pizzaPlace.name = pizzaPlaceParse[@"name"];
 				pizzaPlace.address = pizzaPlaceParse[@"address"];
+				pizzaPlace.street = pizzaPlaceParse[@"street"];
 				pizzaPlace.city = pizzaPlaceParse[@"city"];
 				pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
 				pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
 				pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
+
 				
-				//					NSLog(@"%@", pizzaPlace.name);
-				//					NSLog(@"%f", pizzaPlace.latitude);
 				[self.pizzaPlaceArray addObject:pizzaPlace];
 				//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
 			}

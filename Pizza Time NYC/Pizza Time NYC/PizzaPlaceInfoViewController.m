@@ -20,8 +20,9 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	self.view.backgroundColor = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
 	self.methodManager = [MethodManager sharedManager];
-
+//	self.directionsButton.imageView.image = [UIImage imageNamed:@"MCQgoButtonDirections.png"];
 	[self.directionsButton addTarget:self
 						   action:@selector(directionsButtonPressed:)
 				 forControlEvents:UIControlEventTouchUpInside];
@@ -41,12 +42,22 @@
 -(void)assignLabels {// and buttons
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
+	
+	UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake(16, 16, 45, 45)];
+	self.backButton = backButton;
+	// Add an action in current code file (i.e. target)
+	[self.backButton addTarget:self
+								   action:@selector(backButtonPressed:)
+						 forControlEvents:UIControlEventTouchUpInside];
+	
+	[self.backButton setBackgroundImage:[UIImage imageNamed:@"MCQppiBACK.png"] forState:UIControlStateNormal];
+	[self.view addSubview:self.backButton];
 }
 
 - (void)setLabelValues:(PizzaPlace*)pizzaPlace {
 	//	NSLog(@"The name passed through = %@", pizzaPlace.name);
 	UILabel *nameLabel = (UILabel *)[self.view viewWithTag:200];
-	nameLabel.text = pizzaPlace.name;
+	nameLabel.text = [pizzaPlace.name uppercaseString];
 	
 	//seperate the address into two lines
 	UILabel *addressLabelTop = (UILabel *)[self.view viewWithTag:201];
@@ -59,6 +70,9 @@
 	UILabel *distanceLabel = (UILabel *)[self.view viewWithTag:203];
 	distanceLabel.text = [NSString stringWithFormat:@"%.2f mi away", pizzaPlace.distance];
 	self.currentPizzaPlace = pizzaPlace;
+	
+//	self.imageView.image = [UIImage imageNamed:pizzaPlace.image];
+	self.imageView.image = [UIImage imageNamed:@"6thAve.png"];
 }
 
 #pragma mark - ACTIONS
@@ -72,6 +86,13 @@
 	[self.tabBarController setSelectedIndex:MAPPAGE];
 
 }
+
+-(void)backButtonPressed:(UIButton *)directionsButtonPressed {
+	NSLog(@"backButton was pressed");
+	[self.tabBarController setSelectedIndex:MAPPAGE];
+	
+}
+
 /*
  #pragma mark - Navigation
  

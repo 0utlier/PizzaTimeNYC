@@ -18,21 +18,20 @@
 
 
 @interface MapKitViewController : ViewController <MKMapViewDelegate, UISearchBarDelegate, UIGestureRecognizerDelegate>
-//UITabBarDelegate, UITabBarControllerDelegate // removed 1.19.16
-// CLLocationManagerDelegate  // removed 1.21.16
-
 // DAO info and methods
-//@property (nonatomic, strong) DAO *dao; // in viewController
+//@property (nonatomic, strong) DAO *dao; // in viewController 1.28.16
 
 // here is the map
 @property (nonatomic) MKMapView *mapView;
 
+/*
 // TOOL BAR Properties (remove them when ready = not being used)
 @property (weak, nonatomic) IBOutlet UIToolbar *mapToolBar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *infoButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addPizzaPlaceButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchAddressButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *currentLocationButton;
+*/
 
 // current Location button
 @property (weak, nonatomic) IBOutlet UIButton *searchButtonMapPage;
@@ -50,7 +49,7 @@
 @property (nonatomic, retain) MKDirections *directions;
 
 
--(void)currentLocationButtonPressed;
+//-(void)currentLocationButtonPressed;
 -(void)findDistance:(CLLocation *)userLocation; // called in sortByDistance
 -(void)sortByDistanceForClosest;
 @end
