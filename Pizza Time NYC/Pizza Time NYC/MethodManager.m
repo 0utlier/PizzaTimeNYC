@@ -224,12 +224,17 @@ static AVAudioPlayer *p;
 	
 //	NSLog(@"orienation = %ld", (long)orientation);
 	if (orientation == UIDeviceOrientationLandscapeRight || orientation == UIDeviceOrientationLandscapeLeft) {
-		NSLog(@"turned to side, GIF TIME [if statement]");
+//		NSLog(@"turned to side, GIF TIME [if statement]");
 		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
-					return;
+					return; // do not think necessary
+	}
+	else if (orientation == UIDeviceOrientationFaceDown) {
+		[self performSelector:@selector(speakerButtonPressed:) withObject:nil afterDelay:0];
+		self.gifCount = 0;
+		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
 	}
 	else {
-		NSLog(@"turned back to portrat, UNDO the GIF");
+//		NSLog(@"turned back to portrat, UNDO the GIF");
 //		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(speakerButtonPressed:) object:nil];
 		[self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 

@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "MethodManager.h"
 
-@interface AddNewPlace : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *optionsButtonTemp;
+@interface AddNewPlace : UIViewController <UIImagePickerControllerDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *addressTextField;
+
+@property (weak, nonatomic) IBOutlet UIButton *locationButton;
+@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end

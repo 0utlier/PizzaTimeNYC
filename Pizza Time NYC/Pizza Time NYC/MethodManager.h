@@ -81,15 +81,14 @@
 @property (nonatomic, strong) UIButton *speakerButton;
 @property (nonatomic, strong) UIImageView *mapButton;
 @property (nonatomic, strong) UIImageView *listButton;
-//@property (nonatomic, strong) UIButton *searchBarButton;
 
-//@property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIWindow *window;
 //@property (nonatomic, strong) UIView *topView;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, retain) CLLocation *empireStateBuilding;
 @property CGSize statusBarSize;
+@property int gifCount;
 
 + (id)sharedManager;
 

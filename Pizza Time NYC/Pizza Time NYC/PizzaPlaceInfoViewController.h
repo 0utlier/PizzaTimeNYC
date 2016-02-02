@@ -12,25 +12,7 @@
 @class MapKitViewController;
 @interface PizzaPlaceInfoViewController : UIViewController
 
-// TAB BAR Properties
 @property (strong, nonatomic) PizzaPlace *currentPizzaPlace;
-/*
-//information on PizzaPlaceInfo
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *url;
-@property (nonatomic, retain) NSString *image;
-
-//location of PizzaPlaceInfo
-@property (nonatomic, retain) NSString *address;
-@property (nonatomic, retain) NSString *street;
-@property (nonatomic, retain) NSString *city;
-@property (nonatomic) NSInteger zip;
-@property float latitude;
-@property float longitude;
-@property float distance;
-*/
-
-//@property (weak, nonatomic) IBOutlet UIButton *optionsButton; // removed for MM buttons
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UIButton *directionsButton;

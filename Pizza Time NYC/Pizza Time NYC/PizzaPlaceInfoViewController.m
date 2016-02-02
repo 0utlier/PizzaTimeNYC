@@ -20,9 +20,7 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.view.backgroundColor = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
 	self.methodManager = [MethodManager sharedManager];
-//	self.directionsButton.imageView.image = [UIImage imageNamed:@"MCQgoButtonDirections.png"];
 	[self.directionsButton addTarget:self
 						   action:@selector(directionsButtonPressed:)
 				 forControlEvents:UIControlEventTouchUpInside];
@@ -30,7 +28,6 @@
 
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:YES];
-//	[self.navigationController setNavigationBarHidden:NO];
 	[self assignLabels];
 }
 
@@ -78,7 +75,7 @@
 #pragma mark - ACTIONS
 
 // Main initial button press
--(void)directionsButtonPressed:(UIButton *)directionsButtonPressed {
+-(void)directionsButtonPressed:(UIButton *)directionsButton {
 	NSLog(@"directionsButton was pressed");
 	self.methodManager.directionsShow = YES;
 	MapKitViewController *mapKitViewController = self.tabBarController.viewControllers[MAPPAGE];
@@ -87,7 +84,7 @@
 
 }
 
--(void)backButtonPressed:(UIButton *)directionsButtonPressed {
+-(void)backButtonPressed:(UIButton *)backButton {
 	NSLog(@"backButton was pressed");
 	[self.tabBarController setSelectedIndex:MAPPAGE];
 	

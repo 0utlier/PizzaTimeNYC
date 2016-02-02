@@ -80,7 +80,7 @@ BOOL isRefreshAnimating;
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
 	self.searchBar.placeholder = @"Search Address";
-	
+
 	self.searchBar.backgroundColor = [UIColor redColor]; // color of cancel and cursor
 	self.searchBar.barTintColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0]; // color of the bar
 //	self.searchBar.tintColor = [UIColor purpleColor]; // color of 'cancel'
@@ -102,8 +102,7 @@ BOOL isRefreshAnimating;
 		[self.searchButtonTableView removeFromSuperview];
 	}
 	
-	//	[self.methodManager assignMapButton];
-	//	[self.methodManager assignListButton];
+	
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	

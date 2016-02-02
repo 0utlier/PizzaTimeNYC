@@ -14,12 +14,57 @@
 		99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 99260DFE1C2DD36800EFB125 /* PizzaPlace.m */; };
 		99260E021C2DD4AA00EFB125 /* GW eating a slice.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */; };
 		99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99260E031C2DD4DD00EFB125 /* Images.xcassets */; };
-		99260E0A1C2DD9B500EFB125 /* its pizza time resized.png in Resources */ = {isa = PBXBuildFile; fileRef = 99260E091C2DD9B500EFB125 /* its pizza time resized.png */; };
 		99447E3A1C31B00200260B8E /* InfoPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 99447E391C31B00200260B8E /* InfoPage.m */; };
 		998B96861C32052300DC8EB7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 998B96851C32052300DC8EB7 /* Reachability.m */; };
 		999E74151C337C030030099A /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 999E74141C337C030030099A /* Icon-Small.png */; };
 		99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */; };
-		99D629811C2F690700B49E26 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D629801C2F690700B49E26 /* WebViewController.m */; };
+		AA324AE41C5FCE2D001739C3 /* rocketPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AE11C5FCE2D001739C3 /* rocketPizza.gif */; };
+		AA324AE51C5FCE2D001739C3 /* spinningPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AE21C5FCE2D001739C3 /* spinningPizza.gif */; };
+		AA324AE61C5FCE2D001739C3 /* steamingPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AE31C5FCE2D001739C3 /* steamingPizza.gif */; };
+		AA324AEB1C5FCE53001739C3 /* dripDropPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AE81C5FCE53001739C3 /* dripDropPizza.gif */; };
+		AA324AEC1C5FCE53001739C3 /* druggedPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AE91C5FCE53001739C3 /* druggedPizza.gif */; };
+		AA324B0E1C5FDA07001739C3 /* lovePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AEE1C5FDA07001739C3 /* lovePizza.gif */; };
+		AA324B0F1C5FDA07001739C3 /* friendsPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AEF1C5FDA07001739C3 /* friendsPizza.gif */; };
+		AA324B101C5FDA07001739C3 /* 90sPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF01C5FDA07001739C3 /* 90sPizza.gif */; };
+		AA324B111C5FDA07001739C3 /* 30RockPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF11C5FDA07001739C3 /* 30RockPizza.gif */; };
+		AA324B121C5FDA07001739C3 /* flyingPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF21C5FDA07001739C3 /* flyingPizza.gif */; };
+		AA324B131C5FDA07001739C3 /* moneyPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF31C5FDA07001739C3 /* moneyPizza.gif */; };
+		AA324B141C5FDA07001739C3 /* skatePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF41C5FDA07001739C3 /* skatePizza.gif */; };
+		AA324B151C5FDA07001739C3 /* TMNTMikeyPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF51C5FDA07001739C3 /* TMNTMikeyPizza.gif */; };
+		AA324B161C5FDA07001739C3 /* planetPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF61C5FDA07001739C3 /* planetPizza.gif */; };
+		AA324B171C5FDA07001739C3 /* drippingPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF71C5FDA07001739C3 /* drippingPizza.gif */; };
+		AA324B181C5FDA07001739C3 /* furbyPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF81C5FDA07001739C3 /* furbyPizza.gif */; };
+		AA324B191C5FDA07001739C3 /* loadingPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AF91C5FDA07001739C3 /* loadingPizza.gif */; };
+		AA324B1A1C5FDA07001739C3 /* videoGamePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AFA1C5FDA07001739C3 /* videoGamePizza.gif */; };
+		AA324B1B1C5FDA07001739C3 /* dancingPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AFB1C5FDA07001739C3 /* dancingPizza.gif */; };
+		AA324B1C1C5FDA07001739C3 /* starWarsPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AFC1C5FDA07001739C3 /* starWarsPizza.gif */; };
+		AA324B1D1C5FDA07001739C3 /* newYearPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AFD1C5FDA07001739C3 /* newYearPizza.gif */; };
+		AA324B1E1C5FDA07001739C3 /* handsUpPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AFE1C5FDA07001739C3 /* handsUpPizza.gif */; };
+		AA324B1F1C5FDA07001739C3 /* partyOnPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324AFF1C5FDA07001739C3 /* partyOnPizza.gif */; };
+		AA324B201C5FDA07001739C3 /* catPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B001C5FDA07001739C3 /* catPizza.gif */; };
+		AA324B211C5FDA07001739C3 /* blinkPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B011C5FDA07001739C3 /* blinkPizza.gif */; };
+		AA324B221C5FDA07001739C3 /* bit8Pizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B021C5FDA07001739C3 /* bit8Pizza.gif */; };
+		AA324B231C5FDA07001739C3 /* adventureTimePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B031C5FDA07001739C3 /* adventureTimePizza.gif */; };
+		AA324B241C5FDA07001739C3 /* scaryPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B041C5FDA07001739C3 /* scaryPizza.gif */; };
+		AA324B251C5FDA07001739C3 /* lsdPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B051C5FDA07001739C3 /* lsdPizza.gif */; };
+		AA324B261C5FDA07001739C3 /* cyclePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B061C5FDA07001739C3 /* cyclePizza.gif */; };
+		AA324B271C5FDA07001739C3 /* hungryPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B071C5FDA07001739C3 /* hungryPizza.gif */; };
+		AA324B281C5FDA07001739C3 /* pyrPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B081C5FDA07001739C3 /* pyrPizza.gif */; };
+		AA324B291C5FDA07001739C3 /* sneakyDogPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B091C5FDA07001739C3 /* sneakyDogPizza.gif */; };
+		AA324B2A1C5FDA07001739C3 /* krustyKrabSingPizza2.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B0A1C5FDA07001739C3 /* krustyKrabSingPizza2.gif */; };
+		AA324B2B1C5FDA07001739C3 /* krustyKrabSingPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B0B1C5FDA07001739C3 /* krustyKrabSingPizza.gif */; };
+		AA324B2C1C5FDA07001739C3 /* spongeBobBWPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B0C1C5FDA07001739C3 /* spongeBobBWPizza.gif */; };
+		AA324B2D1C5FDA07001739C3 /* krabsPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B0D1C5FDA07001739C3 /* krabsPizza.gif */; };
+		AA324B351C5FE3A8001739C3 /* pyrCatPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B2E1C5FE3A8001739C3 /* pyrCatPizza.gif */; };
+		AA324B361C5FE3A8001739C3 /* trippyPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B2F1C5FE3A8001739C3 /* trippyPizza.gif */; };
+		AA324B371C5FE3A8001739C3 /* rotatePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B301C5FE3A8001739C3 /* rotatePizza.gif */; };
+		AA324B381C5FE3A8001739C3 /* sliceSlicePizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B311C5FE3A8001739C3 /* sliceSlicePizza.gif */; };
+		AA324B391C5FE3A8001739C3 /* coolPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B321C5FE3A8001739C3 /* coolPizza.gif */; };
+		AA324B3A1C5FE3A8001739C3 /* feetPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B331C5FE3A8001739C3 /* feetPizza.gif */; };
+		AA324B3B1C5FE3A8001739C3 /* dripPizza.gif in Resources */ = {isa = PBXBuildFile; fileRef = AA324B341C5FE3A8001739C3 /* dripPizza.gif */; };
+		AA324B3D1C5FFB51001739C3 /* MCQaddAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = AA324B3C1C5FFB51001739C3 /* MCQaddAdd.png */; };
+		AA324B3F1C600151001739C3 /* pizzaCamera.png in Resources */ = {isa = PBXBuildFile; fileRef = AA324B3E1C600151001739C3 /* pizzaCamera.png */; };
+		AA324B411C600566001739C3 /* pizzaCamera2.png in Resources */ = {isa = PBXBuildFile; fileRef = AA324B401C600566001739C3 /* pizzaCamera2.png */; };
 		AA3E83B41C456E0300C12D35 /* MethodManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3E83B31C456E0300C12D35 /* MethodManager.m */; };
 		AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4B39B31C3DD8750086DB81 /* Main.storyboard */; };
 		AA71E9091C2B32E400FA48F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9081C2B32E400FA48F6 /* main.m */; };
@@ -92,6 +137,9 @@
 		AAD0FCD01C3F31860060B05B /* pizzaPepperoni.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = AAD0FCCF1C3F31860060B05B /* pizzaPepperoni.jpeg */; };
 		AAD0FCD31C3F32240060B05B /* pizzaWholePepperoni.png in Resources */ = {isa = PBXBuildFile; fileRef = AAD0FCD11C3F32240060B05B /* pizzaWholePepperoni.png */; };
 		AAD0FCD41C3F32240060B05B /* pizzaFullSliceRemove.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAD0FCD21C3F32240060B05B /* pizzaFullSliceRemove.jpg */; };
+		AAE26FDC1C611CD800485813 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE26FDB1C611CD800485813 /* GLKit.framework */; };
+		AAE26FE31C612CF600485813 /* FeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE26FE21C612CF600485813 /* FeedbackPageViewController.m */; };
+		AAE26FE61C614DFA00485813 /* annoyedRick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAE26FE51C614DFA00485813 /* annoyedRick.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,15 +168,59 @@
 		99260DFE1C2DD36800EFB125 /* PizzaPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PizzaPlace.m; path = "Pizza Time NYC/PizzaPlace.m"; sourceTree = "<group>"; };
 		99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "GW eating a slice.jpg"; sourceTree = "<group>"; };
 		99260E031C2DD4DD00EFB125 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		99260E091C2DD9B500EFB125 /* its pizza time resized.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "its pizza time resized.png"; sourceTree = "<group>"; };
 		99447E381C31B00200260B8E /* InfoPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoPage.h; path = "Pizza Time NYC/InfoPage.h"; sourceTree = "<group>"; };
 		99447E391C31B00200260B8E /* InfoPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoPage.m; path = "Pizza Time NYC/InfoPage.m"; sourceTree = "<group>"; };
 		998B96841C32052300DC8EB7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		998B96851C32052300DC8EB7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		999E74141C337C030030099A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-Small.png"; sourceTree = "<group>"; };
 		99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TwoBrosPizzaLogo.jpg; sourceTree = "<group>"; };
-		99D6297F1C2F690700B49E26 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = "Pizza Time NYC/WebViewController.h"; sourceTree = "<group>"; };
-		99D629801C2F690700B49E26 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = "Pizza Time NYC/WebViewController.m"; sourceTree = "<group>"; };
+		AA324AE11C5FCE2D001739C3 /* rocketPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = rocketPizza.gif; sourceTree = "<group>"; };
+		AA324AE21C5FCE2D001739C3 /* spinningPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinningPizza.gif; sourceTree = "<group>"; };
+		AA324AE31C5FCE2D001739C3 /* steamingPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = steamingPizza.gif; sourceTree = "<group>"; };
+		AA324AE81C5FCE53001739C3 /* dripDropPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dripDropPizza.gif; sourceTree = "<group>"; };
+		AA324AE91C5FCE53001739C3 /* druggedPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = druggedPizza.gif; sourceTree = "<group>"; };
+		AA324AEE1C5FDA07001739C3 /* lovePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lovePizza.gif; sourceTree = "<group>"; };
+		AA324AEF1C5FDA07001739C3 /* friendsPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = friendsPizza.gif; sourceTree = "<group>"; };
+		AA324AF01C5FDA07001739C3 /* 90sPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 90sPizza.gif; sourceTree = "<group>"; };
+		AA324AF11C5FDA07001739C3 /* 30RockPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 30RockPizza.gif; sourceTree = "<group>"; };
+		AA324AF21C5FDA07001739C3 /* flyingPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flyingPizza.gif; sourceTree = "<group>"; };
+		AA324AF31C5FDA07001739C3 /* moneyPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = moneyPizza.gif; sourceTree = "<group>"; };
+		AA324AF41C5FDA07001739C3 /* skatePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = skatePizza.gif; sourceTree = "<group>"; };
+		AA324AF51C5FDA07001739C3 /* TMNTMikeyPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = TMNTMikeyPizza.gif; sourceTree = "<group>"; };
+		AA324AF61C5FDA07001739C3 /* planetPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = planetPizza.gif; sourceTree = "<group>"; };
+		AA324AF71C5FDA07001739C3 /* drippingPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = drippingPizza.gif; sourceTree = "<group>"; };
+		AA324AF81C5FDA07001739C3 /* furbyPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = furbyPizza.gif; sourceTree = "<group>"; };
+		AA324AF91C5FDA07001739C3 /* loadingPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadingPizza.gif; sourceTree = "<group>"; };
+		AA324AFA1C5FDA07001739C3 /* videoGamePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = videoGamePizza.gif; sourceTree = "<group>"; };
+		AA324AFB1C5FDA07001739C3 /* dancingPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dancingPizza.gif; sourceTree = "<group>"; };
+		AA324AFC1C5FDA07001739C3 /* starWarsPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = starWarsPizza.gif; sourceTree = "<group>"; };
+		AA324AFD1C5FDA07001739C3 /* newYearPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = newYearPizza.gif; sourceTree = "<group>"; };
+		AA324AFE1C5FDA07001739C3 /* handsUpPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = handsUpPizza.gif; sourceTree = "<group>"; };
+		AA324AFF1C5FDA07001739C3 /* partyOnPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = partyOnPizza.gif; sourceTree = "<group>"; };
+		AA324B001C5FDA07001739C3 /* catPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = catPizza.gif; sourceTree = "<group>"; };
+		AA324B011C5FDA07001739C3 /* blinkPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blinkPizza.gif; sourceTree = "<group>"; };
+		AA324B021C5FDA07001739C3 /* bit8Pizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bit8Pizza.gif; sourceTree = "<group>"; };
+		AA324B031C5FDA07001739C3 /* adventureTimePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = adventureTimePizza.gif; sourceTree = "<group>"; };
+		AA324B041C5FDA07001739C3 /* scaryPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = scaryPizza.gif; sourceTree = "<group>"; };
+		AA324B051C5FDA07001739C3 /* lsdPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lsdPizza.gif; sourceTree = "<group>"; };
+		AA324B061C5FDA07001739C3 /* cyclePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cyclePizza.gif; sourceTree = "<group>"; };
+		AA324B071C5FDA07001739C3 /* hungryPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = hungryPizza.gif; sourceTree = "<group>"; };
+		AA324B081C5FDA07001739C3 /* pyrPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = pyrPizza.gif; sourceTree = "<group>"; };
+		AA324B091C5FDA07001739C3 /* sneakyDogPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sneakyDogPizza.gif; sourceTree = "<group>"; };
+		AA324B0A1C5FDA07001739C3 /* krustyKrabSingPizza2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = krustyKrabSingPizza2.gif; sourceTree = "<group>"; };
+		AA324B0B1C5FDA07001739C3 /* krustyKrabSingPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = krustyKrabSingPizza.gif; sourceTree = "<group>"; };
+		AA324B0C1C5FDA07001739C3 /* spongeBobBWPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spongeBobBWPizza.gif; sourceTree = "<group>"; };
+		AA324B0D1C5FDA07001739C3 /* krabsPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = krabsPizza.gif; sourceTree = "<group>"; };
+		AA324B2E1C5FE3A8001739C3 /* pyrCatPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = pyrCatPizza.gif; sourceTree = "<group>"; };
+		AA324B2F1C5FE3A8001739C3 /* trippyPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = trippyPizza.gif; sourceTree = "<group>"; };
+		AA324B301C5FE3A8001739C3 /* rotatePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = rotatePizza.gif; sourceTree = "<group>"; };
+		AA324B311C5FE3A8001739C3 /* sliceSlicePizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sliceSlicePizza.gif; sourceTree = "<group>"; };
+		AA324B321C5FE3A8001739C3 /* coolPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = coolPizza.gif; sourceTree = "<group>"; };
+		AA324B331C5FE3A8001739C3 /* feetPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = feetPizza.gif; sourceTree = "<group>"; };
+		AA324B341C5FE3A8001739C3 /* dripPizza.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dripPizza.gif; sourceTree = "<group>"; };
+		AA324B3C1C5FFB51001739C3 /* MCQaddAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQaddAdd.png; sourceTree = "<group>"; };
+		AA324B3E1C600151001739C3 /* pizzaCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaCamera.png; sourceTree = "<group>"; };
+		AA324B401C600566001739C3 /* pizzaCamera2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaCamera2.png; sourceTree = "<group>"; };
 		AA3E83B21C456E0300C12D35 /* MethodManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodManager.h; sourceTree = "<group>"; };
 		AA3E83B31C456E0300C12D35 /* MethodManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodManager.m; sourceTree = "<group>"; };
 		AA4B39B41C3DD8750086DB81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -216,6 +308,10 @@
 		AAD0FCCF1C3F31860060B05B /* pizzaPepperoni.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pizzaPepperoni.jpeg; sourceTree = "<group>"; };
 		AAD0FCD11C3F32240060B05B /* pizzaWholePepperoni.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaWholePepperoni.png; sourceTree = "<group>"; };
 		AAD0FCD21C3F32240060B05B /* pizzaFullSliceRemove.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pizzaFullSliceRemove.jpg; sourceTree = "<group>"; };
+		AAE26FDB1C611CD800485813 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		AAE26FE11C612CF600485813 /* FeedbackPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackPageViewController.h; path = "Pizza Time NYC/FeedbackPageViewController.h"; sourceTree = "<group>"; };
+		AAE26FE21C612CF600485813 /* FeedbackPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackPageViewController.m; path = "Pizza Time NYC/FeedbackPageViewController.m"; sourceTree = "<group>"; };
+		AAE26FE51C614DFA00485813 /* annoyedRick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = annoyedRick.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +319,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAE26FDC1C611CD800485813 /* GLKit.framework in Frameworks */,
 				AAB54B8F1C5ABDA9003A7C59 /* libsqlite3.0.tbd in Frameworks */,
 				AACC50941C5BEB2D008F4B59 /* libsqlite3.tbd in Frameworks */,
 				AACC50921C5BEB1D008F4B59 /* libz.tbd in Frameworks */,
@@ -292,14 +389,57 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		99D629821C2F6BEA00B49E26 /* WebViewController */ = {
+		AA324AE71C5FCE32001739C3 /* GIFs */ = {
 			isa = PBXGroup;
 			children = (
-				99D6297F1C2F690700B49E26 /* WebViewController.h */,
-				99D629801C2F690700B49E26 /* WebViewController.m */,
+				AA324B2E1C5FE3A8001739C3 /* pyrCatPizza.gif */,
+				AA324B2F1C5FE3A8001739C3 /* trippyPizza.gif */,
+				AA324B301C5FE3A8001739C3 /* rotatePizza.gif */,
+				AA324B311C5FE3A8001739C3 /* sliceSlicePizza.gif */,
+				AA324B321C5FE3A8001739C3 /* coolPizza.gif */,
+				AA324B331C5FE3A8001739C3 /* feetPizza.gif */,
+				AA324B341C5FE3A8001739C3 /* dripPizza.gif */,
+				AA324AEE1C5FDA07001739C3 /* lovePizza.gif */,
+				AA324AEF1C5FDA07001739C3 /* friendsPizza.gif */,
+				AA324AF01C5FDA07001739C3 /* 90sPizza.gif */,
+				AA324AF11C5FDA07001739C3 /* 30RockPizza.gif */,
+				AA324AF21C5FDA07001739C3 /* flyingPizza.gif */,
+				AA324AF31C5FDA07001739C3 /* moneyPizza.gif */,
+				AA324AF41C5FDA07001739C3 /* skatePizza.gif */,
+				AA324AF51C5FDA07001739C3 /* TMNTMikeyPizza.gif */,
+				AA324AF61C5FDA07001739C3 /* planetPizza.gif */,
+				AA324AF71C5FDA07001739C3 /* drippingPizza.gif */,
+				AA324AF81C5FDA07001739C3 /* furbyPizza.gif */,
+				AA324AF91C5FDA07001739C3 /* loadingPizza.gif */,
+				AA324AFA1C5FDA07001739C3 /* videoGamePizza.gif */,
+				AA324AFB1C5FDA07001739C3 /* dancingPizza.gif */,
+				AA324AFC1C5FDA07001739C3 /* starWarsPizza.gif */,
+				AA324AFD1C5FDA07001739C3 /* newYearPizza.gif */,
+				AA324AFE1C5FDA07001739C3 /* handsUpPizza.gif */,
+				AA324AFF1C5FDA07001739C3 /* partyOnPizza.gif */,
+				AA324B001C5FDA07001739C3 /* catPizza.gif */,
+				AA324B011C5FDA07001739C3 /* blinkPizza.gif */,
+				AA324B021C5FDA07001739C3 /* bit8Pizza.gif */,
+				AA324B031C5FDA07001739C3 /* adventureTimePizza.gif */,
+				AA324B041C5FDA07001739C3 /* scaryPizza.gif */,
+				AA324B051C5FDA07001739C3 /* lsdPizza.gif */,
+				AA324B061C5FDA07001739C3 /* cyclePizza.gif */,
+				AA324B071C5FDA07001739C3 /* hungryPizza.gif */,
+				AA324B081C5FDA07001739C3 /* pyrPizza.gif */,
+				AA324B091C5FDA07001739C3 /* sneakyDogPizza.gif */,
+				AA324B0A1C5FDA07001739C3 /* krustyKrabSingPizza2.gif */,
+				AA324B0B1C5FDA07001739C3 /* krustyKrabSingPizza.gif */,
+				AA324B0C1C5FDA07001739C3 /* spongeBobBWPizza.gif */,
+				AA324B0D1C5FDA07001739C3 /* krabsPizza.gif */,
+				AA324AE81C5FCE53001739C3 /* dripDropPizza.gif */,
+				AA324AE91C5FCE53001739C3 /* druggedPizza.gif */,
+				AA324AE11C5FCE2D001739C3 /* rocketPizza.gif */,
+				AA324AE21C5FCE2D001739C3 /* spinningPizza.gif */,
+				AA324AE31C5FCE2D001739C3 /* steamingPizza.gif */,
+				AA8E22901C41B3920018ABE8 /* tmntBikePizza.gif */,
+				AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */,
 			);
-			name = WebViewController;
-			path = ..;
+			name = GIFs;
 			sourceTree = "<group>";
 		};
 		AA3E83B51C456E1C00C12D35 /* MethodManager */ = {
@@ -334,6 +474,7 @@
 		AA71E9061C2B32E400FA48F6 /* Pizza Time NYC */ = {
 			isa = PBXGroup;
 			children = (
+				AAE26FE41C612CFB00485813 /* FeedbackPage */,
 				AA92E1471C5D312C000688F7 /* GIFPage */,
 				AACB1BCD1C3B28FB0069E947 /* DAO */,
 				AACB1BC91C3B218E0069E947 /* TableViewController */,
@@ -341,10 +482,9 @@
 				AA71E9441C2B48D800FA48F6 /* View Controller */,
 				AA71E9421C2B48BC00FA48F6 /* MapKitViewController */,
 				99260E001C2DD37900EFB125 /* PizzaPlace */,
-				99D629821C2F6BEA00B49E26 /* WebViewController */,
 				99447E3B1C31B00D00260B8E /* InfoPage */,
 				998B96871C32052900DC8EB7 /* Apple Reachability */,
-				AACDE94E1C3DAB54004EF963 /* PizzaPlaceInfoViewController */,
+				AACDE94E1C3DAB54004EF963 /* PizzaPlaceInfo */,
 				AA8E228F1C41B30A0018ABE8 /* OptionsPage */,
 				AA3E83B51C456E1C00C12D35 /* MethodManager */,
 				AAB11A711C51ACFA0058BC9C /* AddNewPlace */,
@@ -363,27 +503,28 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */,
+				AA324AE71C5FCE32001739C3 /* GIFs */,
 				AA92E1611C5D7100000688F7 /* MCQ */,
 				AA92E1621C5D7126000688F7 /* FONTS */,
 				AA92E14C1C5D4B7F000688F7 /* 6thAve.png */,
+				AA324B3E1C600151001739C3 /* pizzaCamera.png */,
+				AA324B401C600566001739C3 /* pizzaCamera2.png */,
 				AAAAA15C1C50235C009EC685 /* walkAlpha30.png */,
 				AAAAA15A1C502289009EC685 /* skateBoardAlpha30.png */,
 				AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */,
 				AAB67BF81C4EA6840087F151 /* dollarBill60Alpha.png */,
 				AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */,
 				AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */,
-				AA8E22901C41B3920018ABE8 /* tmntBikePizza.gif */,
 				AAD0FCD11C3F32240060B05B /* pizzaWholePepperoni.png */,
 				AAD0FCD21C3F32240060B05B /* pizzaFullSliceRemove.jpg */,
 				AAD0FCCF1C3F31860060B05B /* pizzaPepperoni.jpeg */,
 				AACDE93E1C3D8DDD004EF963 /* skateboard.jpeg */,
 				99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */,
-				99260E091C2DD9B500EFB125 /* its pizza time resized.png */,
 				99260E011C2DD4AA00EFB125 /* GW eating a slice.jpg */,
 				AACDE9401C3D8E59004EF963 /* skateboard29.png */,
 				999E74141C337C030030099A /* Icon-Small.png */,
 				AACDE9421C3D8EBD004EF963 /* walk29.png */,
+				AAE26FE51C614DFA00485813 /* annoyedRick.mp3 */,
 				AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */,
 				AA71E9081C2B32E400FA48F6 /* main.m */,
 			);
@@ -457,6 +598,7 @@
 		AA92E1611C5D7100000688F7 /* MCQ */ = {
 			isa = PBXGroup;
 			children = (
+				AA324B3C1C5FFB51001739C3 /* MCQaddAdd.png */,
 				AA92E1651C5D78DB000688F7 /* MCQMapLOCATION.png */,
 				AA92E16A1C5D78DB000688F7 /* MCQMapSEARCH.png */,
 				AA92E1681C5D78DB000688F7 /* MCQMapOPTIONS.png */,
@@ -520,6 +662,7 @@
 				AACC50911C5BEB1D008F4B59 /* libz.tbd */,
 				AACC50931C5BEB2D008F4B59 /* libsqlite3.tbd */,
 				AAB54B8E1C5ABDA9003A7C59 /* libsqlite3.0.tbd */,
+				AAE26FDB1C611CD800485813 /* GLKit.framework */,
 				AACC508F1C5BEB12008F4B59 /* SystemConfiguration.framework */,
 				AACC508D1C5BEB09008F4B59 /* StoreKit.framework */,
 				AACC508B1C5BEB03008F4B59 /* Security.framework */,
@@ -552,13 +695,23 @@
 			name = DAO;
 			sourceTree = "<group>";
 		};
-		AACDE94E1C3DAB54004EF963 /* PizzaPlaceInfoViewController */ = {
+		AACDE94E1C3DAB54004EF963 /* PizzaPlaceInfo */ = {
 			isa = PBXGroup;
 			children = (
 				AACDE94B1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.h */,
 				AACDE94C1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.m */,
 			);
-			name = PizzaPlaceInfoViewController;
+			name = PizzaPlaceInfo;
+			sourceTree = "<group>";
+		};
+		AAE26FE41C612CFB00485813 /* FeedbackPage */ = {
+			isa = PBXGroup;
+			children = (
+				AAE26FE11C612CF600485813 /* FeedbackPageViewController.h */,
+				AAE26FE21C612CF600485813 /* FeedbackPageViewController.m */,
+			);
+			name = FeedbackPage;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -671,6 +824,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA324B131C5FDA07001739C3 /* moneyPizza.gif in Resources */,
+				AA324B231C5FDA07001739C3 /* adventureTimePizza.gif in Resources */,
 				AA92E1501C5D5BEA000688F7 /* Rubik-Bold.ttf in Resources */,
 				AA92E1511C5D5BEA000688F7 /* Rubik-Black.ttf in Resources */,
 				990B5EC11C4CB9B6000BF1B5 /* MCQMapSLICE.png in Resources */,
@@ -678,47 +833,92 @@
 				AAA7C1F11C40326E00EE8B43 /* pizzaMusic.mp3 in Resources */,
 				AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */,
 				AA92E1711C5D78DB000688F7 /* MCQMapSEARCH.png in Resources */,
+				AA324B151C5FDA07001739C3 /* TMNTMikeyPizza.gif in Resources */,
+				AA324B2A1C5FDA07001739C3 /* krustyKrabSingPizza2.gif in Resources */,
 				AAAAA15B1C502289009EC685 /* skateBoardAlpha30.png in Resources */,
+				AA324B181C5FDA07001739C3 /* furbyPizza.gif in Resources */,
+				AA324AEC1C5FCE53001739C3 /* druggedPizza.gif in Resources */,
 				AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAPa.png in Resources */,
 				99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */,
+				AA324B2B1C5FDA07001739C3 /* krustyKrabSingPizza.gif in Resources */,
+				AA324AE51C5FCE2D001739C3 /* spinningPizza.gif in Resources */,
+				AA324B411C600566001739C3 /* pizzaCamera2.png in Resources */,
+				AA324B241C5FDA07001739C3 /* scaryPizza.gif in Resources */,
+				AA324B1F1C5FDA07001739C3 /* partyOnPizza.gif in Resources */,
+				AAE26FE61C614DFA00485813 /* annoyedRick.mp3 in Resources */,
 				AA92E1761C5D79B5000688F7 /* MCQMapSOUND.png in Resources */,
 				AAB826941C5EC98800CDFDA7 /* KenPizzaMan.gif in Resources */,
+				AA324B361C5FE3A8001739C3 /* trippyPizza.gif in Resources */,
 				AACDE93F1C3D8DDD004EF963 /* skateboard.jpeg in Resources */,
+				AA324B1B1C5FDA07001739C3 /* dancingPizza.gif in Resources */,
+				AA324B111C5FDA07001739C3 /* 30RockPizza.gif in Resources */,
 				990B5EC51C4CC003000BF1B5 /* MCQMapSLICE29.png in Resources */,
 				AACDE9431C3D8EBD004EF963 /* walk29.png in Resources */,
 				AA92E1701C5D78DB000688F7 /* MCQMapSOUNDNOT.png in Resources */,
+				AA324B121C5FDA07001739C3 /* flyingPizza.gif in Resources */,
+				AA324AEB1C5FCE53001739C3 /* dripDropPizza.gif in Resources */,
 				990B5EC21C4CB9B6000BF1B5 /* MCQMapBIKE.png in Resources */,
+				AA324B1E1C5FDA07001739C3 /* handsUpPizza.gif in Resources */,
+				AA324B271C5FDA07001739C3 /* hungryPizza.gif in Resources */,
+				AA324B291C5FDA07001739C3 /* sneakyDogPizza.gif in Resources */,
+				AA324B351C5FE3A8001739C3 /* pyrCatPizza.gif in Resources */,
+				AA324B261C5FDA07001739C3 /* cyclePizza.gif in Resources */,
 				AAB67C531C4EED540087F151 /* MCQSliceBOTTOM.png in Resources */,
+				AA324B141C5FDA07001739C3 /* skatePizza.gif in Resources */,
 				AAB67C521C4EED540087F151 /* MCQSliceLEFTt.png in Resources */,
+				AA324B101C5FDA07001739C3 /* 90sPizza.gif in Resources */,
 				AAB67C501C4EED540087F151 /* MCQSliceLEFTb.png in Resources */,
 				AA92E16F1C5D78DB000688F7 /* MCQMapOPTIONS.png in Resources */,
 				AA92E17B1C5D7B39000688F7 /* MCQTabBarLIST.png in Resources */,
-				99260E0A1C2DD9B500EFB125 /* its pizza time resized.png in Resources */,
+				AA324B2D1C5FDA07001739C3 /* krabsPizza.gif in Resources */,
+				AA324B211C5FDA07001739C3 /* blinkPizza.gif in Resources */,
+				AA324B171C5FDA07001739C3 /* drippingPizza.gif in Resources */,
 				AA71E91A1C2B32E500FA48F6 /* LaunchScreen.storyboard in Resources */,
 				AA92E1491C5D4257000688F7 /* MCQppiGO.png in Resources */,
+				AA324B191C5FDA07001739C3 /* loadingPizza.gif in Resources */,
 				AA8E22911C41B3930018ABE8 /* tmntBikePizza.gif in Resources */,
 				AA92E14D1C5D4B7F000688F7 /* 6thAve.png in Resources */,
+				AA324B1A1C5FDA07001739C3 /* videoGamePizza.gif in Resources */,
 				AAB67C541C4EED540087F151 /* MCQSliceRIGHTt.png in Resources */,
+				AA324B161C5FDA07001739C3 /* planetPizza.gif in Resources */,
+				AA324B201C5FDA07001739C3 /* catPizza.gif in Resources */,
 				AAD0FCD31C3F32240060B05B /* pizzaWholePepperoni.png in Resources */,
+				AA324B221C5FDA07001739C3 /* bit8Pizza.gif in Resources */,
 				99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */,
 				AAAC939F1C499ECE00D3AC6B /* MCQTabBarLISTa.png in Resources */,
+				AA324B281C5FDA07001739C3 /* pyrPizza.gif in Resources */,
 				AA92E16C1C5D78DB000688F7 /* MCQMapLOCATION.png in Resources */,
 				AA92E17D1C5D7B39000688F7 /* MCQppiBACK.png in Resources */,
+				AA324B3F1C600151001739C3 /* pizzaCamera.png in Resources */,
 				AAD0FCD01C3F31860060B05B /* pizzaPepperoni.jpeg in Resources */,
 				AAB67BFB1C4EA7320087F151 /* dollarBillAlpha60.png in Resources */,
 				AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */,
+				AA324B3D1C5FFB51001739C3 /* MCQaddAdd.png in Resources */,
+				AA324B1C1C5FDA07001739C3 /* starWarsPizza.gif in Resources */,
 				AAB67C511C4EED540087F151 /* MCQSliceRIGHTb.png in Resources */,
 				AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */,
+				AA324B381C5FE3A8001739C3 /* sliceSlicePizza.gif in Resources */,
+				AA324AE61C5FCE2D001739C3 /* steamingPizza.gif in Resources */,
 				AAB67C551C4EED540087F151 /* MCQSliceTOP.png in Resources */,
+				AA324B371C5FE3A8001739C3 /* rotatePizza.gif in Resources */,
 				AAB67BF91C4EA6840087F151 /* dollarBill60Alpha.png in Resources */,
+				AA324B3A1C5FE3A8001739C3 /* feetPizza.gif in Resources */,
+				AA324B0F1C5FDA07001739C3 /* friendsPizza.gif in Resources */,
 				AAAAA15D1C50235C009EC685 /* walkAlpha30.png in Resources */,
+				AA324B251C5FDA07001739C3 /* lsdPizza.gif in Resources */,
 				AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */,
 				AAD0FCD41C3F32240060B05B /* pizzaFullSliceRemove.jpg in Resources */,
+				AA324B391C5FE3A8001739C3 /* coolPizza.gif in Resources */,
+				AA324B3B1C5FE3A8001739C3 /* dripPizza.gif in Resources */,
 				AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png in Resources */,
+				AA324B1D1C5FDA07001739C3 /* newYearPizza.gif in Resources */,
 				990B5EC61C4CC003000BF1B5 /* MCQMapBIKE29.png in Resources */,
 				999E74151C337C030030099A /* Icon-Small.png in Resources */,
 				AACDE9411C3D8E59004EF963 /* skateboard29.png in Resources */,
+				AA324B0E1C5FDA07001739C3 /* lovePizza.gif in Resources */,
+				AA324AE41C5FCE2D001739C3 /* rocketPizza.gif in Resources */,
 				99260E021C2DD4AA00EFB125 /* GW eating a slice.jpg in Resources */,
+				AA324B2C1C5FDA07001739C3 /* spongeBobBWPizza.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,12 +946,12 @@
 				AAB11A701C51ABA50058BC9C /* AddNewPlace.m in Sources */,
 				AACB1BCC1C3B28F30069E947 /* DAO.m in Sources */,
 				AA71E9151C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld in Sources */,
-				99D629811C2F690700B49E26 /* WebViewController.m in Sources */,
 				AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */,
 				AACB1BC81C3B21890069E947 /* TableViewController.m in Sources */,
 				AA8E228E1C41B2BF0018ABE8 /* OptionsPage.m in Sources */,
 				AA92E1461C5D3127000688F7 /* GIFPage.m in Sources */,
 				99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */,
+				AAE26FE31C612CF600485813 /* FeedbackPageViewController.m in Sources */,
 				AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */,
 				AACDE94D1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.m in Sources */,
 				AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */,

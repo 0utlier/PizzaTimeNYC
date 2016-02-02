@@ -319,13 +319,21 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 
 -(void)rightBPressed:(UIButton *)rightBButton {
 	NSLog(@"Open the FEEDBACK");
+	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"feedbackPage"];
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
 						 self.rightB.frame = CGRectMake((self.screenSize.width/4)*3, (self.screenSize.height/6)*5, self.screenSize.width/3, self.screenSize.height/6);
 						 //						 self.rightB.alpha = 0.0;
 					 }completion:^(BOOL finished) { //when finished, load the page
-						 //	[self.tabBarController setSelectedIndex:FEEDBACKPAGE];
+						 UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Profile Page Coming Soon"
+																			   message:@"Leave feedback in the mean time"
+																			  delegate:nil
+																	 cancelButtonTitle:@"OK"
+																	 otherButtonTitles: nil];
+						 
+						 [myAlertView show];
+						 [self presentViewController:detailViewController animated:YES completion:nil];
 						 self.rightB.frame = CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
 					 }];
 }

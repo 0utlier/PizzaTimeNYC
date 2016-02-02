@@ -131,36 +131,19 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
 	self.searchBar.placeholder = @"Search Address";
+	
+	self.searchBar.backgroundColor = [UIColor redColor]; // color of cancel and cursor
+	self.searchBar.barTintColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0]; // color of the bar
+	//	self.searchBar.tintColor = [UIColor purpleColor]; // color of 'cancel'
+	
+	UIImageView *searchIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"walkAlpha30.png"]];
+	searchIcon.frame = CGRectMake(10, 10, 24, 24);
+	[self.searchBar addSubview:searchIcon];
+	[[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0]]; // for ALL searchBars, do this. Effects every bar after called
+	
 	[self.view addSubview:self.searchBar];
 	self.searchBar.hidden = YES;
 }
-
-/* // commented out for TabBar addition // delegate
- -(void)createToolBar {
-	[self.view addSubview:self.mapToolBar];
-	//uncomment following line for programmtic version of toolBar
- 
- //	UIToolbar *toolbar = [[UIToolbar alloc] init];
- //	 toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
- //	 NSMutableArray *items = [[NSMutableArray alloc] init];
- //	 [items addObject:[[[UIBarButtonItem alloc] initWith....]];
- //	 [toolbar setItems:items animated:NO];
- //	 [self.view addSubview:toolbar];
- 
-	// Add an action for each bar button ITEM
-	self.currentLocationButton.target = self;
-	self.currentLocationButton.action = @selector(currentLocationButtonPressed);
- 
-	self.searchAddressButton.target = self;
-	self.searchAddressButton.action = @selector(searchButtonPressed);
- 
- //uncomment this if infoButton needs to do anything besides open page
- //	 self.addPizzaPlaceButton.target = self;
- //	 self.addPizzaPlaceButton.action = @selector(addPizzaPlaceButtonPressed);
- //
- //	 self.infoButton.target = self;
- //	 self.infoButton.action = @selector(infoButtonPressed);}
-	*/
 
 
 -(void)assignButtons {// and buttons
@@ -391,7 +374,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	return MKCoordinateRegionMake(center, span);
 }
 
--(void)setDirectionalValues { //:(PizzaPlace *)pizzaPlace {
+-(void)setDirectionalValues {
 	//	NSLog(@"show DV directions is = %d", self.methodManager.directionsShow);
 	if (!self.methodManager.directionsShow) {
 //		NSLog(@"not looking for directions");
@@ -1066,11 +1049,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		//		dropPin.longitude = [NSNumber numberWithDouble:newAddress.longitude];
 		//		[self.mapView addAnnotation:dropPin];
 		
-		// removed 1.27.16 - my code not necessary
-		//		CLLocationCoordinate2D centerCoordinate;
-		//		centerCoordinate.latitude = (CLLocationDegrees)newAddress.latitude;
-		//		centerCoordinate.longitude = (CLLocationDegrees)newAddress.longitude;
-		MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+			MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
 		[annotation setCoordinate:self.newAddress];
 		[annotation setTitle:@"You Found Me"]; //You can set the subtitle too
 		[annotation setSubtitle:@"Are you my mother?"];
@@ -1080,7 +1059,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		//If we keep this, add the values to an array of places, so that it will not only reload next time, it can be added to the dataBase
 		/*
 		 save the newAddress as a property
-		 (currentSelection or currentAddress - to be used with search as well)
+		 (newAddress  - to be used with search as well)
 		 then in response to uilertview, use property to create place or set as current address
 		 */
 		
