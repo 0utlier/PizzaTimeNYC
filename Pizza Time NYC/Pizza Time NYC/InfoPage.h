@@ -11,4 +11,5 @@
 
 @interface InfoPage : UIViewController
 
+@property UIImage *image;
 @end

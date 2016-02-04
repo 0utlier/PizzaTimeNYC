@@ -14,11 +14,17 @@ AppDelegate *appDelegate;
 @implementation MethodManager
 
 BOOL sound; // silent or loud (NO = 0 = Silent)
+BOOL ipodPlaying;
 /*
  sound 1.20.16
  created in MM
  [not initialized, but assumed YES]
  VC VWA if, set NO
+ 
+ ipodPlaying 2.3.16
+ created in MM
+ set yes during create player
+ used to play music when button pressed for off
  */
 #pragma mark - Singleton Methods
 
@@ -53,7 +59,19 @@ static AVAudioPlayer *p;
 
 #pragma mark - CREATE
 
+- (void)soundCheck {
+	if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying){
+		NSLog(@"backgroud music is playing");
+		ipodPlaying = YES;
+	}
+	else {
+//		NSLog(@"music is NOT playing"); // commented out, but helpful 2.4.16
+		ipodPlaying = NO;
+	}
+}
+
 -(void)createPlayer {
+	[self soundCheck];
 	//	self.window = [[UIApplication sharedApplication] keyWindow];
 	//	self.topView = self.window.rootViewController.view;
 	
@@ -98,7 +116,10 @@ static AVAudioPlayer *p;
 	 object:[UIDevice currentDevice]];
 }
 
-
+- (void)createDate {
+	NSTimeInterval seconds = [NSDate timeIntervalSinceReferenceDate];
+	self.gifCount = (int)seconds;
+}
 
 #pragma mark - Buttons
 
@@ -112,6 +133,9 @@ static AVAudioPlayer *p;
 -(UIImage *)stopMusic {
 	[self.audioPlayer stop];
 	sound = NO;
+	if (ipodPlaying) { // play music if user's music HAD been playing
+		[[MPMusicPlayerController iPodMusicPlayer] play];
+	}
 	UIImage *speakerButtonImage = [UIImage imageNamed:@"MCQMapSOUNDNOT.png"];
 	return speakerButtonImage;	// [maybe] set the image here
 }
@@ -206,9 +230,9 @@ static AVAudioPlayer *p;
 }
 
 - (void)gifPresent {
-//	AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//	UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
-//	[tabBarController setSelectedIndex:ADDPAGE];
+	//	AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	//	UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
+	//	[tabBarController setSelectedIndex:ADDPAGE];
 	self.window = [[UIApplication sharedApplication] keyWindow];
 	UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
 															 bundle: nil];
@@ -218,67 +242,28 @@ static AVAudioPlayer *p;
 
 - (void)orientationChanged:(NSNotification *)note
 {
+	if (!self.rotation) {return;} // if rotation is disabled skip this
 	
 	//Obtaining the current device orientation
 	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
 	
-//	NSLog(@"orienation = %ld", (long)orientation);
+	//	NSLog(@"orienation = %ld", (long)orientation);
 	if (orientation == UIDeviceOrientationLandscapeRight || orientation == UIDeviceOrientationLandscapeLeft) {
-//		NSLog(@"turned to side, GIF TIME [if statement]");
+		//		NSLog(@"turned to side, GIF TIME [if statement]");
 		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
-					return; // do not think necessary
+		return; // do not think necessary
 	}
 	else if (orientation == UIDeviceOrientationFaceDown) {
 		[self performSelector:@selector(speakerButtonPressed:) withObject:nil afterDelay:0];
-		self.gifCount = 0;
+		self.gifCount = 0; //used to set Pizza Man
 		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
 	}
 	else {
-//		NSLog(@"turned back to portrat, UNDO the GIF");
-//		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(speakerButtonPressed:) object:nil];
+		//		NSLog(@"turned back to portrat, UNDO the GIF");
+		//		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(speakerButtonPressed:) object:nil];
 		[self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-
+		
 	}
-//	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(speakerButtonPressed:) object:nil];
-//	//Responding only to changes in landscape or portrait
-//	currentOrientation = orientation;
-//	[self performSelector:@selector(optionsButtonPressed:) withObject:nil afterDelay:0];
-
-/*
-
-	UIDevice * device = note.object;
-	switch(device.orientation)
-	{
-		case UIDeviceOrientationFaceDown:
-			// start special animation
-			NSLog(@"The iPhone is being held FACE DOWN = scary music");
-//			[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
-			break;
-			
-		case UIDeviceOrientationPortrait:
-			// start special animation
-			NSLog(@"The iPhone is returned to PORTRAIT, options page");
-			[self performSelector:@selector(optionsButtonPressed:) withObject:nil afterDelay:0];
-			break;
-			
-		case UIDeviceOrientationLandscapeRight:
-			// start special animation
-			NSLog(@"The iPhone is tilted to the RIGHT, GIF time");
-			[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
-			// present page with GIF, and 1 to the count
-			break;
-
-		case UIDeviceOrientationLandscapeLeft:
-			// start special animation
-			NSLog(@"The iPhone is tilted to the LEFT, GIF time");
-			[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
-			// present page with GIF, and 1 to the count
-			break;
-
-		default:
-			break;
-	};
-*/
 }
 
 

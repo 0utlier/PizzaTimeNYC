@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MethodManager.h"
 
-@interface AddNewPlace : UIViewController <UIImagePickerControllerDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
+@interface AddNewPlace : UIViewController <UIImagePickerControllerDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;

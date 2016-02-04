@@ -12,13 +12,15 @@
 
 @interface DAO : NSObject
 
-@property(nonatomic, retain) NSMutableArray *pizzaPlaceArray;
+@property (nonatomic, retain) NSMutableArray *pizzaPlaceArray;
+@property (nonatomic, retain) NSMutableArray *gifArray;
 
-- (void)fromLocalData;
-- (void)downloadParse;
-- (void)saveParse;
-
-//- (void)createPizzaPlaces; // removed 1.28.16 replaced by parse
+//Parse Methods
+- (void)fromLocalDataPP;
+- (void)downloadParsePP;
+//- (void)saveParse;
+- (void)fromLocalDataGifs;
+- (void)downloadParseGifs;
 + (instancetype)sharedDAO;
 
 

@@ -8,9 +8,19 @@
 
 #import "AddNewPlace.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <AddressBookUI/AddressBookUI.h>
 @interface AddNewPlace ()
 // for use of the avAudioPlayer & Menu Button
 @property (strong, nonatomic) MethodManager *methodManager;
+@property BOOL foundLocation;
+/*
+ foundLocation 2.3.16
+ created AddNew
+ set as NO
+ check for updateLocation
+ set during locButton pressed
+ set during photo taken
+ */
 
 @end
 
@@ -19,8 +29,10 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.methodManager = [MethodManager sharedManager];
+	self.foundLocation = NO;
 	self.addressTextField.delegate = self;
 	self.nameTextField.delegate = self;
+	self.methodManager.locationManager.delegate = self;
 	
 }
 
@@ -68,29 +80,32 @@
 -(void)backButtonPressed:(UIButton *)backButton {
 	NSLog(@"backButton was pressed");
 	[self.tabBarController setSelectedIndex:MAPPAGE];
-	
 }
 
 - (void)locationButtonPressed:(UIButton *)locationButton {
-	//	[self.methodManager.locationManager startUpdatingLocation]; // unsure if I need this or not 2.1.16
+	self.addressTextField.text = @"";
+	self.foundLocation = NO;
+	[self.methodManager.locationManager startUpdatingLocation];
 	if (self.methodManager.locationManager.location.coordinate.latitude == 0.0 || self.methodManager.locationManager.location.coordinate.longitude == 0.0) {
 		NSLog(@"Present an alert");
 	}
-	NSString *latLong = [NSString stringWithFormat:@"%f & %f",self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude];
-	/*
-	 // turn the latLong into an address
-	 CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-	 [geocoder reverseGeocodeLocation:self.methodManager.locationManager.location completionHandler:^(NSArray *placemarks, NSError *error) {
+	[self addressLookUp:self.methodManager.locationManager.location];
+	//	NSString *latLong = [NSString stringWithFormat:@"%f & %f",self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude];
+	//	self.addressTextField.text = latLong;
+}
+
+- (void)addressLookUp:(CLLocation *)location {
+	// turn the latLong into an address
+	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+	[geocoder reverseGeocodeLocation:self.methodManager.locationManager.location completionHandler:^(NSArray *placemarks, NSError *error) {
 		NSLog(@"Finding address");
 		if (error) {
-	 NSLog(@"Error %@", error.description);
+			NSLog(@"Error %@", error.description);
 		} else {
-	 CLPlacemark *placemark = [placemarks lastObject];
-	 self.addressTextField.text = [NSString stringWithFormat:@"%@", ABCreateStringWithAddressDictionary(placemark.addressDictionary, NO)];
+			CLPlacemark *placemark = [placemarks lastObject];
+			self.addressTextField.text = [NSString stringWithFormat:@"%@", ABCreateStringWithAddressDictionary(placemark.addressDictionary, NO)];
 		}
-	 }];
-	 */
-	self.addressTextField.text = latLong;
+	}];
 }
 
 -(void)cameraButtonPressed:(UIButton *)cameraButton {
@@ -117,41 +132,51 @@
 -(void)addButtonPressed:(UIButton *)addButton {
 	NSString *submission = [NSString stringWithFormat:@"User has found %@, which is located: %@", self.nameTextField.text, self.addressTextField.text];
 	NSLog(@"addButton was pressed - submit info to developer \n%@", submission);
+	
+	if ([self.nameTextField.text isEqual:@""] || [self.addressTextField.text isEqual:@""]) {
+		UIAlertView *noNameAlert = [[UIAlertView alloc] initWithTitle:@"Is there a name/address?"
+															  message:@"Pizza Places need a name AND address"
+															 delegate:self
+													cancelButtonTitle:@"Edit"
+													otherButtonTitles: @"Its in the picture!",nil];
+		[noNameAlert show];
+	}
+	else {
 	// create a PFObject and parse it!
-	UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Thank You!"
+	UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
 														  message:@"We will look into your Submission!"
 														 delegate:nil
 												cancelButtonTitle:@"OK"
 												otherButtonTitles: nil];
-	
-	[myAlertView show];
+	[submitAlert show];
 	[self.tabBarController setSelectedIndex:OPTIONSPAGE];
-	
+	}
 }
 
 #pragma mark - Text Field Delegate
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-	return YES;
-}
-
-
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+	//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 	[self.view endEditing:YES];
 	return YES;
 }
 
-- (void)keyboardDidShow:(NSNotification *)notification
-{
+/* // none of these methods are necessary
+ -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+	return YES;
+ }
+ 
+ - (void)keyboardDidShow:(NSNotification *)notification
+ {
 	
-}
-
--(void)keyboardDidHide:(NSNotification *)notification
-{
+ }
+ 
+ -(void)keyboardDidHide:(NSNotification *)notification
+ {
 	
-}
+ }
+ */
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField
 {
@@ -230,7 +255,7 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	
-	NSLog(@"Picker returned successfully.");
+	// NSLog(@"Picker returned successfully.");
 	
 	UIImage *selectedImage;
 	
@@ -273,18 +298,32 @@
 	 CLLocation *location = [photoAsset valueForProperty:ALAssetPropertyLocation];
 		if (location.coordinate.latitude == 0.0 || location.coordinate.longitude == 0.0) {
 			NSLog(@"Present an alert");
+			self.foundLocation = NO;
+			[self.methodManager.locationManager startUpdatingLocation]; // unsure if I need this or not 2.1.16
+			self.addressTextField.text = [NSString stringWithFormat:@"%f & %f", self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude];
 		}
-		NSString *latLong = [NSString stringWithFormat:@"%f & %f",location.coordinate.latitude, location.coordinate.longitude];
-		self.addressTextField.text = latLong;
-/* // not sure what this would do, if not setting the location to the image
-	 NSMutableDictionary *exifDataDict = [[NSMutableDictionary alloc]init];
-	 if (location!=nil) {
+		else {
+			[self addressLookUp:location];
+			//			NSString *latLong = [NSString stringWithFormat:@"%f & %f",location.coordinate.latitude, location.coordinate.longitude];
+			//			self.addressTextField.text = latLong;
+		}
+		/* // not sure what this would do, if not setting the location to the image
+		 NSMutableDictionary *exifDataDict = [[NSMutableDictionary alloc]init];
+		 if (location!=nil) {
 		 [exifDataDict setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
 		 [exifDataDict setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
-	 }
-		*/
+		 }
+		 */
 	} failureBlock:nil];
 }
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+	if (self.foundLocation){return;}
+	//	NSLog(@"locations = %@",[locations lastObject]);
+	[self.methodManager.locationManager stopUpdatingLocation];
+	self.foundLocation = YES;
+}
+
 /*
  #pragma mark - Navigation
  
@@ -294,5 +333,30 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+#pragma mark - UIAlertView
+
+// bring user to settings of Pizza Time (stock settings)
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	
+#pragma mark 1 - Blank Submission
+	// 1 // text field is blank
+	if ([alertView.title isEqualToString:@"Is there a name?"]) {
+		if (buttonIndex == 1) {
+			NSLog(@"user submitted, hopefully with picture");
+			// create a PFObject and parse it!
+			UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
+																  message:@"We will look into your Submission!"
+																 delegate:nil
+														cancelButtonTitle:@"OK"
+														otherButtonTitles: nil];
+			[submitAlert show];
+			[self.tabBarController setSelectedIndex:OPTIONSPAGE];
+		}
+		else {
+			NSLog(@"user decided to edit the submission");
+		}
+	}
+}
 
 @end

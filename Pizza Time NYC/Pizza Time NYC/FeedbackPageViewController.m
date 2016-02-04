@@ -8,8 +8,10 @@
 
 #import "FeedbackPageViewController.h"
 #import <AudioToolbox/AudioServices.h>
+#import "MethodManager.h"
 
 @interface FeedbackPageViewController ()
+@property (strong, nonatomic) MethodManager *methodManager;
 
 @end
 
@@ -17,18 +19,30 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	self.methodManager = [MethodManager sharedManager];
 	// Do any additional setup after loading the view.
 	self.feedbackTextField.delegate = self;
 	self.AppVersion.text = [self buildNumberInfo];
 	[self.submitButton addTarget:self
 						  action:@selector(submitButtonPressed:)
 				forControlEvents:UIControlEventTouchUpInside];
+
+	UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake((self.view.bounds.size.width/2)-22, 16, 45, 45)];
+	// Add an action in current code file (i.e. target)
+	[backButton addTarget:self
+				   action:@selector(backButtonPressed:)
+		 forControlEvents:UIControlEventTouchUpInside];
+	
+	[backButton setBackgroundImage:[UIImage imageNamed:@"MCQppiBACK.png"] forState:UIControlStateNormal];
+	[self.view addSubview:backButton];
 }
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
 }
+
+#pragma mark - ACTIONS
 
 -(NSString *)buildNumberInfo {
 	NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -50,6 +64,12 @@
 	[myAlertView show];
 	[self dismissViewControllerAnimated:YES completion:nil];
 
+}
+
+-(void)backButtonPressed:(UIButton *)backButton {
+	// return to optionsPage
+	self.methodManager.rotation = YES;
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - TextField Methods

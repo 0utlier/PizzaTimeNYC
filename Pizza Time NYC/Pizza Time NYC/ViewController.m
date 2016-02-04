@@ -70,8 +70,11 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 		self.methodManager.userLocRemind = YES;
 		self.methodManager.firstTimeLoaded = YES;
 		self.methodManager.closestPP = NO;
-		[self.dao downloadParse]; // 1.29.16 download first, pin and then call local data
-		[self.dao fromLocalData];
+		self.methodManager.rotation = YES;
+		[self.dao downloadParsePP]; // 1.29.16 download first, pin and then call local data
+		[self.dao fromLocalDataPP];
+//		[self.dao downloadParseGifs]; // 2.4.16 download first, pin and then call local gifs
+		[self.dao fromLocalDataGifs];
 		[self.methodManager createOrientation];
 		[[UIDevice currentDevice] setValue:
 		 [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
@@ -333,6 +336,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 																	 otherButtonTitles: nil];
 						 
 						 [myAlertView show];
+						 self.methodManager.rotation = NO;
 						 [self presentViewController:detailViewController animated:YES completion:nil];
 						 self.rightB.frame = CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
 					 }];

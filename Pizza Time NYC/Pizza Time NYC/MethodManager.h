@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import <MapKit/MapKit.h>
+#import <MediaPlayer/MediaPlayer.h> 
 #import "AppDelegate.h"
 @class MapKitViewController;
 @class ViewController;
@@ -33,6 +34,8 @@
 @property (nonatomic)BOOL userLocAuth; // use to prompt or not // allowed or disabled (YES = enabled or leave alone)
 @property (nonatomic)BOOL userLocRemind; // use to prompt or not // remind or do not (NO = 0 = do not)
 @property (nonatomic)BOOL closestPP; // use to find closest or not // (NO = 0 = not closest)
+@property (nonatomic)BOOL rotation; // use to disable rotation // (NO = 0 = no rotation)
+
 /*
  searching 1.20.16
  created in MM
@@ -76,6 +79,11 @@
  created in MM
  VC init as NO
  MK use during and set NO after
+ 
+ noRotation 2.3.16
+ created in MM
+ VC init as YES
+ 
  */
 @property (nonatomic, strong) UIButton *optionsButton;
 @property (nonatomic, strong) UIButton *speakerButton;
@@ -89,6 +97,8 @@
 @property (nonatomic, retain) CLLocation *empireStateBuilding;
 @property CGSize statusBarSize;
 @property int gifCount;
+
+@property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 + (id)sharedManager;
 
@@ -113,5 +123,6 @@
 
 //-(void)searchButtonPressed:(UIButton *)searchButton;
 
+- (void)createDate;
 
 @end

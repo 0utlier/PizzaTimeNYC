@@ -68,8 +68,7 @@
 	distanceLabel.text = [NSString stringWithFormat:@"%.2f mi away", pizzaPlace.distance];
 	self.currentPizzaPlace = pizzaPlace;
 	
-//	self.imageView.image = [UIImage imageNamed:pizzaPlace.image];
-	self.imageView.image = [UIImage imageNamed:@"6thAve.png"];
+	self.imageView.image = [UIImage imageNamed:pizzaPlace.image];
 }
 
 #pragma mark - ACTIONS
