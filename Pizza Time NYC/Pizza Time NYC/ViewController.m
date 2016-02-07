@@ -202,7 +202,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	[self.view addSubview:self.rightT];
 	
 	
-	self.top = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6)];
+	self.top = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 17), self.screenSize.width/3, self.screenSize.height/6 + 17)];
 	// Add an action in current code file (i.e. target)
 	[self.top addTarget:self
 				 action:@selector(topPressed:)
@@ -211,7 +211,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	[self.view addSubview:self.top];
 	
 	
-	self.bottom = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (3*(self.screenSize.height/4) + 15), self.screenSize.width/3, self.screenSize.height/6)];
+	self.bottom = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), ((self.screenSize.height/4)*3), self.screenSize.width/3, self.screenSize.height/6 + 17)];
 	// Add an action in current code file (i.e. target)
 	[self.bottom addTarget:self
 					action:@selector(bottomPressed:)
@@ -377,9 +377,10 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
-						 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (4*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6);					 }completion:^(BOOL finished) { //when finished, load the page
+						 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (4*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6);
+					 }completion:^(BOOL finished) { //when finished, load the page
 							 [self.tabBarController setSelectedIndex:MAPPAGE];
-							 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6);
+							 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 17), self.screenSize.width/3, self.screenSize.height/6 + 17);
 						 }];
 }
 
@@ -391,7 +392,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (4*(self.screenSize.height/4) + 15), self.screenSize.width/3, self.screenSize.height/6);
 					 }completion:^(BOOL finished) { //when finished, load the page
 						 [self.tabBarController setSelectedIndex:ADDPAGE];
-						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (3*(self.screenSize.height/4) + 15), self.screenSize.width/3, self.screenSize.height/6);
+						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), ((self.screenSize.height/4)*3), self.screenSize.width/3, self.screenSize.height/6 + 17);
 					 }];
 }
 

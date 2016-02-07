@@ -116,11 +116,6 @@ static AVAudioPlayer *p;
 	 object:[UIDevice currentDevice]];
 }
 
-- (void)createDate {
-	NSTimeInterval seconds = [NSDate timeIntervalSinceReferenceDate];
-	self.gifCount = (int)seconds;
-}
-
 #pragma mark - Buttons
 
 -(UIImage *)playMusic {
@@ -233,6 +228,10 @@ static AVAudioPlayer *p;
 	//	AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	//	UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
 	//	[tabBarController setSelectedIndex:ADDPAGE];
+//	NSTimeInterval seconds = [NSDate timeIntervalSinceReferenceDate];
+	NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
+	self.gifCount = (int)timeInMiliseconds;
+
 	self.window = [[UIApplication sharedApplication] keyWindow];
 	UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
 															 bundle: nil];

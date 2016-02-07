@@ -9,10 +9,11 @@
 #import "FeedbackPageViewController.h"
 #import <AudioToolbox/AudioServices.h>
 #import "MethodManager.h"
+#import <Parse/Parse.h>
 
 @interface FeedbackPageViewController ()
 @property (strong, nonatomic) MethodManager *methodManager;
-
+@property (strong, nonatomic) NSString *typeFeedback;
 @end
 
 @implementation FeedbackPageViewController
@@ -22,11 +23,12 @@
 	self.methodManager = [MethodManager sharedManager];
 	// Do any additional setup after loading the view.
 	self.feedbackTextField.delegate = self;
-	self.AppVersion.text = [self buildNumberInfo];
+	self.emailText.delegate = self;
+	self.appVersion.text = [self buildNumberInfo];
 	[self.submitButton addTarget:self
 						  action:@selector(submitButtonPressed:)
 				forControlEvents:UIControlEventTouchUpInside];
-
+	
 	UIButton *backButton = [[UIButton alloc]initWithFrame:CGRectMake((self.view.bounds.size.width/2)-22, 16, 45, 45)];
 	// Add an action in current code file (i.e. target)
 	[backButton addTarget:self
@@ -42,18 +44,52 @@
 	// Dispose of any resources that can be recreated.
 }
 
+-(IBAction)segmentedControl:(id)sender
+{
+	switch (self.segmentControl.selectedSegmentIndex)
+	{
+		case 0:
+			self.typeFeedback = @"Positive";
+			break;
+		case 1:
+			self.typeFeedback = @"Error";
+			break;
+		case 2:
+			self.typeFeedback = @"Request";
+			break;
+		default:
+			break;
+	}
+}
+
 #pragma mark - ACTIONS
 
 -(NSString *)buildNumberInfo {
 	NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
 	NSString *appVersion = [infoDict objectForKey:@"CFBundleShortVersionString"]; // example: 1.0.0
-	return [NSString stringWithFormat:@"Build %@",appVersion];
+	return [NSString stringWithFormat:@"%@",appVersion];
 }
 
 -(void)submitButtonPressed:(UIButton *)submitButton {
-	NSString *feedbackInfo = self.feedbackTextField.text;
+	if ([self.feedbackTextField.text isEqualToString:@"Send constructive and productive feedback!"]) {
+		UIAlertView *noFeedbackAlert = [[UIAlertView alloc] initWithTitle:@"You didn't say anything?"
+																  message:@""
+																 delegate:self
+														cancelButtonTitle:@"Edit"
+														otherButtonTitles: @"Home Page",nil];
+		[noFeedbackAlert show];
+
+	}
+	else {
 	// create a PFObject and parse it!
-	NSLog(@"Submit pressed with:\n %@\n %@", feedbackInfo,[self buildNumberInfo]);
+	PFObject *feedbackParse = [PFObject objectWithClassName:@"FeedbackParse"];
+	feedbackParse[@"feedbackString"] = self.feedbackTextField.text;
+	feedbackParse[@"build"] = [self buildNumberInfo];
+	feedbackParse[@"userEmail"] = self.emailText.text;
+	feedbackParse[@"typeFeedback"] = self.typeFeedback;
+	
+	[feedbackParse saveEventually];
+	//	NSLog(@"Submit pressed with:\n %@\n %@", feedbackInfo,[self buildNumberInfo]);
 	
 	UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Thank You!"
 														  message:@"We will look at your feedback!"
@@ -63,7 +99,7 @@
 	
 	[myAlertView show];
 	[self dismissViewControllerAnimated:YES completion:nil];
-
+	}
 }
 
 -(void)backButtonPressed:(UIButton *)backButton {
@@ -73,6 +109,30 @@
 }
 
 #pragma mark - TextField Methods
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+	// remove placeHolder text if that's what's there
+	if ([self.emailText.text isEqualToString:@"Email (Optional)"]) {
+		self.emailText.text = @"";
+	}
+	return YES;
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+	// remove placeHolder text if that's what's there
+	if ([self.emailText.text isEqualToString:@""]) {
+		self.emailText.text = @"Email (Optional)";
+	}
+	[self.view endEditing:YES];
+	return YES;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	return NO;
+}
+
+#pragma mark - TextView Methods
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
@@ -124,13 +184,20 @@
 	// Assign new frame to your view
 	CGRect keyboardRect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
 	keyboardRect = [self.view convertRect:keyboardRect fromView:nil]; //this is it!
-	[self.view setFrame:CGRectMake(0,0 - keyboardRect.size.height,self.view.bounds.size.width,self.view.bounds.size.height)]; //here taken -20 for example i.e. your view will be scrolled to -20. change its value according to your requirement.
+	//	[self.view setFrame:CGRectMake(0,0 - keyboardRect.size.height,CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))]; //here taken -20 for example i.e. your view will be scrolled to -20. change its value according to your requirement.
+	CGPoint scrollPoint = CGPointMake(0.0, self.feedbackTextField.frame.origin.y);// - keyboardRect.size.height + self.feedbackTextField.bounds.size.height);
+	if ([self.emailText isEditing]) {
+		scrollPoint = CGPointMake(0.0, self.submitButton.frame.origin.y - keyboardRect.size.height + self.submitButton.bounds.size.height);
+	}
+	[self.scrollView setContentOffset:scrollPoint animated:YES];
+ 
 	
 }
 
 -(void)keyboardDidHide:(NSNotification *)notification
 {
-	[self.view setFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height)];
+	//	[self.view setFrame:CGRectMake(0,0,self.view.bounds.size.width,self.view.bounds.size.height)];
+	[self.scrollView setContentOffset:CGPointZero animated:YES];
 }
 
 /*
@@ -142,5 +209,23 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+#pragma mark - UIAlertView
+
+// bring user to settings of Pizza Time (stock settings)
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	
+#pragma mark 1 - Blank Submission
+	// 1 // text field is blank
+	if ([alertView.title isEqualToString:@"You didn't say anything?"]) {
+		if (buttonIndex == 1) {
+			NSLog(@"user requested home");
+			[self dismissViewControllerAnimated:YES completion:nil];
+		}
+	}
+}
+	
+
+
 
 @end

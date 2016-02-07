@@ -35,6 +35,13 @@
 		AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */; };
 		AA84FCC31C5BF7C8000D9808 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC11C5BF7C8000D9808 /* Bolts.framework */; };
 		AA84FCC41C5BF7C8000D9808 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC21C5BF7C8000D9808 /* Parse.framework */; };
+		AA888EFC1C67E72100B3E6E2 /* MCQSliceLEFTt.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF61C67E72100B3E6E2 /* MCQSliceLEFTt.png */; };
+		AA888EFD1C67E72100B3E6E2 /* MCQSliceBOTTOM.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF71C67E72100B3E6E2 /* MCQSliceBOTTOM.png */; };
+		AA888EFE1C67E72100B3E6E2 /* MCQSliceRIGHTt.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF81C67E72100B3E6E2 /* MCQSliceRIGHTt.png */; };
+		AA888EFF1C67E72100B3E6E2 /* MCQSliceRIGHTb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF91C67E72100B3E6E2 /* MCQSliceRIGHTb.png */; };
+		AA888F001C67E72100B3E6E2 /* MCQSliceLEFTb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EFA1C67E72100B3E6E2 /* MCQSliceLEFTb.png */; };
+		AA888F011C67E72100B3E6E2 /* MCQSliceTOP.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EFB1C67E72100B3E6E2 /* MCQSliceTOP.png */; };
+		AA888F031C67E8C800B3E6E2 /* GWPIZZA.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA888F021C67E8C800B3E6E2 /* GWPIZZA.jpg */; };
 		AA8E228E1C41B2BF0018ABE8 /* OptionsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8E228D1C41B2BF0018ABE8 /* OptionsPage.m */; };
 		AA92E1401C5D1A5F000688F7 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC11C5BF7C8000D9808 /* Bolts.framework */; };
 		AA92E1411C5D1A5F000688F7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC21C5BF7C8000D9808 /* Parse.framework */; };
@@ -64,12 +71,12 @@
 		AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */; };
 		AAB67BF91C4EA6840087F151 /* dollarBill60Alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF81C4EA6840087F151 /* dollarBill60Alpha.png */; };
 		AAB67BFB1C4EA7320087F151 /* dollarBillAlpha60.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */; };
-		AAB67C501C4EED540087F151 /* MCQSliceLEFTb.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb.png */; };
-		AAB67C511C4EED540087F151 /* MCQSliceRIGHTb.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb.png */; };
-		AAB67C521C4EED540087F151 /* MCQSliceLEFTt.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt.png */; };
-		AAB67C531C4EED540087F151 /* MCQSliceBOTTOM.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM.png */; };
-		AAB67C541C4EED540087F151 /* MCQSliceRIGHTt.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt.png */; };
-		AAB67C551C4EED540087F151 /* MCQSliceTOP.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4F1C4EED540087F151 /* MCQSliceTOP.png */; };
+		AAB67C501C4EED540087F151 /* MCQSliceLEFTb2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb2.png */; };
+		AAB67C511C4EED540087F151 /* MCQSliceRIGHTb2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb2.png */; };
+		AAB67C521C4EED540087F151 /* MCQSliceLEFTt2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt2.png */; };
+		AAB67C531C4EED540087F151 /* MCQSliceBOTTOM2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM2.png */; };
+		AAB67C541C4EED540087F151 /* MCQSliceRIGHTt2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt2.png */; };
+		AAB67C551C4EED540087F151 /* MCQSliceTOP2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */; };
 		AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png */; };
 		AAB826941C5EC98800CDFDA7 /* KenPizzaMan.gif in Resources */ = {isa = PBXBuildFile; fileRef = AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */; };
 		AACB1BC81C3B21890069E947 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AACB1BC71C3B21890069E947 /* TableViewController.m */; };
@@ -91,6 +98,7 @@
 		AAD0FCD01C3F31860060B05B /* pizzaPepperoni.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = AAD0FCCF1C3F31860060B05B /* pizzaPepperoni.jpeg */; };
 		AAD0FCD31C3F32240060B05B /* pizzaWholePepperoni.png in Resources */ = {isa = PBXBuildFile; fileRef = AAD0FCD11C3F32240060B05B /* pizzaWholePepperoni.png */; };
 		AAD0FCD41C3F32240060B05B /* pizzaFullSliceRemove.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAD0FCD21C3F32240060B05B /* pizzaFullSliceRemove.jpg */; };
+		AADF84EA1C66682200AD1B5D /* KenSadPizzaMan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AADF84E91C66682200AD1B5D /* KenSadPizzaMan.jpg */; };
 		AAE26FDC1C611CD800485813 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE26FDB1C611CD800485813 /* GLKit.framework */; };
 		AAE26FE31C612CF600485813 /* FeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE26FE21C612CF600485813 /* FeedbackPageViewController.m */; };
 		AAE26FE61C614DFA00485813 /* annoyedRick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAE26FE51C614DFA00485813 /* annoyedRick.mp3 */; };
@@ -157,6 +165,14 @@
 		AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapKitViewController.m; sourceTree = "<group>"; };
 		AA84FCC11C5BF7C8000D9808 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		AA84FCC21C5BF7C8000D9808 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		AA888EF51C67E46900B3E6E2 /* adventureTimePizza.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = adventureTimePizza.m4a; sourceTree = "<group>"; };
+		AA888EF61C67E72100B3E6E2 /* MCQSliceLEFTt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTt.png; sourceTree = "<group>"; };
+		AA888EF71C67E72100B3E6E2 /* MCQSliceBOTTOM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceBOTTOM.png; sourceTree = "<group>"; };
+		AA888EF81C67E72100B3E6E2 /* MCQSliceRIGHTt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTt.png; sourceTree = "<group>"; };
+		AA888EF91C67E72100B3E6E2 /* MCQSliceRIGHTb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTb.png; sourceTree = "<group>"; };
+		AA888EFA1C67E72100B3E6E2 /* MCQSliceLEFTb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTb.png; sourceTree = "<group>"; };
+		AA888EFB1C67E72100B3E6E2 /* MCQSliceTOP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceTOP.png; sourceTree = "<group>"; };
+		AA888F021C67E8C800B3E6E2 /* GWPIZZA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GWPIZZA.jpg; sourceTree = "<group>"; };
 		AA8E228C1C41B2BF0018ABE8 /* OptionsPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsPage.h; sourceTree = "<group>"; };
 		AA8E228D1C41B2BF0018ABE8 /* OptionsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsPage.m; sourceTree = "<group>"; };
 		AA92E1441C5D3127000688F7 /* GIFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIFPage.h; sourceTree = "<group>"; };
@@ -188,12 +204,12 @@
 		AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizza29Alpha.png; sourceTree = "<group>"; };
 		AAB67BF81C4EA6840087F151 /* dollarBill60Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollarBill60Alpha.png; sourceTree = "<group>"; };
 		AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollarBillAlpha60.png; sourceTree = "<group>"; };
-		AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTb.png; sourceTree = "<group>"; };
-		AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTb.png; sourceTree = "<group>"; };
-		AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTt.png; sourceTree = "<group>"; };
-		AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceBOTTOM.png; sourceTree = "<group>"; };
-		AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTt.png; sourceTree = "<group>"; };
-		AAB67C4F1C4EED540087F151 /* MCQSliceTOP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceTOP.png; sourceTree = "<group>"; };
+		AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTb2.png; sourceTree = "<group>"; };
+		AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTb2.png; sourceTree = "<group>"; };
+		AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTt2.png; sourceTree = "<group>"; };
+		AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceBOTTOM2.png; sourceTree = "<group>"; };
+		AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTt2.png; sourceTree = "<group>"; };
+		AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceTOP2.png; sourceTree = "<group>"; };
 		AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQpizzaTimeLOGO.png; sourceTree = "<group>"; };
 		AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = KenPizzaMan.gif; sourceTree = "<group>"; };
 		AACB1BC61C3B21890069E947 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
@@ -218,6 +234,7 @@
 		AAD0FCCF1C3F31860060B05B /* pizzaPepperoni.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pizzaPepperoni.jpeg; sourceTree = "<group>"; };
 		AAD0FCD11C3F32240060B05B /* pizzaWholePepperoni.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaWholePepperoni.png; sourceTree = "<group>"; };
 		AAD0FCD21C3F32240060B05B /* pizzaFullSliceRemove.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pizzaFullSliceRemove.jpg; sourceTree = "<group>"; };
+		AADF84E91C66682200AD1B5D /* KenSadPizzaMan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = KenSadPizzaMan.jpg; sourceTree = "<group>"; };
 		AAE26FDB1C611CD800485813 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		AAE26FE11C612CF600485813 /* FeedbackPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackPageViewController.h; path = "Pizza Time NYC/FeedbackPageViewController.h"; sourceTree = "<group>"; };
 		AAE26FE21C612CF600485813 /* FeedbackPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackPageViewController.m; path = "Pizza Time NYC/FeedbackPageViewController.m"; sourceTree = "<group>"; };
@@ -369,6 +386,7 @@
 				AA92E1611C5D7100000688F7 /* MCQ */,
 				AA92E1621C5D7126000688F7 /* FONTS */,
 				AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */,
+				AADF84E91C66682200AD1B5D /* KenSadPizzaMan.jpg */,
 				AA324B3E1C600151001739C3 /* pizzaCamera.png */,
 				AA324B401C600566001739C3 /* pizzaCamera2.png */,
 				AAAAA15C1C50235C009EC685 /* walkAlpha30.png */,
@@ -386,6 +404,7 @@
 				AACDE9401C3D8E59004EF963 /* skateboard29.png */,
 				999E74141C337C030030099A /* Icon-Small.png */,
 				AACDE9421C3D8EBD004EF963 /* walk29.png */,
+				AA888EF51C67E46900B3E6E2 /* adventureTimePizza.m4a */,
 				AAE26FE51C614DFA00485813 /* annoyedRick.mp3 */,
 				AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */,
 				AA71E9081C2B32E400FA48F6 /* main.m */,
@@ -439,6 +458,19 @@
 			name = "View Controller";
 			sourceTree = "<group>";
 		};
+		AA888F041C67ED3C00B3E6E2 /* ARCHIVE DELETE */ = {
+			isa = PBXGroup;
+			children = (
+				AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb2.png */,
+				AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb2.png */,
+				AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt2.png */,
+				AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM2.png */,
+				AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt2.png */,
+				AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */,
+			);
+			name = "ARCHIVE DELETE";
+			sourceTree = "<group>";
+		};
 		AA8E228F1C41B30A0018ABE8 /* OptionsPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +492,8 @@
 		AA92E1611C5D7100000688F7 /* MCQ */ = {
 			isa = PBXGroup;
 			children = (
+				AA888F041C67ED3C00B3E6E2 /* ARCHIVE DELETE */,
+				AA888F021C67E8C800B3E6E2 /* GWPIZZA.jpg */,
 				AA324B3C1C5FFB51001739C3 /* MCQaddAdd.png */,
 				AA92E1651C5D78DB000688F7 /* MCQMapLOCATION.png */,
 				AA92E16A1C5D78DB000688F7 /* MCQMapSEARCH.png */,
@@ -497,12 +531,12 @@
 		AA92E1771C5D7A62000688F7 /* SLICES */ = {
 			isa = PBXGroup;
 			children = (
-				AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb.png */,
-				AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb.png */,
-				AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt.png */,
-				AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM.png */,
-				AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt.png */,
-				AAB67C4F1C4EED540087F151 /* MCQSliceTOP.png */,
+				AA888EF61C67E72100B3E6E2 /* MCQSliceLEFTt.png */,
+				AA888EF71C67E72100B3E6E2 /* MCQSliceBOTTOM.png */,
+				AA888EF81C67E72100B3E6E2 /* MCQSliceRIGHTt.png */,
+				AA888EF91C67E72100B3E6E2 /* MCQSliceRIGHTb.png */,
+				AA888EFA1C67E72100B3E6E2 /* MCQSliceLEFTb.png */,
+				AA888EFB1C67E72100B3E6E2 /* MCQSliceTOP.png */,
 			);
 			name = SLICES;
 			sourceTree = "<group>";
@@ -709,29 +743,35 @@
 				990B5EC11C4CB9B6000BF1B5 /* MCQMapSLICE.png in Resources */,
 				AA92E17C1C5D7B39000688F7 /* MCQTabBarMAP.png in Resources */,
 				AAA7C1F11C40326E00EE8B43 /* pizzaMusic.mp3 in Resources */,
+				AADF84EA1C66682200AD1B5D /* KenSadPizzaMan.jpg in Resources */,
 				AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */,
 				AA92E1711C5D78DB000688F7 /* MCQMapSEARCH.png in Resources */,
 				AAAAA15B1C502289009EC685 /* skateBoardAlpha30.png in Resources */,
+				AA888EFC1C67E72100B3E6E2 /* MCQSliceLEFTt.png in Resources */,
 				AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAPa.png in Resources */,
 				99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */,
 				AA324B411C600566001739C3 /* pizzaCamera2.png in Resources */,
+				AA888F031C67E8C800B3E6E2 /* GWPIZZA.jpg in Resources */,
 				AAE26FE61C614DFA00485813 /* annoyedRick.mp3 in Resources */,
 				AA92E1761C5D79B5000688F7 /* MCQMapSOUND.png in Resources */,
+				AA888F011C67E72100B3E6E2 /* MCQSliceTOP.png in Resources */,
 				AAB826941C5EC98800CDFDA7 /* KenPizzaMan.gif in Resources */,
 				AACDE93F1C3D8DDD004EF963 /* skateboard.jpeg in Resources */,
 				990B5EC51C4CC003000BF1B5 /* MCQMapSLICE29.png in Resources */,
 				AACDE9431C3D8EBD004EF963 /* walk29.png in Resources */,
 				AA92E1701C5D78DB000688F7 /* MCQMapSOUNDNOT.png in Resources */,
 				990B5EC21C4CB9B6000BF1B5 /* MCQMapBIKE.png in Resources */,
-				AAB67C531C4EED540087F151 /* MCQSliceBOTTOM.png in Resources */,
-				AAB67C521C4EED540087F151 /* MCQSliceLEFTt.png in Resources */,
-				AAB67C501C4EED540087F151 /* MCQSliceLEFTb.png in Resources */,
+				AAB67C531C4EED540087F151 /* MCQSliceBOTTOM2.png in Resources */,
+				AAB67C521C4EED540087F151 /* MCQSliceLEFTt2.png in Resources */,
+				AAB67C501C4EED540087F151 /* MCQSliceLEFTb2.png in Resources */,
 				AA92E16F1C5D78DB000688F7 /* MCQMapOPTIONS.png in Resources */,
 				AA92E17B1C5D7B39000688F7 /* MCQTabBarLIST.png in Resources */,
 				AA71E91A1C2B32E500FA48F6 /* LaunchScreen.storyboard in Resources */,
 				AA92E1491C5D4257000688F7 /* MCQppiGO.png in Resources */,
-				AAB67C541C4EED540087F151 /* MCQSliceRIGHTt.png in Resources */,
+				AAB67C541C4EED540087F151 /* MCQSliceRIGHTt2.png in Resources */,
+				AA888EFF1C67E72100B3E6E2 /* MCQSliceRIGHTb.png in Resources */,
 				AAD0FCD31C3F32240060B05B /* pizzaWholePepperoni.png in Resources */,
+				AA888EFD1C67E72100B3E6E2 /* MCQSliceBOTTOM.png in Resources */,
 				99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */,
 				AAAC939F1C499ECE00D3AC6B /* MCQTabBarLISTa.png in Resources */,
 				AA92E16C1C5D78DB000688F7 /* MCQMapLOCATION.png in Resources */,
@@ -740,15 +780,17 @@
 				AAD0FCD01C3F31860060B05B /* pizzaPepperoni.jpeg in Resources */,
 				AAB67BFB1C4EA7320087F151 /* dollarBillAlpha60.png in Resources */,
 				AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */,
+				AA888F001C67E72100B3E6E2 /* MCQSliceLEFTb.png in Resources */,
 				AA324B3D1C5FFB51001739C3 /* MCQaddAdd.png in Resources */,
-				AAB67C511C4EED540087F151 /* MCQSliceRIGHTb.png in Resources */,
+				AAB67C511C4EED540087F151 /* MCQSliceRIGHTb2.png in Resources */,
 				AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */,
-				AAB67C551C4EED540087F151 /* MCQSliceTOP.png in Resources */,
+				AAB67C551C4EED540087F151 /* MCQSliceTOP2.png in Resources */,
 				AAB67BF91C4EA6840087F151 /* dollarBill60Alpha.png in Resources */,
 				AAAAA15D1C50235C009EC685 /* walkAlpha30.png in Resources */,
 				AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */,
 				AAD0FCD41C3F32240060B05B /* pizzaFullSliceRemove.jpg in Resources */,
 				AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png in Resources */,
+				AA888EFE1C67E72100B3E6E2 /* MCQSliceRIGHTt.png in Resources */,
 				990B5EC61C4CC003000BF1B5 /* MCQMapBIKE29.png in Resources */,
 				999E74151C337C030030099A /* Icon-Small.png in Resources */,
 				AACDE9411C3D8E59004EF963 /* skateboard29.png in Resources */,
@@ -956,7 +998,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lsqlite3";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.99;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -972,7 +1014,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lsqlite3";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN3.99;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

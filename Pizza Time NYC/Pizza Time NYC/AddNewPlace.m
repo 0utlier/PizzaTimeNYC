@@ -9,10 +9,13 @@
 #import "AddNewPlace.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <Parse/Parse.h>
 @interface AddNewPlace ()
 // for use of the avAudioPlayer & Menu Button
 @property (strong, nonatomic) MethodManager *methodManager;
+@property (nonatomic, strong) CLLocation *location;
 @property BOOL foundLocation;
+
 /*
  foundLocation 2.3.16
  created AddNew
@@ -33,6 +36,7 @@
 	self.addressTextField.delegate = self;
 	self.nameTextField.delegate = self;
 	self.methodManager.locationManager.delegate = self;
+	self.location = [[CLLocation alloc]init];
 	
 }
 
@@ -78,7 +82,7 @@
 #pragma mark - ACTIONS
 
 -(void)backButtonPressed:(UIButton *)backButton {
-	NSLog(@"backButton was pressed");
+//	NSLog(@"backButton was pressed");
 	[self.tabBarController setSelectedIndex:MAPPAGE];
 }
 
@@ -87,26 +91,17 @@
 	self.foundLocation = NO;
 	[self.methodManager.locationManager startUpdatingLocation];
 	if (self.methodManager.locationManager.location.coordinate.latitude == 0.0 || self.methodManager.locationManager.location.coordinate.longitude == 0.0) {
-		NSLog(@"Present an alert");
+//		NSLog(@"Present an alert");
+		UIAlertView *notFoundAlert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+															  message:@"We could not find your location!"
+															 delegate:nil
+													cancelButtonTitle:@"OK"
+													otherButtonTitles: nil];
+		[notFoundAlert show];
 	}
 	[self addressLookUp:self.methodManager.locationManager.location];
-	//	NSString *latLong = [NSString stringWithFormat:@"%f & %f",self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude];
-	//	self.addressTextField.text = latLong;
 }
 
-- (void)addressLookUp:(CLLocation *)location {
-	// turn the latLong into an address
-	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-	[geocoder reverseGeocodeLocation:self.methodManager.locationManager.location completionHandler:^(NSArray *placemarks, NSError *error) {
-		NSLog(@"Finding address");
-		if (error) {
-			NSLog(@"Error %@", error.description);
-		} else {
-			CLPlacemark *placemark = [placemarks lastObject];
-			self.addressTextField.text = [NSString stringWithFormat:@"%@", ABCreateStringWithAddressDictionary(placemark.addressDictionary, NO)];
-		}
-	}];
-}
 
 -(void)cameraButtonPressed:(UIButton *)cameraButton {
 	//	NSLog(@"camera button pressed, open camera or library");
@@ -141,17 +136,64 @@
 													otherButtonTitles: @"Its in the picture!",nil];
 		[noNameAlert show];
 	}
+	else if (self.imageView.image == nil) {
+		UIAlertView *noImageAlert = [[UIAlertView alloc] initWithTitle:@"Is there a picture?"
+																  message:@"Pizza Places like to have pictures"
+																 delegate:self
+														cancelButtonTitle:@"Edit"
+														otherButtonTitles: @"I do not have one",nil];
+		[noImageAlert show];
+	}
 	else {
-	// create a PFObject and parse it!
-	UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
-														  message:@"We will look into your Submission!"
-														 delegate:nil
-												cancelButtonTitle:@"OK"
-												otherButtonTitles: nil];
-	[submitAlert show];
-	[self.tabBarController setSelectedIndex:OPTIONSPAGE];
+		// create a PFObject and parse it!
+		PFObject *addRequest = [PFObject objectWithClassName:@"AddRequest"];
+		addRequest[@"name"] = self.nameTextField.text;
+		addRequest[@"address"] = self.addressTextField.text;
+		addRequest[@"latitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
+		addRequest[@"longitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
+		[addRequest saveEventually];
+		
+		
+		NSData *imageData = UIImagePNGRepresentation(self.imageView.image);
+		PFFile *imageFile = [PFFile fileWithName:[NSString stringWithFormat:@"%@.png", self.nameTextField.text] data:imageData];
+		PFObject *userPhoto = [PFObject objectWithClassName:@"AddRequest"];
+		userPhoto[@"name"] = self.nameTextField.text;
+		userPhoto[@"image"] = imageFile;
+		[userPhoto saveInBackground]; //not handling errors. 2.6.16 is it necessary?
+
+		
+		UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
+															  message:@"We will look into your Submission!"
+															 delegate:nil
+													cancelButtonTitle:@"OK"
+													otherButtonTitles: nil];
+		[submitAlert show];
+		[self resetFields];
+		[self.tabBarController setSelectedIndex:OPTIONSPAGE];
 	}
 }
+
+- (void)resetFields {
+	self.nameTextField.text = @"";
+	self.addressTextField.text = @"";
+	self.imageView.image = nil;
+}
+
+- (void)addressLookUp:(CLLocation *)location {
+	self.location = location;
+	// turn the latLong into an address
+	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+	[geocoder reverseGeocodeLocation:self.methodManager.locationManager.location completionHandler:^(NSArray *placemarks, NSError *error) {
+		NSLog(@"Finding address");
+		if (error) {
+			NSLog(@"Error %@", error.description);
+		} else {
+			CLPlacemark *placemark = [placemarks lastObject];
+			self.addressTextField.text = [NSString stringWithFormat:@"%@", ABCreateStringWithAddressDictionary(placemark.addressDictionary, NO)];
+		}
+	}];
+}
+
 
 #pragma mark - Text Field Delegate
 
@@ -296,11 +338,18 @@
 	ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc]init];
 	[assetsLibrary assetForURL:photoUrl resultBlock:^(ALAsset *photoAsset) {
 	 CLLocation *location = [photoAsset valueForProperty:ALAssetPropertyLocation];
-		if (location.coordinate.latitude == 0.0 || location.coordinate.longitude == 0.0) {
-			NSLog(@"Present an alert");
+		if (location.coordinate.latitude == 0.0 || location.coordinate.longitude == 0.0) { // if the latLong is not showing up, use current location
+//			NSLog(@"Present an alert");
+			UIAlertView *notFoundAlert = [[UIAlertView alloc] initWithTitle:@"We could not find the location from the image!"
+															  message:@"We will use your current location!"
+																   delegate:nil
+														  cancelButtonTitle:@"OK"
+														  otherButtonTitles: nil];
+			[notFoundAlert show];
 			self.foundLocation = NO;
 			[self.methodManager.locationManager startUpdatingLocation]; // unsure if I need this or not 2.1.16
-			self.addressTextField.text = [NSString stringWithFormat:@"%f & %f", self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude];
+			//			self.addressTextField.text = [NSString stringWithFormat:@"%f & %f", self.methodManager.locationManager.location.coordinate.latitude, self.methodManager.locationManager.location.coordinate.longitude];
+			[self addressLookUp:self.methodManager.locationManager.location];
 		}
 		else {
 			[self addressLookUp:location];
@@ -341,17 +390,33 @@
 	
 #pragma mark 1 - Blank Submission
 	// 1 // text field is blank
-	if ([alertView.title isEqualToString:@"Is there a name?"]) {
+	if ([alertView.title isEqualToString:@"Is there a name/address?"]) {
 		if (buttonIndex == 1) {
 			NSLog(@"user submitted, hopefully with picture");
 			// create a PFObject and parse it!
-			UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
-																  message:@"We will look into your Submission!"
-																 delegate:nil
-														cancelButtonTitle:@"OK"
-														otherButtonTitles: nil];
-			[submitAlert show];
-			[self.tabBarController setSelectedIndex:OPTIONSPAGE];
+			if ([self.nameTextField.text isEqual:@""]) {
+				self.nameTextField.text = @"In The Picture";
+			}
+			else {
+				self.addressTextField.text = @"In The Picture";
+			}
+			[self addButtonPressed:self.addButton]; // go back and submit again
+		}
+		else {
+			NSLog(@"user decided to edit the submission");
+		}
+	}
+	
+#pragma mark 2 - Blank Image
+	// 2 // image is blank
+	if ([alertView.title isEqualToString:@"Is there a picture?"]) {
+		if (buttonIndex == 1) {
+			NSLog(@"user submitted, without a picture");
+			// set image as sad pizza
+			UIImage *sadPizzaMan = [UIImage imageNamed:@"KenSadPizzaMan.jpg"];
+			self.imageView.image = sadPizzaMan;
+			
+			[self addButtonPressed:self.addButton]; // go back and submit again
 		}
 		else {
 			NSLog(@"user decided to edit the submission");

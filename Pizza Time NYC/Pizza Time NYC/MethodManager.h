@@ -123,6 +123,4 @@
 
 //-(void)searchButtonPressed:(UIButton *)searchButton;
 
-- (void)createDate;
-
 @end
