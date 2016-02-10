@@ -10,7 +10,7 @@
 #import "MethodManager.h"
 #import "FLAnimatedImage.h"
 #import "FLAnimatedImageView.h"
-#import <Parse/Parse.h>
+//#import <Parse/Parse.h>
 #import "DAO.h"
 
 @interface GIFPage ()
@@ -43,7 +43,7 @@
 		self.methodManager.gifCount += 1;
 	}
 	else {
-	// set animated view to suqare in middle of view
+	// set animated view to square in middle of view
 	FLAnimatedImageView *animatedImageView = [[FLAnimatedImageView alloc]initWithFrame:CGRectMake(0, (self.view.bounds.size.height - self.view.bounds.size.width)/2 , self.view.bounds.size.width, self.view.bounds.size.width)];
 	[self.view addSubview:animatedImageView];
 

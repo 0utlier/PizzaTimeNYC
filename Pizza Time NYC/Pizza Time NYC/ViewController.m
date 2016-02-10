@@ -40,7 +40,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	self.methodManager = [MethodManager sharedManager];
 	self.methodManager.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
 	[self.methodManager createLocationManager];
-//	NSLog(@"location manager in VDL VC = %f", self.methodManager.locationManager.location.coordinate.latitude);
+	//	NSLog(@"location manager in VDL VC = %f", self.methodManager.locationManager.location.coordinate.latitude);
 	[self.methodManager createEmpireStateBuilding];
 	self.dao = [DAO sharedDAO];
 	//	[self checkInternet]; //comment back in when ready to fix
@@ -48,14 +48,14 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	UIImageView *pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
 	pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
 	[self.view addSubview:pizzaTimeLogo];
-
+	
 	[self assignSlices];
 	
 }
 
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-//	[self.navigationController setNavigationBarHidden:YES]; // removed 1.26.16 no more nav bar to worry about
+	//	[self.navigationController setNavigationBarHidden:YES]; // removed 1.26.16 no more nav bar to worry about
 	[self assignLabels];
 	countHomePage+=1;
 	[self assignColors];
@@ -71,9 +71,9 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 		self.methodManager.firstTimeLoaded = YES;
 		self.methodManager.closestPP = NO;
 		self.methodManager.rotation = YES;
-		[self.dao downloadParsePP]; // 1.29.16 download first, pin and then call local data
+//		[self.dao downloadParsePP]; // 1.29.16 download first, pin and then call local data
 		[self.dao fromLocalDataPP];
-//		[self.dao downloadParseGifs]; // 2.4.16 download first, pin and then call local gifs
+		//		[self.dao downloadParseGifs]; // 2.4.16 download first, pin and then call local gifs
 		[self.dao fromLocalDataGifs];
 		[self.methodManager createOrientation];
 		[[UIDevice currentDevice] setValue:
@@ -84,35 +84,35 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 
 -(void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:YES];
-//	[self.pizzaTimeLogo removeFromSuperview];
+	//	[self.pizzaTimeLogo removeFromSuperview];
 }
 
 /*
-// I do not think this is doing anything I want it to 1.30.16
--(UIInterfaceOrientationMask)supportedInterfaceOrientations {
-
+ // I do not think this is doing anything I want it to 1.30.16
+ -(UIInterfaceOrientationMask)supportedInterfaceOrientations {
+ 
 	// Return a bitmask of supported orientations. If you need more,
 	// use bitwise or (see the commented return).
 	return UIInterfaceOrientationMaskPortrait;
 	// return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-}
-
-- (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation {
+ }
+ 
+ - (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation {
 	// Return the orientation you'd prefer - this is what it launches to. The
 	// user can still rotate. You don't have to implement this method, in which
 	// case it launches in the current orientation
 	return UIInterfaceOrientationPortrait;
-}
-*/
+ }
+ */
 
 -(void)assignLabels {// and buttons
-
+	
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
-
-//	self.pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
-//	self.pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
-//	[self.view addSubview:self.pizzaTimeLogo];
-
+	
+	//	self.pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
+	//	self.pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
+	//	[self.view addSubview:self.pizzaTimeLogo];
+	
 	//	UIImage *pizzaButtonImage = [UIImage imageNamed:@"pizzaPepperoni300.png"];
 	//	[self.pizzaTimeButton setBackgroundImage:pizzaButtonImage forState:UIControlStateNormal];
 	//
@@ -202,7 +202,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	[self.view addSubview:self.rightT];
 	
 	
-	self.top = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 17), self.screenSize.width/3, self.screenSize.height/6 + 17)];
+	self.top = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - self.screenSize.height*0.026), self.screenSize.width/3, self.screenSize.height/6 + self.screenSize.height*0.026)];
 	// Add an action in current code file (i.e. target)
 	[self.top addTarget:self
 				 action:@selector(topPressed:)
@@ -211,7 +211,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	[self.view addSubview:self.top];
 	
 	
-	self.bottom = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), ((self.screenSize.height/4)*3), self.screenSize.width/3, self.screenSize.height/6 + 17)];
+	self.bottom = [[UIButton alloc]initWithFrame:CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), ((self.screenSize.height/4)*3), self.screenSize.width/3, self.screenSize.height/6 + self.screenSize.height*0.026)];
 	// Add an action in current code file (i.e. target)
 	[self.bottom addTarget:self
 					action:@selector(bottomPressed:)
@@ -228,15 +228,20 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	//	NSLog(@"\nversion = %@\nbuild = %@", appVersion, buildNumber);
 	UILabel *nameLabel = (UILabel *)[self.view viewWithTag:1000];
 	nameLabel.text = [NSString stringWithFormat:@"ver %@",appVersion];
-	
+	self.methodManager.buildNumber = appVersion;
 }
 
 -(void)assignColors { // is it better to alloc ONLY inside of the case statement, or create all?
+	/*
+	 orange HEX = FFCE62
+	 blue HEX = 00BCCC
+	 red HEX = F16648
+	 tan HEX = F8DB96
+	 */
 	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
-	// orange HEX = FFCE62
 	UIColor *blueMCQ = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0];
-	UIColor *green = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
 	UIColor *purple = [[UIColor alloc]initWithRed:137.0/255.0 green:12.0/255.0 blue:208.0/255.0 alpha:1.0];
+	//	UIColor *green = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
 	// assign background color to change
 	switch (countHomePage%3) {
 		case 0:
@@ -251,7 +256,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 			break;
 		case 2:
 			//					NSLog(@"Count is 2 - set green");
-			self.view.backgroundColor = green;
+			self.view.backgroundColor = purple;
 			countHomePage +=1;
 			break;
 		default:
@@ -353,8 +358,6 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 [self presentViewController:detailViewController animated:YES completion:nil];
 						 self.leftT.frame = CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6);
 					 }];
-	
-	
 }
 
 -(void)rightTPressed:(UIButton *)rightTButton {
@@ -379,9 +382,9 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 // where is the button going?
 						 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (4*(self.screenSize.height/12) - 15), self.screenSize.width/3, self.screenSize.height/6);
 					 }completion:^(BOOL finished) { //when finished, load the page
-							 [self.tabBarController setSelectedIndex:MAPPAGE];
-							 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - 17), self.screenSize.width/3, self.screenSize.height/6 + 17);
-						 }];
+						 [self.tabBarController setSelectedIndex:MAPPAGE];
+						 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - self.screenSize.height*0.026), self.screenSize.width/3, self.screenSize.height/6 + self.screenSize.height*0.026);
+					 }];
 }
 
 -(void)bottomPressed:(UIButton *)bottomButton {
@@ -392,7 +395,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (4*(self.screenSize.height/4) + 15), self.screenSize.width/3, self.screenSize.height/6);
 					 }completion:^(BOOL finished) { //when finished, load the page
 						 [self.tabBarController setSelectedIndex:ADDPAGE];
-						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), ((self.screenSize.height/4)*3), self.screenSize.width/3, self.screenSize.height/6 + 17);
+						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), ((self.screenSize.height/4)*3), self.screenSize.width/3, self.screenSize.height/6 + self.screenSize.height*0.026);
 					 }];
 }
 

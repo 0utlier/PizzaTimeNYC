@@ -29,6 +29,15 @@
 	// [Optional] Track statistics around application opens.
 	[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 	
+	[PFUser enableAutomaticUser];
+	PFACL *defaultACL = [PFACL ACL];
+	// Optionally enable public read access while disabling public write access.
+	// [defaultACL setPublicReadAccess:YES];
+	// Ability to track runCount
+	[[PFUser currentUser] incrementKey:@"RunCount"];
+	[[PFUser currentUser] saveInBackground];
+	[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+	
 	MethodManager *methodManager = [[MethodManager alloc]init];
 	[methodManager createPlayer];
 	return YES;

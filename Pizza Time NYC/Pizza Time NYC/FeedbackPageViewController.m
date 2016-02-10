@@ -9,10 +9,12 @@
 #import "FeedbackPageViewController.h"
 #import <AudioToolbox/AudioServices.h>
 #import "MethodManager.h"
-#import <Parse/Parse.h>
+#import "DAO.h"
+//#import <Parse/Parse.h>
 
 @interface FeedbackPageViewController ()
 @property (strong, nonatomic) MethodManager *methodManager;
+@property (strong, nonatomic) DAO *dao;
 @property (strong, nonatomic) NSString *typeFeedback;
 @end
 
@@ -21,10 +23,12 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.methodManager = [MethodManager sharedManager];
+	self.dao = [DAO sharedDAO];
 	// Do any additional setup after loading the view.
 	self.feedbackTextField.delegate = self;
 	self.emailText.delegate = self;
-	self.appVersion.text = [self buildNumberInfo];
+	self.appVersion.text = self.methodManager.buildNumber;
+	self.typeFeedback = @"Positive"; //default
 	[self.submitButton addTarget:self
 						  action:@selector(submitButtonPressed:)
 				forControlEvents:UIControlEventTouchUpInside];
@@ -64,12 +68,6 @@
 
 #pragma mark - ACTIONS
 
--(NSString *)buildNumberInfo {
-	NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-	NSString *appVersion = [infoDict objectForKey:@"CFBundleShortVersionString"]; // example: 1.0.0
-	return [NSString stringWithFormat:@"%@",appVersion];
-}
-
 -(void)submitButtonPressed:(UIButton *)submitButton {
 	if ([self.feedbackTextField.text isEqualToString:@"Send constructive and productive feedback!"]) {
 		UIAlertView *noFeedbackAlert = [[UIAlertView alloc] initWithTitle:@"You didn't say anything?"
@@ -82,15 +80,19 @@
 	}
 	else {
 	// create a PFObject and parse it!
-	PFObject *feedbackParse = [PFObject objectWithClassName:@"FeedbackParse"];
+		[self.dao feedbackSubmission:self.feedbackTextField.text build:self.methodManager.buildNumber email:self.emailText.text type:self.typeFeedback];
+	/* // moved to DAO 2.10.16
+	 PFObject *feedbackParse = [PFObject objectWithClassName:@"FeedbackParse"];
 	feedbackParse[@"feedbackString"] = self.feedbackTextField.text;
 	feedbackParse[@"build"] = [self buildNumberInfo];
 	feedbackParse[@"userEmail"] = self.emailText.text;
 	feedbackParse[@"typeFeedback"] = self.typeFeedback;
-	
+	feedbackParse[@"user"] = [PFUser currentUser];
+
 	[feedbackParse saveEventually];
 	//	NSLog(@"Submit pressed with:\n %@\n %@", feedbackInfo,[self buildNumberInfo]);
-	
+	*/
+		
 	UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Thank You!"
 														  message:@"We will look at your feedback!"
 														 delegate:nil

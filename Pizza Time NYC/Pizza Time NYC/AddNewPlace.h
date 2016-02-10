@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MethodManager.h"
+#import "DAO.h"
 
 @interface AddNewPlace : UIViewController <UIImagePickerControllerDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 

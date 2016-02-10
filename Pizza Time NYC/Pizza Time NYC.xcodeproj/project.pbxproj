@@ -79,6 +79,9 @@
 		AAB67C551C4EED540087F151 /* MCQSliceTOP2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */; };
 		AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png */; };
 		AAB826941C5EC98800CDFDA7 /* KenPizzaMan.gif in Resources */ = {isa = PBXBuildFile; fileRef = AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */; };
+		AAB98D651C6920410004FA9E /* KenPizzaManYw.mov in Resources */ = {isa = PBXBuildFile; fileRef = AAB98D641C6920410004FA9E /* KenPizzaManYw.mov */; };
+		AAB98D671C6941720004FA9E /* MCQMapSLICE 180Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB98D661C6941720004FA9E /* MCQMapSLICE 180Green.png */; };
+		AAB98D691C6941FD0004FA9E /* MCQMapSLICE 180Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB98D681C6941FD0004FA9E /* MCQMapSLICE 180Red.png */; };
 		AACB1BC81C3B21890069E947 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AACB1BC71C3B21890069E947 /* TableViewController.m */; };
 		AACB1BCC1C3B28F30069E947 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = AACB1BCB1C3B28F30069E947 /* DAO.m */; };
 		AACC50821C5BEADE008F4B59 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACC50811C5BEADE008F4B59 /* CFNetwork.framework */; };
@@ -212,6 +215,9 @@
 		AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceTOP2.png; sourceTree = "<group>"; };
 		AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQpizzaTimeLOGO.png; sourceTree = "<group>"; };
 		AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = KenPizzaMan.gif; sourceTree = "<group>"; };
+		AAB98D641C6920410004FA9E /* KenPizzaManYw.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = KenPizzaManYw.mov; sourceTree = "<group>"; };
+		AAB98D661C6941720004FA9E /* MCQMapSLICE 180Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MCQMapSLICE 180Green.png"; sourceTree = "<group>"; };
+		AAB98D681C6941FD0004FA9E /* MCQMapSLICE 180Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MCQMapSLICE 180Red.png"; sourceTree = "<group>"; };
 		AACB1BC61C3B21890069E947 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		AACB1BC71C3B21890069E947 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		AACB1BCA1C3B28F30069E947 /* DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAO.h; sourceTree = "<group>"; };
@@ -383,6 +389,7 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AAB98D641C6920410004FA9E /* KenPizzaManYw.mov */,
 				AA92E1611C5D7100000688F7 /* MCQ */,
 				AA92E1621C5D7126000688F7 /* FONTS */,
 				AAB826931C5EC98800CDFDA7 /* KenPizzaMan.gif */,
@@ -502,6 +509,8 @@
 				AA92E1691C5D78DB000688F7 /* MCQMapSOUNDNOT.png */,
 				AA92E1481C5D4257000688F7 /* MCQppiGO.png */,
 				AA92E17A1C5D7B39000688F7 /* MCQppiBACK.png */,
+				AAB98D661C6941720004FA9E /* MCQMapSLICE 180Green.png */,
+				AAB98D681C6941FD0004FA9E /* MCQMapSLICE 180Red.png */,
 				990B5EC31C4CC003000BF1B5 /* MCQMapSLICE29.png */,
 				990B5EBF1C4CB9B6000BF1B5 /* MCQMapSLICE.png */,
 				990B5EC41C4CC003000BF1B5 /* MCQMapBIKE29.png */,
@@ -747,6 +756,7 @@
 				AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */,
 				AA92E1711C5D78DB000688F7 /* MCQMapSEARCH.png in Resources */,
 				AAAAA15B1C502289009EC685 /* skateBoardAlpha30.png in Resources */,
+				AAB98D671C6941720004FA9E /* MCQMapSLICE 180Green.png in Resources */,
 				AA888EFC1C67E72100B3E6E2 /* MCQSliceLEFTt.png in Resources */,
 				AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAPa.png in Resources */,
 				99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */,
@@ -783,11 +793,13 @@
 				AA888F001C67E72100B3E6E2 /* MCQSliceLEFTb.png in Resources */,
 				AA324B3D1C5FFB51001739C3 /* MCQaddAdd.png in Resources */,
 				AAB67C511C4EED540087F151 /* MCQSliceRIGHTb2.png in Resources */,
+				AAB98D651C6920410004FA9E /* KenPizzaManYw.mov in Resources */,
 				AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */,
 				AAB67C551C4EED540087F151 /* MCQSliceTOP2.png in Resources */,
 				AAB67BF91C4EA6840087F151 /* dollarBill60Alpha.png in Resources */,
 				AAAAA15D1C50235C009EC685 /* walkAlpha30.png in Resources */,
 				AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */,
+				AAB98D691C6941FD0004FA9E /* MCQMapSLICE 180Red.png in Resources */,
 				AAD0FCD41C3F32240060B05B /* pizzaFullSliceRemove.jpg in Resources */,
 				AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGO.png in Resources */,
 				AA888EFE1C67E72100B3E6E2 /* MCQSliceRIGHTt.png in Resources */,

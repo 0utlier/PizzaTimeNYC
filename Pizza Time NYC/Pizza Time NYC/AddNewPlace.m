@@ -9,11 +9,15 @@
 #import "AddNewPlace.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AddressBookUI/AddressBookUI.h>
-#import <Parse/Parse.h>
+//#import <Parse/Parse.h>
 @interface AddNewPlace ()
+
 // for use of the avAudioPlayer & Menu Button
 @property (strong, nonatomic) MethodManager *methodManager;
+@property (strong, nonatomic) DAO *dao;
 @property (nonatomic, strong) CLLocation *location;
+@property (strong, nonatomic) IBOutlet UIImageView *imageViewios7;
+
 @property BOOL foundLocation;
 
 /*
@@ -32,6 +36,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	self.methodManager = [MethodManager sharedManager];
+	self.dao = [DAO sharedDAO];
 	self.foundLocation = NO;
 	self.addressTextField.delegate = self;
 	self.nameTextField.delegate = self;
@@ -82,7 +87,7 @@
 #pragma mark - ACTIONS
 
 -(void)backButtonPressed:(UIButton *)backButton {
-//	NSLog(@"backButton was pressed");
+	//	NSLog(@"backButton was pressed");
 	[self.tabBarController setSelectedIndex:MAPPAGE];
 }
 
@@ -91,12 +96,12 @@
 	self.foundLocation = NO;
 	[self.methodManager.locationManager startUpdatingLocation];
 	if (self.methodManager.locationManager.location.coordinate.latitude == 0.0 || self.methodManager.locationManager.location.coordinate.longitude == 0.0) {
-//		NSLog(@"Present an alert");
+		//		NSLog(@"Present an alert");
 		UIAlertView *notFoundAlert = [[UIAlertView alloc] initWithTitle:@"Oops!"
-															  message:@"We could not find your location!"
-															 delegate:nil
-													cancelButtonTitle:@"OK"
-													otherButtonTitles: nil];
+																message:@"We could not find your location!"
+															   delegate:nil
+													  cancelButtonTitle:@"OK"
+													  otherButtonTitles: nil];
 		[notFoundAlert show];
 	}
 	[self addressLookUp:self.methodManager.locationManager.location];
@@ -146,30 +151,43 @@
 	}
 	else {
 		// create a PFObject and parse it!
-		PFObject *addRequest = [PFObject objectWithClassName:@"AddRequest"];
-		addRequest[@"name"] = self.nameTextField.text;
-		addRequest[@"address"] = self.addressTextField.text;
-		addRequest[@"latitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
-		addRequest[@"longitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
-		[addRequest saveEventually];
-		
-		
+		/* // moved to DAO 2.10.16
+		 PFObject *addRequest = [PFObject objectWithClassName:@"AddRequest"];
+		 addRequest[@"name"] = self.nameTextField.text;
+		 addRequest[@"address"] = self.addressTextField.text;
+		 addRequest[@"latitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
+		 addRequest[@"longitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
+		 addRequest[@"user"] = [PFUser currentUser];
+		 
+		 
+		 NSData *imageData = UIImagePNGRepresentation(self.imageView.image);
+		 PFFile *imageFile = [PFFile fileWithName:[NSString stringWithFormat:@"%@.png", self.nameTextField.text] data:imageData];
+		 addRequest[@"image"] = imageFile;
+		 [addRequest saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+			if (succeeded) {
+		 */
 		NSData *imageData = UIImagePNGRepresentation(self.imageView.image);
-		PFFile *imageFile = [PFFile fileWithName:[NSString stringWithFormat:@"%@.png", self.nameTextField.text] data:imageData];
-		PFObject *userPhoto = [PFObject objectWithClassName:@"AddRequest"];
-		userPhoto[@"name"] = self.nameTextField.text;
-		userPhoto[@"image"] = imageFile;
-		[userPhoto saveInBackground]; //not handling errors. 2.6.16 is it necessary?
-
-		
-		UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
-															  message:@"We will look into your Submission!"
-															 delegate:nil
-													cancelButtonTitle:@"OK"
-													otherButtonTitles: nil];
-		[submitAlert show];
-		[self resetFields];
-		[self.tabBarController setSelectedIndex:OPTIONSPAGE];
+		PFBooleanResultBlock block = ^(BOOL succeeded, NSError * _Nullable error) {
+			if (succeeded) {
+				UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
+																	  message:@"We will look into your Submission!"
+																	 delegate:nil
+															cancelButtonTitle:@"OK"
+															otherButtonTitles: nil];
+				[submitAlert show];
+				[self resetFields];
+				[self.tabBarController setSelectedIndex:OPTIONSPAGE];
+			}
+			else { //failed
+				UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"We were unable to receive your submission!"
+																	message:@"Please try again!"
+																   delegate:nil
+														  cancelButtonTitle:@"OK"
+														  otherButtonTitles: nil];
+				[failAlert show];
+			}
+		};
+		[self.dao addNewPizzaPlace:self.nameTextField.text address:self.addressTextField.text location:self.location imageData:imageData block:block];
 	}
 }
 
@@ -187,6 +205,14 @@
 		NSLog(@"Finding address");
 		if (error) {
 			NSLog(@"Error %@", error.description);
+			UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+																  message:@"Cannot Find Address from given location"
+																 delegate:nil
+														cancelButtonTitle:@"OK"
+														otherButtonTitles: nil];
+			
+			[myAlertView show];
+
 		} else {
 			CLPlacemark *placemark = [placemarks lastObject];
 			self.addressTextField.text = [NSString stringWithFormat:@"%@", ABCreateStringWithAddressDictionary(placemark.addressDictionary, NO)];
@@ -324,8 +350,24 @@
 	[self imageCoordinate:info];
 	[self dismissViewControllerAnimated:YES completion:nil];
 	
-	
-	self.imageView.image = selectedImage;
+	if ([UIAlertController class]) {
+		// user is above ios 7
+		self.imageView.image = selectedImage;
+		
+	} else { // iOS 7 imageview remade
+		NSLog(@"User's iOS < iOS 8 or 9");
+		if (self.imageViewios7.image == NULL) {
+			self.imageViewios7 = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/2, self.view.frame.size.width, self.view.frame.size.height/2)];
+			self.imageViewios7.image = selectedImage;
+			self.imageViewios7.alpha = 0.5;
+			[self.view addSubview:self.imageViewios7];
+		}
+		else {
+			self.imageViewios7.image = nil;
+			self.imageViewios7.image = selectedImage;
+			
+		}
+	}
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -339,7 +381,7 @@
 	[assetsLibrary assetForURL:photoUrl resultBlock:^(ALAsset *photoAsset) {
 	 CLLocation *location = [photoAsset valueForProperty:ALAssetPropertyLocation];
 		if (location.coordinate.latitude == 0.0 || location.coordinate.longitude == 0.0) { // if the latLong is not showing up, use current location
-//			NSLog(@"Present an alert");
+			//			NSLog(@"Present an alert");
 			UIAlertView *notFoundAlert = [[UIAlertView alloc] initWithTitle:@"We could not find the location from the image!"
 															  message:@"We will use your current location!"
 																   delegate:nil

@@ -10,6 +10,12 @@
 
 @interface PizzaPlace : NSObject
 
+typedef NS_ENUM(NSInteger, RatingOptions) { //0,1,2//
+	RATEDNOT,
+	RATEDLIKE,
+	RATEDDISLIKE
+};
+
 //information on PizzaPlace
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *url;
@@ -23,4 +29,11 @@
 @property float latitude;
 @property float longitude;
 @property float distance;
+
+@property (nonatomic) int likes;
+@property (nonatomic) int dislikes;
+@property (nonatomic) RatingOptions rated;
+@property float percentageLikes;
+
+
 @end

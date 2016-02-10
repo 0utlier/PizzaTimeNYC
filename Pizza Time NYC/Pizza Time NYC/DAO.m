@@ -56,8 +56,30 @@
 				pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
 				pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
 				
-				[self.pizzaPlaceArray addObject:pizzaPlace];
-				[pizzaPlaceParse pinInBackground]; // this is for local Storage
+				PFQuery *queryLikes = [PFQuery queryWithClassName:@"Likes"];
+				[queryLikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse]; // using the object
+				[queryLikes whereKey:@"likeType" equalTo:@"like"]; // using the object
+				[queryLikes countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
+					pizzaPlace.likes = number;
+					
+					PFQuery *queryDislikes = [PFQuery queryWithClassName:@"Likes"];
+					[queryDislikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse]; // using the object
+					[queryDislikes whereKey:@"likeType" equalTo:@"dislike"]; // using the object
+					[queryDislikes countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
+						pizzaPlace.dislikes = number;
+						if (pizzaPlace.likes + pizzaPlace.dislikes == 0) {
+							pizzaPlace.percentageLikes = 0;
+						}
+						else {
+							pizzaPlace.percentageLikes = (float)pizzaPlace.likes/(pizzaPlace.likes + pizzaPlace.dislikes)*100;
+						}
+						NSLog(@"ratings = %f for %@", pizzaPlace.percentageLikes, pizzaPlace.name);
+						[self.pizzaPlaceArray addObject:pizzaPlace];
+						[pizzaPlaceParse pinInBackground]; // this is for local Storage
+					}];
+				}];
+				
+				
 				//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
 			}
 		}
@@ -72,34 +94,50 @@
 	PFQuery *query = [PFQuery queryWithClassName:@"PizzaPlaceParse"];
 	[query fromLocalDatastore];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *parseArray, NSError *error) {
-		if (!error) {
-			// The find succeeded.
-			NSLog(@"Successfully retrieved %lu pizzaPlaces from LOCAL", (unsigned long)parseArray.count);
-			// Do something with the found objects
-			PizzaPlace *pizzaPlace = nil;
-			for (PFObject *pizzaPlaceParse in parseArray) {
-				
-				pizzaPlace = [[PizzaPlace alloc]init]; // allocate the new instance
-				// assign its values from the objects
-				pizzaPlace.name = pizzaPlaceParse[@"name"];
-				pizzaPlace.address = pizzaPlaceParse[@"address"];
-				pizzaPlace.street = pizzaPlaceParse[@"street"];
-				pizzaPlace.city = pizzaPlaceParse[@"city"];
-				pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
-				pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
-				pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
-				
-				
-				[self.pizzaPlaceArray addObject:pizzaPlace];
-				//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
-			}
-		}
-		else {
-			// Log details of the failure
-			NSLog(@"Error: %@ %@", error, [error userInfo]);
-		}
 		if (parseArray == nil || parseArray.count == 0) {
 			[self downloadParsePP];
+		} else {
+			if (!error) {
+				// The find succeeded.
+				NSLog(@"Successfully retrieved %lu pizzaPlaces from LOCAL", (unsigned long)parseArray.count);
+				// Do something with the found objects
+				PizzaPlace *pizzaPlace = nil;
+				for (PFObject *pizzaPlaceParse in parseArray) {
+					
+					pizzaPlace = [[PizzaPlace alloc]init]; // allocate the new instance
+					// assign its values from the objects
+					pizzaPlace.name = pizzaPlaceParse[@"name"];
+					pizzaPlace.address = pizzaPlaceParse[@"address"];
+					pizzaPlace.street = pizzaPlaceParse[@"street"];
+					pizzaPlace.city = pizzaPlaceParse[@"city"];
+					pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
+					pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
+					pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
+					
+					PFQuery *queryLikes = [PFQuery queryWithClassName:@"Likes"];
+					[queryLikes fromLocalDatastore];
+					[queryLikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse];
+					[queryLikes whereKey:@"user" equalTo:[PFUser currentUser]];
+					[queryLikes getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+						pizzaPlace.rated = RATEDNOT;
+						if (object) {
+							if ([object[@"likeType"] isEqualToString:@"like"]) {
+								pizzaPlace.rated = RATEDLIKE;
+							}
+							else if ([object[@"likeType"] isEqualToString:@"dislike"]) {
+								pizzaPlace.rated = RATEDDISLIKE;
+							}
+						}
+						[self.pizzaPlaceArray addObject:pizzaPlace];
+					}];
+					
+					//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
+				}
+			}
+			else {
+				// Log details of the failure
+				NSLog(@"Error: %@ %@", error, [error userInfo]);
+			}
 		}
 	}];
 }
@@ -127,7 +165,7 @@
 						NSLog(@"There was an error, and it needs to be logged");
 					}
 				}];
-}
+			}
 		}
 		else {
 			// Log details of the failure
@@ -188,9 +226,94 @@
 	PFObject *gifObject = [PFObject objectWithClassName:@"GifParse"];
 	[gifObject setObject:file forKey:@"GifFile"];
 	[gifObject saveInBackground];
-
+	
 	
 }
 
+
+- (void)likePizzaPlaceWithName:(NSString *)name {
+	[self addLikeForPizzaPlace:name withType:@"like"];
+}
+
+- (void)dislikePizzaPlaceWithName:(NSString *)name {
+	[self addLikeForPizzaPlace:name withType:@"dislike"];
+}
+
+- (void)addLikeForPizzaPlace:(NSString *)name withType:(NSString *)type {
+	PFQuery *query = [PFQuery queryWithClassName:@"PizzaPlaceParse"];
+	[query fromLocalDatastore];
+	[query whereKey:@"name" equalTo:name];
+	PFObject *pizzaPlaceParse = [query getFirstObject];
+	
+	PFQuery *queryLikes = [PFQuery queryWithClassName:@"Likes"];
+	[queryLikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse]; // using the object
+	[queryLikes whereKey:@"user" equalTo:[PFUser currentUser]]; // using the object
+	[queryLikes getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable likeParse, NSError * _Nullable error) {
+		//likes or NO likes
+		if (!likeParse) {
+			// create like
+			PFObject *objectNew = [[PFObject alloc]initWithClassName:@"Likes"];
+			objectNew[@"likeType"] = type;
+			objectNew[@"pizzaPlace"] = pizzaPlaceParse;
+			objectNew[@"user"] = [PFUser currentUser];
+			[objectNew saveEventually];
+			[objectNew pinInBackground];
+		}
+		else {
+			if(![likeParse[@"likeType"] isEqualToString:type]) {
+				//update like
+				likeParse[@"likeType"] = type;
+				[likeParse saveEventually];
+			}
+			else {//[likeParse[@"likeType"] isEqualToString:type]
+				[likeParse deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+					if (succeeded && !error) {
+						NSLog(@"like deleted from parse");
+					} else {
+						NSLog(@"error: %@", error);
+					}
+				}];
+			}
+		}
+	}];
+}
+
+-(void)addNewPizzaPlace:(NSString *)name address:(NSString *)address location:(CLLocation *)location imageData:(NSData *)imageData block:(PFBooleanResultBlock)block {
+	PFObject *addRequest = [PFObject objectWithClassName:@"AddRequest"];
+	addRequest[@"name"] = name;
+	addRequest[@"address"] = address;
+	addRequest[@"latitude"] = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+	addRequest[@"longitude"] = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+	addRequest[@"user"] = [PFUser currentUser];
+	
+	
+	PFFile *imageFile = [PFFile fileWithName:[NSString stringWithFormat:@"%@.png", name] data:imageData];
+	addRequest[@"image"] = imageFile;
+	
+	[addRequest saveInBackgroundWithBlock:block];
+	
+	
+}
+
+-(void)feedbackSubmission:(NSString *)feedback build:(NSString *)build email:(NSString *)email type:(NSString *)type {
+	PFObject *feedbackParse = [PFObject objectWithClassName:@"FeedbackParse"];
+	feedbackParse[@"feedbackString"] = feedback;
+	feedbackParse[@"build"] = build;
+	feedbackParse[@"userEmail"] = email;
+	feedbackParse[@"typeFeedback"] = type;
+	feedbackParse[@"user"] = [PFUser currentUser];
+	
+	[feedbackParse saveEventually];
+}
+
+-(void)closedSubmission:(PizzaPlace *)pizzaPlace {
+	PFObject *feedbackParse = [PFObject objectWithClassName:@"FeedbackParse"];
+	feedbackParse[@"feedbackString"] = pizzaPlace.name;
+	feedbackParse[@"userEmail"] = pizzaPlace.address;
+	feedbackParse[@"typeFeedback"] = @"CLOSED";
+	feedbackParse[@"user"] = [PFUser currentUser];
+	
+	[feedbackParse saveEventually];
+}
 
 @end

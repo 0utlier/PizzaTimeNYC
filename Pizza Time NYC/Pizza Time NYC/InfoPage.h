@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MethodManager.h"
 
-@interface InfoPage : UIViewController
+@interface InfoPage : UIViewController <UIWebViewDelegate>
 
-@property UIImage *image;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UILabel *broughtToYou;
+@property (weak, nonatomic) IBOutlet UILabel *designLabel;
+
 @end

@@ -15,13 +15,26 @@
 @property (nonatomic, retain) NSMutableArray *pizzaPlaceArray;
 @property (nonatomic, retain) NSMutableArray *gifArray;
 
-//Parse Methods
-- (void)fromLocalDataPP;
-- (void)downloadParsePP;
-//- (void)saveParse;
-- (void)fromLocalDataGifs;
-- (void)downloadParseGifs;
+
 + (instancetype)sharedDAO;
 
+#pragma mark - Parse Methods
+//pizza places
+- (void)fromLocalDataPP;
+- (void)downloadParsePP;
 
+//gifs
+- (void)fromLocalDataGifs;
+- (void)downloadParseGifs;
+
+// ratings
+- (void)likePizzaPlaceWithName:(NSString *)name;
+- (void)dislikePizzaPlaceWithName:(NSString *)name;
+
+// add new place
+-(void)addNewPizzaPlace:(NSString *)name address:(NSString *)address location:(CLLocation *)location imageData:(NSData *)imageData block:(PFBooleanResultBlock)block;
+
+//feedback submissions
+- (void)feedbackSubmission:(NSString *)feedback build:(NSString *)build email:(NSString *)email type:(NSString *)type;
+- (void)closedSubmission:(PizzaPlace *)pizzaPlace;
 @end
