@@ -27,7 +27,8 @@
 	[super viewDidLoad];
 	self.methodManager = [MethodManager sharedManager];
 	self.dao = [DAO sharedDAO];
-	
+	// removed 2.13.16 since gif now working well other places
+	/*
 	if (self.methodManager.gifCount == 0.0) { // tilted screen forward
 		NSString *kenPizzaMan = [[NSBundle mainBundle] pathForResource:@"KenPizzaMan" ofType:@"gif"];
 		NSURL *imageURL = [NSURL fileURLWithPath: kenPizzaMan];
@@ -43,6 +44,7 @@
 		self.methodManager.gifCount += 1;
 	}
 	else {
+	 */
 	// set animated view to square in middle of view
 	FLAnimatedImageView *animatedImageView = [[FLAnimatedImageView alloc]initWithFrame:CGRectMake(0, (self.view.bounds.size.height - self.view.bounds.size.width)/2 , self.view.bounds.size.width, self.view.bounds.size.width)];
 	[self.view addSubview:animatedImageView];
@@ -61,7 +63,7 @@
 	self.methodManager.gifCount += 1;
 	self.methodManager.gifCount = self.methodManager.gifCount % self.dao.gifArray.count;
 	animatedImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[self.dao.gifArray objectAtIndex:self.methodManager.gifCount]];
-	}
+//	}
 }
 
 -(void)viewWillAppear:(BOOL)animated {

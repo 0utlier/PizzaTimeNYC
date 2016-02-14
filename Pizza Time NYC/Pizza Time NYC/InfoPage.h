@@ -10,7 +10,8 @@
 
 @interface InfoPage : UIViewController <UIWebViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+//@property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UILabel *broughtToYou;
 @property (weak, nonatomic) IBOutlet UILabel *designLabel;
 

@@ -57,7 +57,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	[super viewWillAppear:animated];
 	//	[self.navigationController setNavigationBarHidden:YES]; // removed 1.26.16 no more nav bar to worry about
 	[self assignLabels];
-	countHomePage+=1;
+	self.methodManager.mapPageBool = NO;
 	[self assignColors];
 	if(firstTimeLoadedHomePage) {
 		// do what occurs AFTER first time
@@ -237,16 +237,19 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	 blue HEX = 00BCCC
 	 red HEX = F16648
 	 tan HEX = F8DB96
+	 yellow HEX = FFB700
+	 darkBlue HEX = 455CC7
 	 */
 	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
-	UIColor *blueMCQ = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0];
-	UIColor *purple = [[UIColor alloc]initWithRed:137.0/255.0 green:12.0/255.0 blue:208.0/255.0 alpha:1.0];
-	//	UIColor *green = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
+	UIColor *greenMCQ = [[UIColor alloc]initWithRed:0/255.0 green:173.0/255.0 blue:104.0/255.0 alpha:1.0];
+	UIColor *purpleMCQ = [[UIColor alloc]initWithRed:179/255.0 green:79/255.0 blue:197/255.0 alpha:1.0];
+	UIColor *darkBlueMCQ = [[UIColor alloc]initWithRed:69.0/255.0 green:92.0/255.0 blue:199.0/255.0 alpha:1.0];
 	// assign background color to change
-	switch (countHomePage%3) {
+	countHomePage +=1;
+	switch (countHomePage%4) {
 		case 0:
 			//					NSLog(@"count is 0 - set blue");
-			self.view.backgroundColor = blueMCQ;
+			self.view.backgroundColor = darkBlueMCQ;
 			countHomePage +=1;
 			break;
 		case 1:
@@ -255,13 +258,18 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 			countHomePage +=1;
 			break;
 		case 2:
-			//					NSLog(@"Count is 2 - set green");
-			self.view.backgroundColor = purple;
+			//					NSLog(@"Count is 2 - set purple");
+			self.view.backgroundColor = purpleMCQ;
+			countHomePage +=1;
+			break;
+		case 3:
+			//					NSLog(@"Count is 3 - set green");
+			self.view.backgroundColor = greenMCQ;
 			countHomePage +=1;
 			break;
 		default:
 			NSLog(@"CountHomePage is DEFAULT - decide what to do");
-			self.view.backgroundColor = purple;
+			self.view.backgroundColor = darkBlueMCQ;
 			countHomePage +=1;
 			break;
 	}
@@ -314,25 +322,12 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
  */
 
 -(void)leftBPressed:(UIButton *)leftBButton {
-	//	NSLog(@"Open the LIST");
-	[UIView animateWithDuration:0.66
-					 animations:^{
-						 // where is the button going?
-						 self.leftB.frame = CGRectMake((self.screenSize.width/12)*-1, (self.screenSize.height/6)*5, self.screenSize.width/3, self.screenSize.height/6);
-					 }completion:^(BOOL finished) { //when finished, load the page
-						 [self.tabBarController setSelectedIndex:LISTPAGE];
-						 self.leftB.frame = CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
-					 }];
-}
-
--(void)rightBPressed:(UIButton *)rightBButton {
-	NSLog(@"Open the FEEDBACK");
+//	NSLog(@"Open the FEEDBACK");
 	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"feedbackPage"];
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
-						 self.rightB.frame = CGRectMake((self.screenSize.width/4)*3, (self.screenSize.height/6)*5, self.screenSize.width/3, self.screenSize.height/6);
-						 //						 self.rightB.alpha = 0.0;
+						 self.leftB.frame = CGRectMake((self.screenSize.width/12)*-1, (self.screenSize.height/6)*5, self.screenSize.width/3, self.screenSize.height/6);
 					 }completion:^(BOOL finished) { //when finished, load the page
 						 UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Profile Page Coming Soon"
 																			   message:@"Leave feedback in the mean time"
@@ -343,25 +338,38 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 [myAlertView show];
 						 self.methodManager.rotation = NO;
 						 [self presentViewController:detailViewController animated:YES completion:nil];
-						 self.rightB.frame = CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
+						 self.leftB.frame = CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
 					 }];
 }
 
--(void)leftTPressed:(UIButton *)leftTButton {
+-(void)rightBPressed:(UIButton *)rightBButton {
 	//	NSLog(@"Open the ABOUT");
 	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"aboutPage"];
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
-						 self.leftT.frame = CGRectMake((self.screenSize.width/12)*-1, (self.screenSize.height/3), self.screenSize.width/3, self.screenSize.height/6);
+						 self.rightB.frame = CGRectMake((self.screenSize.width/4)*3, (self.screenSize.height/6)*5, self.screenSize.width/3, self.screenSize.height/6);
+						 //						 self.rightB.alpha = 0.0;
 					 }completion:^(BOOL finished) { //when finished, load the page
 						 [self presentViewController:detailViewController animated:YES completion:nil];
+						 self.rightB.frame = CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3, self.screenSize.width/3, self.screenSize.height/6);
+					 }];
+}
+
+-(void)leftTPressed:(UIButton *)leftTButton {
+	//	NSLog(@"Open the LIST");
+	[UIView animateWithDuration:0.66
+					 animations:^{
+						 // where is the button going?
+						 self.leftT.frame = CGRectMake((self.screenSize.width/12)*-1, (self.screenSize.height/3), self.screenSize.width/3, self.screenSize.height/6);
+					 }completion:^(BOOL finished) { //when finished, load the page
+						 [self.tabBarController setSelectedIndex:LISTPAGE];
 						 self.leftT.frame = CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6);
 					 }];
 }
 
 -(void)rightTPressed:(UIButton *)rightTButton {
-	NSLog(@"Open the CLOSEST");
+//	NSLog(@"Open the CLOSEST");
 	self.methodManager.directionsShow = YES;
 	self.methodManager.closestPP = YES;
 	[UIView animateWithDuration:0.66

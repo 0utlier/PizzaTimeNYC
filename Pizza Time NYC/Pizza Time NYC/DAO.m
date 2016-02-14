@@ -31,12 +31,45 @@
 
 #pragma mark - PARSE
 
+-(MBProgressHUD *)progresshud:(NSString *)label {
+	// Load images
+//	NSArray *imageNames = @[@"fullPizza1.png", @"fullPizza2.png", @"fullPizza3.png", @"fullPizza4.png", @"fullPizza5.png", @"fullPizza6.png", @"fullPizza7.png"];
+	NSArray *imageNames = @[@"KenPizzaMan1.png", @"KenPizzaMan3.png", @"KenPizzaMan5.png", @"KenPizzaMan9.png", @"KenPizzaMan11.png", @"KenPizzaMan13.png", @"KenPizzaMan15.png", @"KenPizzaMan19.png"];
+
+	NSMutableArray *images = [[NSMutableArray alloc] init];
+	for (int i = 0; i < imageNames.count; i++) {
+		[images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
+	}
+	
+	// Normal Animation
+	UIImageView *animationImageView = [[UIImageView alloc] init];//WithFrame:CGRectMake(200, 200, 100, 100)];
+	animationImageView.animationImages = images;
+	animationImageView.animationDuration = 0.6;
+	animationImageView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6f];
+	[animationImageView startAnimating];
+	
+	UIWindow *window = [[[UIApplication sharedApplication] windows] lastObject];
+	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:window.rootViewController.view animated:YES];
+	hud.mode = MBProgressHUDModeCustomView;
+//	hud.contentColor = [UIColor blueColor];
+	hud.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6f];
+	hud.customView = [[UIImageView alloc]init];
+	hud.opaque = NO;
+	hud.customView = animationImageView;
+	hud.label.text = label;// from parameter
+	hud.label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6f];
+	hud.frame = CGRectMake(window.frame.size.width/2 - (window.frame.size.width/3)*2, window.frame.size.height/2, (window.frame.size.width/3)*2, window.frame.size.height/3);
+	[hud showAnimated:YES];
+	return hud;
+}
+
 -(void) downloadParsePP {
 	// iterate through and create PP instance for place
 	PFQuery *query = [PFQuery queryWithClassName:@"PizzaPlaceParse"];
 	
 	// Sorts the results in ascending order by the ZIP field
 	[query orderByAscending:@"zip"];
+	MBProgressHUD *hud = [self progresshud:@"Makin' Pizza"];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *parseArray, NSError *error) {
 		if (!error) {
 			// The find succeeded.
@@ -55,7 +88,7 @@
 				pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
 				pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
 				pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
-				
+			/*
 				PFQuery *queryLikes = [PFQuery queryWithClassName:@"Likes"];
 				[queryLikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse]; // using the object
 				[queryLikes whereKey:@"likeType" equalTo:@"like"]; // using the object
@@ -69,16 +102,25 @@
 						pizzaPlace.dislikes = number;
 						if (pizzaPlace.likes + pizzaPlace.dislikes == 0) {
 							pizzaPlace.percentageLikes = 0;
+							pizzaPlace.percentageDislikes = 0;
 						}
 						else {
 							pizzaPlace.percentageLikes = (float)pizzaPlace.likes/(pizzaPlace.likes + pizzaPlace.dislikes)*100;
+							pizzaPlace.percentageDislikes = (float)pizzaPlace.dislikes/(pizzaPlace.likes + pizzaPlace.dislikes)*100;
 						}
-						NSLog(@"ratings = %f for %@", pizzaPlace.percentageLikes, pizzaPlace.name);
+						NSLog(@"ratings = %f and %f for %@", pizzaPlace.percentageLikes, pizzaPlace.percentageDislikes, pizzaPlace.name);
 						[self.pizzaPlaceArray addObject:pizzaPlace];
 						[pizzaPlaceParse pinInBackground]; // this is for local Storage
+						[hud hideAnimated:YES];
 					}];
 				}];
-				
+				*/					BOOL last = ([[parseArray lastObject] isEqual:pizzaPlaceParse])? YES:NO;
+
+				[self updateLikes:pizzaPlaceParse pizzaPlace:pizzaPlace isLast:last];
+				[hud hideAnimated:YES];
+				[self.pizzaPlaceArray addObject:pizzaPlace];
+				[pizzaPlaceParse pinInBackground]; // this is for local Storage
+
 				
 				//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
 			}
@@ -93,7 +135,10 @@
 -(void) fromLocalDataPP {
 	PFQuery *query = [PFQuery queryWithClassName:@"PizzaPlaceParse"];
 	[query fromLocalDatastore];
+//	MBProgressHUD *hud = [self progresshud:@"Updatin' Ratings"];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *parseArray, NSError *error) {
+		NSLog(@"hide animated local");
+//		[hud hideAnimated:YES];
 		if (parseArray == nil || parseArray.count == 0) {
 			[self downloadParsePP];
 		} else {
@@ -102,6 +147,7 @@
 				NSLog(@"Successfully retrieved %lu pizzaPlaces from LOCAL", (unsigned long)parseArray.count);
 				// Do something with the found objects
 				PizzaPlace *pizzaPlace = nil;
+				self.pizzaPlaceArray = [[NSMutableArray alloc]init]; // removed old one, and replace with new
 				for (PFObject *pizzaPlaceParse in parseArray) {
 					
 					pizzaPlace = [[PizzaPlace alloc]init]; // allocate the new instance
@@ -113,7 +159,8 @@
 					pizzaPlace.zip = [pizzaPlaceParse[@"zip"]integerValue];
 					pizzaPlace.latitude = [pizzaPlaceParse[@"latitude"]floatValue];
 					pizzaPlace.longitude = [pizzaPlaceParse[@"longitude"]floatValue];
-					
+					BOOL last = ([[parseArray lastObject] isEqual:pizzaPlaceParse])? YES:NO;
+					[self updateLikes:pizzaPlaceParse pizzaPlace:pizzaPlace isLast:last];
 					PFQuery *queryLikes = [PFQuery queryWithClassName:@"Likes"];
 					[queryLikes fromLocalDatastore];
 					[queryLikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse];
@@ -128,7 +175,9 @@
 								pizzaPlace.rated = RATEDDISLIKE;
 							}
 						}
+						
 						[self.pizzaPlaceArray addObject:pizzaPlace];
+						[pizzaPlaceParse pinInBackground]; // this is for local Storage
 					}];
 					
 					//					NSLog(@"my array is = %@", self.pizzaPlaceArray);
@@ -140,6 +189,50 @@
 			}
 		}
 	}];
+}
+
+- (void) updateLikesA:(PFObject *)pizzaPlaceParse pizzaPlace:(PizzaPlace *)pizzaPlace {
+
+}
+
+
+- (void) updateLikes:(PFObject *)pizzaPlaceParse pizzaPlace:(PizzaPlace *)pizzaPlace isLast:(BOOL)isLast {// this takes a very long time to do
+	PFQuery *queryLikes = [PFQuery queryWithClassName:@"Likes"];
+	[queryLikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse]; // using the object
+	[queryLikes whereKey:@"likeType" equalTo:@"like"]; // using the object
+//	MBProgressHUD *hud = [self progresshud:@"Updatin' Ratings"];
+	[queryLikes countObjectsInBackgroundWithBlock:^(int numberL, NSError * _Nullable error) {
+//		[hud hideAnimated:YES];
+//		NSLog(@"likes updated");
+		pizzaPlace.likes = numberL;
+		
+		PFQuery *queryDislikes = [PFQuery queryWithClassName:@"Likes"];
+		[queryDislikes whereKey:@"pizzaPlace" equalTo:pizzaPlaceParse]; // using the object
+		[queryDislikes whereKey:@"likeType" equalTo:@"dislike"]; // using the object
+		[queryDislikes countObjectsInBackgroundWithBlock:^(int numberD, NSError * _Nullable error) {
+			pizzaPlace.dislikes = numberD;
+//			NSLog(@"%d like and %d dislike", numberL, numberD);
+			if (pizzaPlace.likes + pizzaPlace.dislikes == 0) {
+				pizzaPlace.percentageLikes = 0;
+				pizzaPlace.percentageDislikes = 0;
+			}
+			else {
+				pizzaPlace.percentageLikes = (float)pizzaPlace.likes/(pizzaPlace.likes + pizzaPlace.dislikes)*100;
+				pizzaPlace.percentageDislikes = (float)pizzaPlace.dislikes/(pizzaPlace.likes + pizzaPlace.dislikes)*100;
+			}
+			if (isLast) {
+				// All instances of TestClass will be notified
+    [[NSNotificationCenter defaultCenter]
+	 postNotificationName:@"FinishedLoadingData"
+	 object:self];
+
+			}
+//			NSLog(@"ratings = %f and %f for %@", pizzaPlace.percentageLikes, pizzaPlace.percentageDislikes, pizzaPlace.name);
+//			[self.pizzaPlaceArray addObject:pizzaPlace];
+//			[pizzaPlaceParse pinInBackground]; // this is for local Storage
+		}];
+	}];
+
 }
 
 - (void)downloadParseGifs {
@@ -205,7 +298,7 @@
 		}
 	}];
 }
-
+/* // commented out, but kept for help later 2.10.16
 -(void) saveParse {
 	
 	PFObject *testObjectPizza = [PFObject objectWithClassName:@"PizzaPlaceParse"];
@@ -229,7 +322,7 @@
 	
 	
 }
-
+*/
 
 - (void)likePizzaPlaceWithName:(NSString *)name {
 	[self addLikeForPizzaPlace:name withType:@"like"];

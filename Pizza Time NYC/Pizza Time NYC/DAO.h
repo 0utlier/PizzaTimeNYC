@@ -9,16 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "PizzaPlace.h"
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 @interface DAO : NSObject
 
 @property (nonatomic, retain) NSMutableArray *pizzaPlaceArray;
 @property (nonatomic, retain) NSMutableArray *gifArray;
-
+@property (nonatomic, retain) MBProgressHUD *hud;
 
 + (instancetype)sharedDAO;
 
 #pragma mark - Parse Methods
+//LOADING hud
+- (MBProgressHUD *)progresshud:(NSString *)label;
+
 //pizza places
 - (void)fromLocalDataPP;
 - (void)downloadParsePP;

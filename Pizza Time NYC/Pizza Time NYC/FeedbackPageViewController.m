@@ -81,18 +81,7 @@
 	else {
 	// create a PFObject and parse it!
 		[self.dao feedbackSubmission:self.feedbackTextField.text build:self.methodManager.buildNumber email:self.emailText.text type:self.typeFeedback];
-	/* // moved to DAO 2.10.16
-	 PFObject *feedbackParse = [PFObject objectWithClassName:@"FeedbackParse"];
-	feedbackParse[@"feedbackString"] = self.feedbackTextField.text;
-	feedbackParse[@"build"] = [self buildNumberInfo];
-	feedbackParse[@"userEmail"] = self.emailText.text;
-	feedbackParse[@"typeFeedback"] = self.typeFeedback;
-	feedbackParse[@"user"] = [PFUser currentUser];
-
-	[feedbackParse saveEventually];
-	//	NSLog(@"Submit pressed with:\n %@\n %@", feedbackInfo,[self buildNumberInfo]);
-	*/
-		
+	
 	UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Thank You!"
 														  message:@"We will look at your feedback!"
 														 delegate:nil

@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, RatingOptions) { //0,1,2//
 @property (nonatomic) int dislikes;
 @property (nonatomic) RatingOptions rated;
 @property float percentageLikes;
+@property float percentageDislikes;
 
 
 @end

@@ -10,6 +10,8 @@
 #import "MethodManager.h"
 //#import "FLAnimatedImage.h"
 //#import "FLAnimatedImageView.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 
 @interface InfoPage ()
 
@@ -34,26 +36,21 @@
 }
 
 - (void)assignGif {
-	self.methodManager = [MethodManager sharedManager];
+	self.methodManager = [MethodManager sharedManager]; // not necessary, unless move gif to method manager
+
+	// animated images implement
+	NSArray *imageNames = @[@"KenPizzaMan1.png", @"KenPizzaMan3.png", @"KenPizzaMan5.png", @"KenPizzaMan9.png", @"KenPizzaMan11.png", @"KenPizzaMan13.png", @"KenPizzaMan15.png", @"KenPizzaMan19.png"];
 	
-	NSString *kenPizzaMan = [[NSBundle mainBundle] pathForResource:@"KenPizzaMan" ofType:@"gif"];
+	NSMutableArray *images = [[NSMutableArray alloc] init];
+	for (int i = 0; i < imageNames.count; i++) {
+		[images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
+	}
 	
-	NSURL *imageURL = [NSURL fileURLWithPath: kenPizzaMan];
-	NSString *htmlString = @"<html><body><img src='%@' margin='0' padding='0' width='1100' height='%f'></body></html>";
-	NSString *imageHTML  = [[NSString alloc] initWithFormat:htmlString, imageURL, self.view.frame.size.height * 0.88];
-	// Load image in UIWebView
-	self.webView.scalesPageToFit = YES;
-	self.webView.userInteractionEnabled = NO;
-	[self.webView loadHTMLString:imageHTML baseURL:nil];
-	[self.view addSubview:self.webView];
-	/*
-		self.webView.hidden = YES;
-	 NSData *gifData = [NSData dataWithContentsOfFile: kenPizzaMan];
-	 FLAnimatedImageView *animatedImageView = [[FLAnimatedImageView alloc]initWithFrame:CGRectMake(self.webView.frame.origin.x, self.webView.frame.origin.y, self.view.frame.size.width, self.designLabel.frame.origin.y - self.webView.frame.origin.y - self.designLabel.frame.size.height*2)];
-	 //		FLAnimatedImageView *animatedImageView = [[FLAnimatedImageView alloc]initWithFrame:self.webView.frame];
-		[self.view addSubview:animatedImageView];
-		animatedImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:gifData];
-	*/
+	// Normal Animation
+	self.imageView.animationImages = images;
+	self.imageView.animationDuration = 0.6;
+	
+	[self.imageView startAnimating];
 }
 
 -(void)backButtonPressed:(UIButton *)backButton {

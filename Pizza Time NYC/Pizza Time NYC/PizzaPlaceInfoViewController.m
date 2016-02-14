@@ -32,12 +32,16 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:YES];
 	[self assignLabels];
+	[self setPercentageLabels];
+	[self setRatingButtons];
 }
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
 }
+
+#pragma mark - ASSIGN VALUES
 
 - (void)assignLabels {// and buttons
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
@@ -63,15 +67,17 @@
 	[self.rateUpButton addTarget:self
 						  action:@selector(ratingUpButtonPressed:)
 				forControlEvents:UIControlEventTouchUpInside];
-	
+	[self.rateUpButton setBackgroundImage:[UIImage imageNamed:@"MCQSliceGreen.png"] forState:UIControlStateNormal];
+	[self.rateUpButton setBackgroundImage:[UIImage imageNamed:@"pizzaHappyRate.jpg"] forState:UIControlStateSelected];
+
 	[self.rateDownButton addTarget:self
 							action:@selector(ratingDownButtonPressed:)
 				  forControlEvents:UIControlEventTouchUpInside];
-	
+	[self.rateDownButton setBackgroundImage:[UIImage imageNamed:@"MCQSliceRed.png"] forState:UIControlStateNormal];
+	[self.rateDownButton setBackgroundImage:[UIImage imageNamed:@"pizzaSadRate.jpg"] forState:UIControlStateSelected];
 }
 
-
-- (void)setLabelValues:(PizzaPlace*)pizzaPlace {
+- (void)setLabelValues:(PizzaPlace*)pizzaPlace { // called before page loads
 	//	NSLog(@"The name passed through = %@", pizzaPlace.name);
 	UILabel *nameLabel = (UILabel *)[self.view viewWithTag:200];
 	nameLabel.text = [pizzaPlace.name uppercaseString];
@@ -89,10 +95,34 @@
 	self.currentPizzaPlace = pizzaPlace;
 	
 	self.imageView.image = [UIImage imageNamed:pizzaPlace.image];
+}
+
+- (void)setPercentageLabels {
+	// now set the values
+	if (self.currentPizzaPlace.likes + self.currentPizzaPlace.dislikes == 0) {
+		self.rateUpLabel.text = [NSString stringWithFormat:@"%.0f%%", 0.0];
+		self.rateDownLabel.text = [NSString stringWithFormat:@"%.0f%%", 0.0];
+	}
+	else {
+		self.rateUpLabel.text = [NSString stringWithFormat:@"%.0f%%", self.currentPizzaPlace.percentageLikes];
+		self.rateDownLabel.text = [NSString stringWithFormat:@"%.0f%%", self.currentPizzaPlace.percentageDislikes];
+	}	NSLog(@"%d", self.currentPizzaPlace.likes);
 	
-	self.rateUpLabel.text = [NSString stringWithFormat:@"%d", pizzaPlace.likes];
-	self.rateDownLabel.text = [NSString stringWithFormat:@"%d", pizzaPlace.dislikes];
-	
+}
+
+- (void)setRatingButtons {
+	if (self.currentPizzaPlace.rated == RATEDLIKE) {
+		self.rateUpButton.selected = YES;
+		self.rateDownButton.selected = NO;
+	}
+	else if (self.currentPizzaPlace.rated == RATEDDISLIKE) {
+		self.rateUpButton.selected = NO;
+		self.rateDownButton.selected = YES;
+	}
+	else { // (self.currentPizzaPlace.rated == RATEDNOT)
+		self.rateUpButton.selected = NO;
+		self.rateDownButton.selected = NO;
+	}
 }
 
 #pragma mark - ACTIONS
@@ -109,7 +139,12 @@
 
 -(void)backButtonPressed:(UIButton *)backButton {
 	//	NSLog(@"backButton was pressed");
-	[self.tabBarController setSelectedIndex:MAPPAGE];
+	if (self.methodManager.mapPageBool == YES) {
+		[self.tabBarController setSelectedIndex:MAPPAGE];
+	}
+	else {
+		[self.tabBarController setSelectedIndex:LISTPAGE];
+	}
 	
 }
 
@@ -132,27 +167,23 @@
 	else if (self.currentPizzaPlace.rated == RATEDDISLIKE) {
 		self.currentPizzaPlace.likes++;
 		self.currentPizzaPlace.dislikes--;
-		NSString *dislikesValue = [NSString stringWithFormat:@"%d", self.currentPizzaPlace.dislikes];
-		self.rateDownLabel.text = dislikesValue;
 		self.currentPizzaPlace.rated = RATEDLIKE;
 	}
 	else { // (self.currentPizzaPlace.rated == RATEDNOT)
 		self.currentPizzaPlace.likes++;
 		self.currentPizzaPlace.rated = RATEDLIKE;
 	}
-	NSString *likesValue = [NSString stringWithFormat:@"%d", self.currentPizzaPlace.likes];
-	self.rateUpLabel.text = likesValue;
-	NSLog(@"%@", self.rateUpLabel.text);
+	// now set the values
+	[self setPercentageLabels];
+	[self setRatingButtons];
 }
 
 - (void)ratingDownButtonPressed:(UIButton *)downButton {
 	[self.dao dislikePizzaPlaceWithName:self.currentPizzaPlace.name];
 	
 	if (self.currentPizzaPlace.rated == RATEDLIKE) {
-		self.currentPizzaPlace.likes--;
-		NSString *likesValue = [NSString stringWithFormat:@"%d", self.currentPizzaPlace.likes];
-		self.rateDownLabel.text = likesValue;
 		self.currentPizzaPlace.dislikes++;
+		self.currentPizzaPlace.likes--;
 		self.currentPizzaPlace.rated = RATEDDISLIKE;
 	}
 	else if (self.currentPizzaPlace.rated == RATEDDISLIKE) {
@@ -161,11 +192,11 @@
 	}
 	else { // (self.currentPizzaPlace.rated == RATEDNOT)
 		self.currentPizzaPlace.dislikes++;
-				self.currentPizzaPlace.rated = RATEDDISLIKE;
+		self.currentPizzaPlace.rated = RATEDDISLIKE;
 	}
-	NSString *dislikesValue = [NSString stringWithFormat:@"%d", self.currentPizzaPlace.dislikes];
-	self.rateDownLabel.text = dislikesValue;
-	NSLog(@"%@", self.rateDownLabel.text);
+	// now set the values
+	[self setPercentageLabels];
+	[self setRatingButtons];
 }
 
 /*
@@ -189,15 +220,7 @@
 		if (buttonIndex == 1) {
 			// create a PFObject and parse it!
 			[self.dao closedSubmission:self.currentPizzaPlace];
-
-			/* // moved to DAO 2.10.16
-			PFObject *feedbackParse = [PFObject objectWithClassName:@"FeedbackParse"];
-			feedbackParse[@"feedbackString"] = self.currentPizzaPlace.name;
-			feedbackParse[@"userEmail"] = self.currentPizzaPlace.address;
-			feedbackParse[@"typeFeedback"] = @"CLOSED";
 			
-			[feedbackParse saveEventually];
-			*/
 			UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
 																		message:@"We will look into it!"
 																	   delegate:nil

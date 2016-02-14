@@ -249,13 +249,13 @@ static AVAudioPlayer *p;
 	//	NSLog(@"orienation = %ld", (long)orientation);
 	if (orientation == UIDeviceOrientationLandscapeRight || orientation == UIDeviceOrientationLandscapeLeft) {
 		//		NSLog(@"turned to side, GIF TIME [if statement]");
-		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
+//		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
+		[self gifPresent];
 		return; // do not think necessary
 	}
 	else if (orientation == UIDeviceOrientationFaceDown) {
-		[self performSelector:@selector(speakerButtonPressed:) withObject:nil afterDelay:0];
-		self.gifCount = 0; //used to set Pizza Man
-		[self performSelector:@selector(gifPresent) withObject:nil afterDelay:0];
+		[self speakerButtonPressed:self.speakerButton];
+//		[self performSelector:@selector(speakerButtonPressed:) withObject:nil afterDelay:0]; // 2.12.16 this does not make icon change
 	}
 	else {
 		//		NSLog(@"turned back to portrat, UNDO the GIF");

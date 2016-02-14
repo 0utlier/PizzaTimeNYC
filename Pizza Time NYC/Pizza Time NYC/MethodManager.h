@@ -35,6 +35,7 @@
 @property (nonatomic)BOOL userLocRemind; // use to prompt or not // remind or do not (NO = 0 = do not)
 @property (nonatomic)BOOL closestPP; // use to find closest or not // (NO = 0 = not closest)
 @property (nonatomic)BOOL rotation; // use to disable rotation // (NO = 0 = no rotation)
+@property (nonatomic)BOOL mapPageBool; // use to remember where to go back // (NO = 0 = not map)
 
 /*
  searching 1.20.16

@@ -9,7 +9,7 @@
 #import "AddNewPlace.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AddressBookUI/AddressBookUI.h>
-//#import <Parse/Parse.h>
+//#import "MBProgressHUD.h"
 @interface AddNewPlace ()
 
 // for use of the avAudioPlayer & Menu Button
@@ -88,7 +88,12 @@
 
 -(void)backButtonPressed:(UIButton *)backButton {
 	//	NSLog(@"backButton was pressed");
-	[self.tabBarController setSelectedIndex:MAPPAGE];
+	if (self.methodManager.mapPageBool == YES) {
+		[self.tabBarController setSelectedIndex:MAPPAGE];
+	}
+	else {
+	[self.tabBarController setSelectedIndex:OPTIONSPAGE];
+	}
 }
 
 - (void)locationButtonPressed:(UIButton *)locationButton {
@@ -110,6 +115,8 @@
 
 -(void)cameraButtonPressed:(UIButton *)cameraButton {
 	//	NSLog(@"camera button pressed, open camera or library");
+	[self.addressTextField resignFirstResponder];
+	[self.nameTextField resignFirstResponder];
 	if (self.imageView.image == NULL) {
 		
 		UIActionSheet *photoChoice = [[UIActionSheet alloc]initWithTitle:nil
@@ -130,6 +137,9 @@
 }
 
 -(void)addButtonPressed:(UIButton *)addButton {
+	[self.addressTextField resignFirstResponder];
+	[self.nameTextField resignFirstResponder];
+
 	NSString *submission = [NSString stringWithFormat:@"User has found %@, which is located: %@", self.nameTextField.text, self.addressTextField.text];
 	NSLog(@"addButton was pressed - submit info to developer \n%@", submission);
 	
@@ -141,7 +151,7 @@
 													otherButtonTitles: @"Its in the picture!",nil];
 		[noNameAlert show];
 	}
-	else if (self.imageView.image == nil) {
+	else if (self.imageView.image == NULL) {
 		UIAlertView *noImageAlert = [[UIAlertView alloc] initWithTitle:@"Is there a picture?"
 																  message:@"Pizza Places like to have pictures"
 																 delegate:self
@@ -151,23 +161,11 @@
 	}
 	else {
 		// create a PFObject and parse it!
-		/* // moved to DAO 2.10.16
-		 PFObject *addRequest = [PFObject objectWithClassName:@"AddRequest"];
-		 addRequest[@"name"] = self.nameTextField.text;
-		 addRequest[@"address"] = self.addressTextField.text;
-		 addRequest[@"latitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.latitude];
-		 addRequest[@"longitude"] = [NSString stringWithFormat:@"%f", self.location.coordinate.longitude];
-		 addRequest[@"user"] = [PFUser currentUser];
-		 
-		 
-		 NSData *imageData = UIImagePNGRepresentation(self.imageView.image);
-		 PFFile *imageFile = [PFFile fileWithName:[NSString stringWithFormat:@"%@.png", self.nameTextField.text] data:imageData];
-		 addRequest[@"image"] = imageFile;
-		 [addRequest saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-			if (succeeded) {
-		 */
 		NSData *imageData = UIImagePNGRepresentation(self.imageView.image);
+		// Show progress
+		MBProgressHUD *hud = [self.dao progresshud:@"Sending Pizza"];
 		PFBooleanResultBlock block = ^(BOOL succeeded, NSError * _Nullable error) {
+			[hud hideAnimated:YES];
 			if (succeeded) {
 				UIAlertView *submitAlert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
 																	  message:@"We will look into your Submission!"
@@ -194,14 +192,14 @@
 - (void)resetFields {
 	self.nameTextField.text = @"";
 	self.addressTextField.text = @"";
-	self.imageView.image = nil;
+	self.imageView.image = NULL;
 }
 
 - (void)addressLookUp:(CLLocation *)location {
 	self.location = location;
 	// turn the latLong into an address
 	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-	[geocoder reverseGeocodeLocation:self.methodManager.locationManager.location completionHandler:^(NSArray *placemarks, NSError *error) {
+	[geocoder reverseGeocodeLocation:self.location completionHandler:^(NSArray *placemarks, NSError *error) {
 		NSLog(@"Finding address");
 		if (error) {
 			NSLog(@"Error %@", error.description);
@@ -212,10 +210,11 @@
 														otherButtonTitles: nil];
 			
 			[myAlertView show];
-
+			self.addressTextField.text = @"No connection";
 		} else {
 			CLPlacemark *placemark = [placemarks lastObject];
 			self.addressTextField.text = [NSString stringWithFormat:@"%@", ABCreateStringWithAddressDictionary(placemark.addressDictionary, NO)];
+			NSLog(@"address text = %@", self.addressTextField.text);
 		}
 	}];
 }
@@ -311,7 +310,7 @@
 			break;
 		case 2:
 		{
-			self.imageView.image = nil;
+			self.imageView.image = NULL;
 		}
 			
 		default:
@@ -324,7 +323,8 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	
 	// NSLog(@"Picker returned successfully.");
-	
+	self.imageView.image = NULL;
+
 	UIImage *selectedImage;
 	
 	NSURL *mediaUrl;

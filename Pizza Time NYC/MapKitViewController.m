@@ -71,6 +71,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	[super viewWillAppear:animated];
 	//	NSLog(@"locMan = %f", self.locationManager.location.coordinate.latitude);
 	countMapKit+=1; // changes the annotation for self
+	self.methodManager.mapPageBool = YES;
 	if (self.currentPizzaPlace == NULL) {self.currentPizzaPlace = [[PizzaPlace alloc]init];}
 	
 	//	NSLog(@"show VWA directions is = %d", self.methodManager.directionsShow);
@@ -301,15 +302,15 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		
 		CLLocation *userLocationForDistance = [[CLLocation alloc] initWithLatitude:userLocationLat
 																		 longitude:userLocationLong];
-		CLLocationDistance distance = [pizzaPlaceLocation distanceFromLocation:userLocationForDistance];
+		CLLocationDistance distanceL = [pizzaPlaceLocation distanceFromLocation:userLocationForDistance];
 		//		NSLog(@"%f AND %f", userLocationLat, userLocationLong);
-		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distance/1609.344)];
+		NSString *distanceFromUser = [NSString stringWithFormat:@"%.1fmi",(distanceL/1609.344)];
 		//		NSLog(@"distance in miles: %@ for %@", distanceFromUser, pizzaPlace.name);
 		
 		//convert to float and then assign to pizzaPlaceDistance
 		float distanceFloat = [distanceFromUser floatValue];
 		pizzaPlace.distance = distanceFloat;
-		//		NSLog(@"The distance saved as %f for %@", pizzaPlace.distance, pizzaPlace.name);
+		//				NSLog(@"The distance saved as %f for %@", pizzaPlace.distance, pizzaPlace.name);
 	}
 }
 
@@ -377,11 +378,11 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 -(void)setDirectionalValues {
 	//	NSLog(@"show DV directions is = %d", self.methodManager.directionsShow);
 	if (!self.methodManager.directionsShow) {
-//		NSLog(@"not looking for directions");
+		//		NSLog(@"not looking for directions");
 	}
 	
 	else { // show directions
-//		NSLog(@"WE ARE looking for directionsor %@", self.currentPizzaPlace.name);
+		//		NSLog(@"WE ARE looking for directionsor %@", self.currentPizzaPlace.name);
 		MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.currentPizzaPlace.latitude, self.currentPizzaPlace.longitude) addressDictionary:nil];
 		// create a MKMapItem with coordinates of pizza place
 		MKMapItem *pizzaPlaceLocation = [[MKMapItem alloc]initWithPlacemark:placemark];
@@ -683,13 +684,13 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 				case 0:
 					//					NSLog(@"count is 0 - set bike");
 					//					customPinView.image = [UIImage imageNamed:@"animatedBike29.jpg"];
-					customPinView.image = [UIImage imageNamed:@"MCQMapBIKE29.png"];
+					customPinView.image = [UIImage imageNamed:@"skateBoardAlpha30.png"];
 					customPinView.centerOffset = CGPointMake(0,-customPinView.frame.size.height*0.5);
 					countMapKit +=1;
 					break;
 				case 1:
 					//					NSLog(@"Count is 1 - set board");
-					customPinView.image = [UIImage imageNamed:@"skateBoardAlpha30.png"];
+					customPinView.image = [UIImage imageNamed:@"MCQMapBIKE29.png"];
 					countMapKit +=1;
 					break;
 				case 2:
@@ -706,7 +707,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			customPinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		}
 		else{
-			customPinView.image = [UIImage imageNamed:@"MCQMapSLICE29.png"];
+			customPinView.image = [UIImage imageNamed:@"MCQMapSLICE.png"];
 			customPinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		}
 		//			customPinView.animatesDrop = NO;
@@ -744,7 +745,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		annotationView.frame = CGRectMake(annotationView.frame.origin.x, annotationView.frame.origin.y - self.view.frame.size.height, annotationView.frame.size.width, annotationView.frame.size.height);
 		
 		// Animate drop
-		[UIView animateWithDuration:2.5 delay:0.4*[views indexOfObject:annotationView] options: UIViewAnimationOptionCurveLinear animations:^{
+		[UIView animateWithDuration:1.75 delay:0.4*[views indexOfObject:annotationView] options: UIViewAnimationOptionCurveLinear animations:^{
 			
 			annotationView.frame = endFrame;
 			
@@ -898,12 +899,11 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			// enter audio BUMMMMMMMERRRRR
 		}
 	}
-#pragma mark 4 - Add New (HOLD)
+#pragma mark 4 - Add New (HOLD Screen)
 	// 4 // (hold gesture) add pizza OR set current
 	else if ([alertView.title isEqualToString:@"ADD NEW PLACE"]) {
 		if (buttonIndex == 1) {
 			//			NSLog(@"Add new pizzaPlace to this location"); // add
-			// create a method to use self.
 			[self.tabBarController setSelectedIndex:ADDPAGE];
 		}
 		else if (buttonIndex == 2)		{
@@ -923,9 +923,14 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		}
 		else { //cancel
 			NSLog(@"Selected cancel - remove the annotation just added");
+			for (id annotation in self.mapView.annotations)
+			{
+				if ([[annotation title] isEqualToString:@"You Found Me"])
+					[self.mapView removeAnnotation:annotation];
+			}
 		}
 	}
-#pragma mark 4 - Add New (Current Location)
+#pragma mark 5 - Add New (Selected Current Location)
 	// 5 // (current location tapped) add pizza OR open progile
 	else if ([alertView.title isEqualToString:@"ADD A NEW PLACE"]) {
 		if (buttonIndex == 1) {
@@ -933,7 +938,17 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			[self.tabBarController setSelectedIndex:ADDPAGE];
 		}
 		else if (buttonIndex == 2)		{
-			NSLog(@"OPEN PROFILE PAGE"); // current location
+			//			NSLog(@"OPEN FEEDBACK PAGE"); // current location
+			UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"feedbackPage"];
+			UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Profile Page Coming Soon"
+																  message:@"Leave feedback in the mean time"
+																 delegate:nil
+														cancelButtonTitle:@"OK"
+														otherButtonTitles: nil];
+			
+			[myAlertView show];
+			self.methodManager.rotation = NO;
+			[self presentViewController:detailViewController animated:YES completion:nil];
 		}
 		else { //cancel
 			NSLog(@"Selected cancel");
@@ -955,7 +970,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 
 // Main initial button press
 -(void)searchButtonPressed:(UIButton *)searchButton {
-//	NSLog(@"searchButtonMapKit was pressed");
+	//	NSLog(@"searchButtonMapKit was pressed");
 	// this should hide the buttons and present the search bar of Pizza Time
 	self.methodManager.searching = YES;
 	[self.methodManager searchBarPresent];
@@ -975,17 +990,43 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 
 -(void)mapButtonPressed:(UIButton *)mapButton {
 	NSLog(@"refresh the mapView here");
-	[self currentLocationButtonPressed];
+	//create a function that removes all annotations please
+	[self removeAllAnnotations];
+	[self.dao fromLocalDataPP];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(parseDone:)
+												 name:@"FinishedLoadingData"
+											   object:nil];
+	
 }
 
--(void)listButtonPressed:(UIButton *)listButton {
+- (void)removeAllAnnotations {
+	id userLocation = [self.mapView userLocation];
+	NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mapView annotations]];
+	if ( userLocation != nil ) {
+		[pins removeObject:userLocation]; // avoid removing user location off the map
+	}
+	
+	[self.mapView removeAnnotations:pins];
+	pins = nil;
+}
+
+- (void)parseDone:(NSNotification *) notification {
+	[self currentLocationButtonPressed];
+	[self createPizzaPins];
+	[[NSNotificationCenter defaultCenter]removeObserver:self name:@"FinishedLoadingData" object:nil];
+	
+}
+
+- (void)listButtonPressed:(UIButton *)listButton {
 	//	NSLog(@"open and present the listView here");
 	[self.tabBarController setSelectedIndex:LISTPAGE];
 }
 
 // Main initial button press
--(void)currentLocationButtonPressed {
-	NSLog(@"Current Location button was pressed");
+- (void)currentLocationButtonPressed {
+	[self.methodManager.locationManager startUpdatingLocation]; // added 2.11.16 unsure if necessary because testing on simulator
+	NSLog(@"Current Location button was pressed \n(LAT = %f)",self.methodManager.locationManager.location.coordinate.latitude);
 	// this should zoom in on current location again, if not found = ESB
 	NSArray *pointsArray = [self.mapView overlays];
 	[self.mapView removeOverlays:pointsArray];
@@ -1049,11 +1090,12 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		//		dropPin.longitude = [NSNumber numberWithDouble:newAddress.longitude];
 		//		[self.mapView addAnnotation:dropPin];
 		
-			MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+		MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
 		[annotation setCoordinate:self.newAddress];
 		[annotation setTitle:@"You Found Me"]; //You can set the subtitle too
 		[annotation setSubtitle:@"Are you my mother?"];
 		[self.mapView addAnnotation:annotation];
+		NSLog(@"%@", annotation);
 		// this will be the two options ken wants
 		NSLog(@"found new PP with lat = %f and long = %f", self.newAddress.latitude, self.newAddress.longitude);
 		//If we keep this, add the values to an array of places, so that it will not only reload next time, it can be added to the dataBase

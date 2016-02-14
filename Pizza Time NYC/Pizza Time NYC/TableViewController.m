@@ -28,13 +28,13 @@ BOOL isRefreshAnimating;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	//	NSLog(@"Table View Controller loaded!");
-	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
-	self.view.backgroundColor = orangeMCQ; // this changes the bar where the buttons are
+//	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
+//	self.view.backgroundColor = orangeMCQ; // this changes the bar where the buttons are
 
 	// instantiate tableView
 	self.tableView.delegate=self;
 	self.tableView.dataSource=self;
-	self.tableView.backgroundColor = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
+//	self.tableView.backgroundColor = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
 	
 	self.methodManager = [MethodManager sharedManager];
 	self.methodManager.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
@@ -51,7 +51,7 @@ BOOL isRefreshAnimating;
 		[self.mapKit sortByDistanceForClosest];
 	}
 	[self createRefreshControl];
-	[self.tableView reloadData];
+//	[self.tableView reloadData]; // removed 2.12.16 unecessary?
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -59,6 +59,7 @@ BOOL isRefreshAnimating;
 	[self.navigationController setNavigationBarHidden:YES];
 	[self.tableView reloadData];
 	//	NSLog(@"realign bools here");
+	self.methodManager.mapPageBool = NO;
 	[self.view setNeedsDisplay];	// i am unsure of why i need this 1.19.16, and still on 1.29
 	[self assignLabels];
 }
@@ -165,8 +166,6 @@ BOOL isRefreshAnimating;
 	if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
-//	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
-	cell.backgroundColor = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
 	// Display pizzaPlace in the table cell
 	PizzaPlace *pizzaPlace = [self.dao.pizzaPlaceArray objectAtIndex:indexPath.row];
 	//	UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
@@ -174,22 +173,41 @@ BOOL isRefreshAnimating;
 	
 	UILabel *nameLabel = (UILabel *)[cell viewWithTag:100];
 	nameLabel.text = [pizzaPlace.name uppercaseString];
-//	nameLabel.textColor = [UIColor redColor];
 	
 	//seperate the address into two lines
 	UILabel *addressLabelTop = (UILabel *)[cell viewWithTag:101];
 	addressLabelTop.text = pizzaPlace.street;
-//	addressLabelTop.textColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0];
 	
 	UILabel *addressLabelBottom = (UILabel *)[cell viewWithTag:102];
 	NSString *secondLineAddress = [pizzaPlace.city stringByAppendingString:[NSString stringWithFormat:@" %ld",(long)pizzaPlace.zip ]];
 	//	NSLog(@"%@", secondLineAddress);
 	addressLabelBottom.text = secondLineAddress;
-//	addressLabelBottom.textColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0];
 	
 	UILabel *distanceLabel = (UILabel *)[cell viewWithTag:103];
 	distanceLabel.text = [NSString stringWithFormat:@"%.2f mi", pizzaPlace.distance];
+
+	UILabel *ratingUpLabel = (UILabel *)[cell viewWithTag:104];
+	ratingUpLabel.text = [NSString stringWithFormat:@"%.0f%%", pizzaPlace.percentageLikes];
 	
+	UILabel *ratingDownLabel = (UILabel *)[cell viewWithTag:105];
+	ratingDownLabel.text = [NSString stringWithFormat:@"%.0f%%", pizzaPlace.percentageDislikes];
+
+	
+	UIButton *rated = (UIButton *)[cell viewWithTag:106];
+//	rated.contentMode = UIViewContentModeScaleToFill;
+//	rated.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+//	rated.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+//rated.imageView.contentMode = UIViewContentModeScaleAspectFit;
+	if (pizzaPlace.rated == RATEDLIKE) {
+		[rated setBackgroundImage:[UIImage imageNamed:@"MCQHeart.png"] forState:UIControlStateNormal];
+	}
+	else if (pizzaPlace.rated == RATEDDISLIKE) {
+		[rated setBackgroundImage:[UIImage imageNamed:@"MCQHeartBroken.png"] forState:UIControlStateNormal];
+	}
+	else { // (self.currentPizzaPlace.rated == RATEDNOT)
+		[rated setBackgroundImage:nil forState:UIControlStateNormal];
+	}
+
 	return cell;
 }
 
@@ -332,8 +350,8 @@ BOOL isRefreshAnimating;
 	self.refreshColorView.alpha = 0.80;
 	
 	// Create the graphic image views
-	self.pizzaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pizza29Alpha.png"]];
-	self.dollarImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarBillAlpha60.png"]];
+	self.pizzaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCQPizzaLoad.png"]];
+	self.dollarImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCQDollarLoad1.png"]];
 	
 	// Add the graphics to the loading view
 	[self.refreshLoadingView addSubview:self.dollarImage];
@@ -363,20 +381,37 @@ BOOL isRefreshAnimating;
 - (void)refresh:(id)sender{ // ??? this needs refreshing haha
 	NSLog(@"begin = %f", self.methodManager.locationManager.location.coordinate.latitude);
 	// -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
-	self.mapKit = self.tabBarController.viewControllers[MAPPAGE];
-	[self.mapKit sortByDistanceForClosest];
-	[self.tableView reloadData];
+	[self.view setUserInteractionEnabled:NO];
 	// This is where you'll make requests to an API, reload data, or process information
-	double delayInSeconds = 3.0;
+	[self.dao fromLocalDataPP]; // this should update the likes
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(parseDone:)
+												 name:@"FinishedLoadingData"
+											   object:nil];
+	/*
+	double delayInSeconds = 5.0;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		[self.mapKit sortByDistanceForClosest];
 		NSLog(@"DONE");
+		[self.tableView reloadData];
 		
 		// When done requesting/reloading/processing invoke endRefreshing, to close the control
 		[self.refreshControl endRefreshing];
 		NSLog(@"after = %f", self.methodManager.locationManager.location.coordinate.latitude);
 	});
 	// -- FINISHED SOMETHING AWESOME, WOO! --
+	 */
+}
+
+- (void) parseDone:(NSNotification *) notification {
+	self.mapKit = self.tabBarController.viewControllers[MAPPAGE];
+	[self.mapKit sortByDistanceForClosest];
+	[self createPizzaCells];
+	[self.tableView reloadData];
+	[self.refreshControl endRefreshing];
+	[[NSNotificationCenter defaultCenter]removeObserver:self name:@"FinishedLoadingData" object:nil];
+	[self.view setUserInteractionEnabled:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -465,7 +500,7 @@ BOOL isRefreshAnimating;
 						options:UIViewAnimationOptionCurveLinear
 					 animations:^{
 						 // Rotate the spinner by M_PI_2 = PI/2 = 90 degrees
-						 [self.dollarImage setTransform:CGAffineTransformRotate(self.dollarImage.transform, M_PI_2)];
+						 [self.dollarImage setTransform:CGAffineTransformRotate(self.dollarImage.transform, M_PI)];
        
 						 // Change the background color
 						 self.refreshColorView.backgroundColor = [colorArray objectAtIndex:colorIndex];
