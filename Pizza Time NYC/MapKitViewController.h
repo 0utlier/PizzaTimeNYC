@@ -2,11 +2,10 @@
 //  MapKitViewController.h
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 12/23/15.
+//  Created by JD Leonard on 12/23/15.
 //  Copyright © 2015 TTT. All rights reserved.
 //
 
-#import "ViewController.h"
 #include <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -16,7 +15,7 @@
 #import "MethodManager.h"
 
 
-@interface MapKitViewController : ViewController <MKMapViewDelegate, UISearchBarDelegate, UIGestureRecognizerDelegate>
+@interface MapKitViewController : UIViewController <MKMapViewDelegate, UISearchBarDelegate, UIGestureRecognizerDelegate>
 
 // here is the map
 @property (nonatomic) MKMapView *mapView;

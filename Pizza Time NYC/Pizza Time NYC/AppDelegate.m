@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 12/23/15.
+//  Created by JD Leonard on 12/23/15.
 //  Copyright © 2015 TTT. All rights reserved.
 //
 
@@ -38,14 +38,17 @@
 	[[PFUser currentUser] saveInBackground];
 	[PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
 	
-	MethodManager *methodManager = [[MethodManager alloc]init];
+	MethodManager *methodManager = [MethodManager sharedManager];
 	[methodManager createPlayer];
+	
 	return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 	// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+//	[[NSNotificationCenter defaultCenter] removeObserver: self];
+//	[[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -57,7 +60,7 @@
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)applicationDidBecomeActive:(UIApplication *)application { // called after multi tasking and returning to the app
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

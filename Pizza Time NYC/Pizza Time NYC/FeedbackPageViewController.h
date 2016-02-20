@@ -2,7 +2,7 @@
 //  FeedbackPageViewController.h
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 2/2/16.
+//  Created by JD Leonard on 2/2/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 

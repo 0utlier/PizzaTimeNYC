@@ -8,10 +8,6 @@
 
 #import "InfoPage.h"
 #import "MethodManager.h"
-//#import "FLAnimatedImage.h"
-//#import "FLAnimatedImageView.h"
-#import <AVFoundation/AVFoundation.h>
-#import <AVKit/AVKit.h>
 
 @interface InfoPage ()
 
@@ -36,7 +32,7 @@
 }
 
 - (void)assignGif {
-	self.methodManager = [MethodManager sharedManager]; // not necessary, unless move gif to method manager
+//	self.methodManager = [MethodManager sharedManager]; // not necessary, unless move gif to method manager
 
 	// animated images implement
 	NSArray *imageNames = @[@"KenPizzaMan1.png", @"KenPizzaMan3.png", @"KenPizzaMan5.png", @"KenPizzaMan9.png", @"KenPizzaMan11.png", @"KenPizzaMan13.png", @"KenPizzaMan15.png", @"KenPizzaMan19.png"];
@@ -48,7 +44,7 @@
 	
 	// Normal Animation
 	self.imageView.animationImages = images;
-	self.imageView.animationDuration = 0.6;
+	self.imageView.animationDuration = 0.8;
 	
 	[self.imageView startAnimating];
 }

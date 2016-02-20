@@ -2,17 +2,16 @@
 //  MethodManager.h
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 1/12/16.
+//  Created by JD Leonard on 1/12/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#import <MapKit/MapKit.h>
-#import <MediaPlayer/MediaPlayer.h> 
+#import <CoreLocation/CoreLocation.h>
+#import <MediaPlayer/MediaPlayer.h>
 #import "AppDelegate.h"
-@class MapKitViewController;
 @class ViewController;
 
 @interface MethodManager : NSObject <CLLocationManagerDelegate>
@@ -36,6 +35,7 @@
 @property (nonatomic)BOOL closestPP; // use to find closest or not // (NO = 0 = not closest)
 @property (nonatomic)BOOL rotation; // use to disable rotation // (NO = 0 = no rotation)
 @property (nonatomic)BOOL mapPageBool; // use to remember where to go back // (NO = 0 = not map)
+@property (nonatomic)BOOL orientationSet; // use to log if orientation has been set // (NO = 0 = not map)
 
 /*
  searching 1.20.16
@@ -90,6 +90,8 @@
 @property (nonatomic, strong) UIButton *speakerButton;
 @property (nonatomic, strong) UIImageView *mapButton;
 @property (nonatomic, strong) UIImageView *listButton;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageViewImage;
 
 @property (nonatomic, strong) UIWindow *window;
 //@property (nonatomic, strong) UIView *topView;
@@ -97,7 +99,6 @@
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, retain) CLLocation *empireStateBuilding;
 @property CGSize statusBarSize;
-@property int gifCount;
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) NSString *buildNumber;
@@ -118,6 +119,8 @@
 -(UIButton *)assignSpeakerButton;
 //-(UIButton *)assignSearchButton;
 
+-(UIImageView *)assignDancingGif;
+-(UIImageView *)assignSadPizza;
 
 -(void)removeBothButtons;
 

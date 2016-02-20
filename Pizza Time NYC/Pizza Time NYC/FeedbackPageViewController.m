@@ -2,7 +2,7 @@
 //  FeedbackPageViewController.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 2/2/16.
+//  Created by JD Leonard on 2/2/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 
@@ -10,7 +10,6 @@
 #import <AudioToolbox/AudioServices.h>
 #import "MethodManager.h"
 #import "DAO.h"
-//#import <Parse/Parse.h>
 
 @interface FeedbackPageViewController ()
 @property (strong, nonatomic) MethodManager *methodManager;

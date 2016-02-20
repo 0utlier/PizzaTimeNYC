@@ -7,19 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		990B5EC11C4CB9B6000BF1B5 /* MCQMapSLICEb.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EBF1C4CB9B6000BF1B5 /* MCQMapSLICEb.png */; };
 		990B5EC21C4CB9B6000BF1B5 /* MCQMapBIKE.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EC01C4CB9B6000BF1B5 /* MCQMapBIKE.png */; };
-		990B5EC51C4CC003000BF1B5 /* MCQMapSLICE29b.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EC31C4CC003000BF1B5 /* MCQMapSLICE29b.png */; };
 		990B5EC61C4CC003000BF1B5 /* MCQMapBIKE29.png in Resources */ = {isa = PBXBuildFile; fileRef = 990B5EC41C4CC003000BF1B5 /* MCQMapBIKE29.png */; };
 		99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 99260DFE1C2DD36800EFB125 /* PizzaPlace.m */; };
 		99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99260E031C2DD4DD00EFB125 /* Images.xcassets */; };
 		99447E3A1C31B00200260B8E /* InfoPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 99447E391C31B00200260B8E /* InfoPage.m */; };
-		998B96861C32052300DC8EB7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 998B96851C32052300DC8EB7 /* Reachability.m */; };
 		99D6297E1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */; };
 		AA324B3D1C5FFB51001739C3 /* MCQaddADD.png in Resources */ = {isa = PBXBuildFile; fileRef = AA324B3C1C5FFB51001739C3 /* MCQaddADD.png */; };
 		AA324B411C600566001739C3 /* pizzaCamera2.png in Resources */ = {isa = PBXBuildFile; fileRef = AA324B401C600566001739C3 /* pizzaCamera2.png */; };
 		AA3E83B41C456E0300C12D35 /* MethodManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3E83B31C456E0300C12D35 /* MethodManager.m */; };
 		AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA4B39B31C3DD8750086DB81 /* Main.storyboard */; };
+		AA5EBE691C750BAC00629035 /* adventureTimePizza.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA5EBE631C74EA8800629035 /* adventureTimePizza.m4a */; };
+		AA5EBE6A1C750BAC00629035 /* ATHFPizzaTime.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA5EBE641C74EA8800629035 /* ATHFPizzaTime.m4a */; };
+		AA5EBE6B1C750BAC00629035 /* cowabunga.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA5EBE651C74EA8800629035 /* cowabunga.m4a */; };
+		AA5EBE6C1C750BAC00629035 /* excellent.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA5EBE661C74EA8800629035 /* excellent.m4a */; };
+		AA5EBE6D1C750BAC00629035 /* krustyKrabPizza.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA5EBE671C74EA8800629035 /* krustyKrabPizza.m4a */; };
+		AA5EBE6E1C750BAC00629035 /* rickBestPizza.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA5EBE681C74EA8800629035 /* rickBestPizza.m4a */; };
 		AA71E9091C2B32E400FA48F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9081C2B32E400FA48F6 /* main.m */; };
 		AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90B1C2B32E500FA48F6 /* AppDelegate.m */; };
 		AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E90E1C2B32E500FA48F6 /* ViewController.m */; };
@@ -32,14 +35,8 @@
 		AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */; };
 		AA84FCC31C5BF7C8000D9808 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC11C5BF7C8000D9808 /* Bolts.framework */; };
 		AA84FCC41C5BF7C8000D9808 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC21C5BF7C8000D9808 /* Parse.framework */; };
-		AA888EFC1C67E72100B3E6E2 /* MCQSliceLEFTtb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF61C67E72100B3E6E2 /* MCQSliceLEFTtb.png */; };
-		AA888EFD1C67E72100B3E6E2 /* MCQSliceBOTTOMb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF71C67E72100B3E6E2 /* MCQSliceBOTTOMb.png */; };
-		AA888EFE1C67E72100B3E6E2 /* MCQSliceRIGHTtb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF81C67E72100B3E6E2 /* MCQSliceRIGHTtb.png */; };
-		AA888EFF1C67E72100B3E6E2 /* MCQSliceRIGHTbb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EF91C67E72100B3E6E2 /* MCQSliceRIGHTbb.png */; };
-		AA888F001C67E72100B3E6E2 /* MCQSliceLEFTbb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EFA1C67E72100B3E6E2 /* MCQSliceLEFTbb.png */; };
-		AA888F011C67E72100B3E6E2 /* MCQSliceTOPb.png in Resources */ = {isa = PBXBuildFile; fileRef = AA888EFB1C67E72100B3E6E2 /* MCQSliceTOPb.png */; };
 		AA888F031C67E8C800B3E6E2 /* GWPIZZA.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AA888F021C67E8C800B3E6E2 /* GWPIZZA.jpg */; };
-		AA8E228E1C41B2BF0018ABE8 /* OptionsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8E228D1C41B2BF0018ABE8 /* OptionsPage.m */; };
+		AA8D216B1C77EAA200EE46A5 /* TMReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8D21691C77EAA200EE46A5 /* TMReachability.m */; };
 		AA92E1401C5D1A5F000688F7 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC11C5BF7C8000D9808 /* Bolts.framework */; };
 		AA92E1411C5D1A5F000688F7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC21C5BF7C8000D9808 /* Parse.framework */; };
 		AA92E1421C5D1A88000688F7 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA84FCC11C5BF7C8000D9808 /* Bolts.framework */; };
@@ -58,7 +55,6 @@
 		AA92E17D1C5D7B39000688F7 /* MCQppiBACK.png in Resources */ = {isa = PBXBuildFile; fileRef = AA92E17A1C5D7B39000688F7 /* MCQppiBACK.png */; };
 		AAA7C1EF1C40315300EE8B43 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */; };
 		AAA7C1F11C40326E00EE8B43 /* pizzaMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */; };
-		AAA7CCBF1C6F9B3F001DA758 /* KenPizzaMan.gif in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CCBE1C6F9B3F001DA758 /* KenPizzaMan.gif */; };
 		AAA7CCDD1C6FA501001DA758 /* KenPizzaMan1.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CCD51C6FA501001DA758 /* KenPizzaMan1.png */; };
 		AAA7CCDE1C6FA501001DA758 /* KenPizzaMan3.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CCD61C6FA501001DA758 /* KenPizzaMan3.png */; };
 		AAA7CCDF1C6FA501001DA758 /* KenPizzaMan5.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CCD71C6FA501001DA758 /* KenPizzaMan5.png */; };
@@ -79,34 +75,18 @@
 		AAA7CCFB1C6FD26D001DA758 /* MCQSliceGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CCF81C6FD26D001DA758 /* MCQSliceGreen.png */; };
 		AAA7CCFC1C6FD26D001DA758 /* MCQMapSLICE29.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CCF91C6FD26D001DA758 /* MCQMapSLICE29.png */; };
 		AAA7CCFD1C6FD26D001DA758 /* MCQSliceRed.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CCFA1C6FD26D001DA758 /* MCQSliceRed.png */; };
-		AAA7CD041C6FDF4D001DA758 /* MCQDollarLoad.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CD021C6FDF4D001DA758 /* MCQDollarLoad.png */; };
 		AAA7CD051C6FDF4D001DA758 /* MCQPizzaLoad.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CD031C6FDF4D001DA758 /* MCQPizzaLoad.png */; };
-		AAA7CD071C6FE27E001DA758 /* MCQDollarLoad1.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CD061C6FE27E001DA758 /* MCQDollarLoad1.png */; };
+		AAA7CD071C6FE27E001DA758 /* MCQDollarLoad.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CD061C6FE27E001DA758 /* MCQDollarLoad.png */; };
 		AAA7CD091C6FEE4A001DA758 /* MCQMapSLICElarge.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CD081C6FEE4A001DA758 /* MCQMapSLICElarge.png */; };
 		AAA7CD0B1C6FEF8A001DA758 /* MCQMapSLICE.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA7CD0A1C6FEF8A001DA758 /* MCQMapSLICE.png */; };
 		AAAAA15B1C502289009EC685 /* skateBoardAlpha30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAAA15A1C502289009EC685 /* skateBoardAlpha30.png */; };
 		AAAAA15D1C50235C009EC685 /* walkAlpha30.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAAA15C1C50235C009EC685 /* walkAlpha30.png */; };
-		AAAC939F1C499ECE00D3AC6B /* MCQTabBarLISTa.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC939D1C499ECE00D3AC6B /* MCQTabBarLISTa.png */; };
-		AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAPa.png in Resources */ = {isa = PBXBuildFile; fileRef = AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAPa.png */; };
 		AAB11A701C51ABA50058BC9C /* AddNewPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */; };
 		AAB54B8F1C5ABDA9003A7C59 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB54B8E1C5ABDA9003A7C59 /* libsqlite3.0.tbd */; };
 		AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */; };
-		AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */; };
 		AAB67BFB1C4EA7320087F151 /* dollarBillAlpha60.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */; };
-		AAB67C501C4EED540087F151 /* MCQSliceLEFTb2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb2.png */; };
-		AAB67C511C4EED540087F151 /* MCQSliceRIGHTb2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb2.png */; };
-		AAB67C521C4EED540087F151 /* MCQSliceLEFTt2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt2.png */; };
-		AAB67C531C4EED540087F151 /* MCQSliceBOTTOM2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM2.png */; };
-		AAB67C541C4EED540087F151 /* MCQSliceRIGHTt2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt2.png */; };
-		AAB67C551C4EED540087F151 /* MCQSliceTOP2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */; };
-		AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGOb.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGOb.png */; };
-		AAB98D671C6941720004FA9E /* MCQMapSLICE180Green.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB98D661C6941720004FA9E /* MCQMapSLICE180Green.png */; };
-		AAB98D691C6941FD0004FA9E /* MCQMapSLICE180Red.png in Resources */ = {isa = PBXBuildFile; fileRef = AAB98D681C6941FD0004FA9E /* MCQMapSLICE180Red.png */; };
+		AAC11D121C726A67001D11FA /* KenSadPizzaManAlpha.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC11D111C726A67001D11FA /* KenSadPizzaManAlpha.png */; };
 		AAC9111F1C6BF398002FA301 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = AAC9111E1C6BF398002FA301 /* MBProgressHUD.m */; };
-		AAC9112D1C6C0737002FA301 /* fullPizza2.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC911291C6C0737002FA301 /* fullPizza2.png */; };
-		AAC9112E1C6C0737002FA301 /* fullPizza1.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC9112A1C6C0737002FA301 /* fullPizza1.png */; };
-		AAC9112F1C6C0737002FA301 /* fullPizza4.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC9112B1C6C0737002FA301 /* fullPizza4.png */; };
-		AAC911301C6C0737002FA301 /* fullPizza3.png in Resources */ = {isa = PBXBuildFile; fileRef = AAC9112C1C6C0737002FA301 /* fullPizza3.png */; };
 		AACB1BC81C3B21890069E947 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AACB1BC71C3B21890069E947 /* TableViewController.m */; };
 		AACB1BCC1C3B28F30069E947 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = AACB1BCB1C3B28F30069E947 /* DAO.m */; };
 		AACC50821C5BEADE008F4B59 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACC50811C5BEADE008F4B59 /* CFNetwork.framework */; };
@@ -119,14 +99,10 @@
 		AACC50901C5BEB12008F4B59 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACC508F1C5BEB12008F4B59 /* SystemConfiguration.framework */; };
 		AACC50921C5BEB1D008F4B59 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AACC50911C5BEB1D008F4B59 /* libz.tbd */; };
 		AACC50941C5BEB2D008F4B59 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AACC50931C5BEB2D008F4B59 /* libsqlite3.tbd */; };
-		AACD36251C6D2F5C002AF9DC /* fullPizza5.png in Resources */ = {isa = PBXBuildFile; fileRef = AACD36221C6D2F5C002AF9DC /* fullPizza5.png */; };
-		AACD36261C6D2F5C002AF9DC /* fullPizza6.png in Resources */ = {isa = PBXBuildFile; fileRef = AACD36231C6D2F5C002AF9DC /* fullPizza6.png */; };
-		AACD36271C6D2F5C002AF9DC /* fullPizza7.png in Resources */ = {isa = PBXBuildFile; fileRef = AACD36241C6D2F5C002AF9DC /* fullPizza7.png */; };
 		AACD362D1C6D5379002AF9DC /* pizzaHappyRate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACD362B1C6D5379002AF9DC /* pizzaHappyRate.jpg */; };
 		AACD362E1C6D5379002AF9DC /* pizzaSadRate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACD362C1C6D5379002AF9DC /* pizzaSadRate.jpg */; };
 		AACDE93F1C3D8DDD004EF963 /* skateboard.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = AACDE93E1C3D8DDD004EF963 /* skateboard.jpeg */; };
 		AACDE94D1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AACDE94C1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.m */; };
-		AADF84EA1C66682200AD1B5D /* KenSadPizzaMan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AADF84E91C66682200AD1B5D /* KenSadPizzaMan.jpg */; };
 		AAE26FDC1C611CD800485813 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE26FDB1C611CD800485813 /* GLKit.framework */; };
 		AAE26FE31C612CF600485813 /* FeedbackPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE26FE21C612CF600485813 /* FeedbackPageViewController.m */; };
 		AAE26FE61C614DFA00485813 /* annoyedRick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AAE26FE51C614DFA00485813 /* annoyedRick.mp3 */; };
@@ -152,23 +128,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		990B5EBF1C4CB9B6000BF1B5 /* MCQMapSLICEb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICEb.png; sourceTree = "<group>"; };
 		990B5EC01C4CB9B6000BF1B5 /* MCQMapBIKE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapBIKE.png; sourceTree = "<group>"; };
-		990B5EC31C4CC003000BF1B5 /* MCQMapSLICE29b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICE29b.png; sourceTree = "<group>"; };
 		990B5EC41C4CC003000BF1B5 /* MCQMapBIKE29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapBIKE29.png; sourceTree = "<group>"; };
 		99260DFD1C2DD36800EFB125 /* PizzaPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PizzaPlace.h; path = "Pizza Time NYC/PizzaPlace.h"; sourceTree = "<group>"; };
 		99260DFE1C2DD36800EFB125 /* PizzaPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PizzaPlace.m; path = "Pizza Time NYC/PizzaPlace.m"; sourceTree = "<group>"; };
 		99260E031C2DD4DD00EFB125 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		99447E381C31B00200260B8E /* InfoPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoPage.h; path = "Pizza Time NYC/InfoPage.h"; sourceTree = "<group>"; };
 		99447E391C31B00200260B8E /* InfoPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoPage.m; path = "Pizza Time NYC/InfoPage.m"; sourceTree = "<group>"; };
-		998B96841C32052300DC8EB7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		998B96851C32052300DC8EB7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TwoBrosPizzaLogo.jpg; sourceTree = "<group>"; };
 		AA324B3C1C5FFB51001739C3 /* MCQaddADD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQaddADD.png; sourceTree = "<group>"; };
 		AA324B401C600566001739C3 /* pizzaCamera2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaCamera2.png; sourceTree = "<group>"; };
 		AA3E83B21C456E0300C12D35 /* MethodManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodManager.h; sourceTree = "<group>"; };
 		AA3E83B31C456E0300C12D35 /* MethodManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodManager.m; sourceTree = "<group>"; };
 		AA4B39B41C3DD8750086DB81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AA5EBE631C74EA8800629035 /* adventureTimePizza.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = adventureTimePizza.m4a; sourceTree = "<group>"; };
+		AA5EBE641C74EA8800629035 /* ATHFPizzaTime.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = ATHFPizzaTime.m4a; sourceTree = "<group>"; };
+		AA5EBE651C74EA8800629035 /* cowabunga.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cowabunga.m4a; sourceTree = "<group>"; };
+		AA5EBE661C74EA8800629035 /* excellent.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = excellent.m4a; sourceTree = "<group>"; };
+		AA5EBE671C74EA8800629035 /* krustyKrabPizza.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = krustyKrabPizza.m4a; sourceTree = "<group>"; };
+		AA5EBE681C74EA8800629035 /* rickBestPizza.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = rickBestPizza.m4a; sourceTree = "<group>"; };
 		AA71E9041C2B32E400FA48F6 /* Pizza Time NYC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pizza Time NYC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA71E9081C2B32E400FA48F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AA71E90A1C2B32E500FA48F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -190,16 +168,9 @@
 		AA71E9401C2B48B800FA48F6 /* MapKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapKitViewController.m; sourceTree = "<group>"; };
 		AA84FCC11C5BF7C8000D9808 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		AA84FCC21C5BF7C8000D9808 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		AA888EF51C67E46900B3E6E2 /* adventureTimePizza.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = adventureTimePizza.m4a; sourceTree = "<group>"; };
-		AA888EF61C67E72100B3E6E2 /* MCQSliceLEFTtb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTtb.png; sourceTree = "<group>"; };
-		AA888EF71C67E72100B3E6E2 /* MCQSliceBOTTOMb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceBOTTOMb.png; sourceTree = "<group>"; };
-		AA888EF81C67E72100B3E6E2 /* MCQSliceRIGHTtb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTtb.png; sourceTree = "<group>"; };
-		AA888EF91C67E72100B3E6E2 /* MCQSliceRIGHTbb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTbb.png; sourceTree = "<group>"; };
-		AA888EFA1C67E72100B3E6E2 /* MCQSliceLEFTbb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTbb.png; sourceTree = "<group>"; };
-		AA888EFB1C67E72100B3E6E2 /* MCQSliceTOPb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceTOPb.png; sourceTree = "<group>"; };
 		AA888F021C67E8C800B3E6E2 /* GWPIZZA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GWPIZZA.jpg; sourceTree = "<group>"; };
-		AA8E228C1C41B2BF0018ABE8 /* OptionsPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsPage.h; sourceTree = "<group>"; };
-		AA8E228D1C41B2BF0018ABE8 /* OptionsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsPage.m; sourceTree = "<group>"; };
+		AA8D21691C77EAA200EE46A5 /* TMReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMReachability.m; sourceTree = "<group>"; };
+		AA8D216A1C77EAA200EE46A5 /* TMReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMReachability.h; sourceTree = "<group>"; };
 		AA92E1441C5D3127000688F7 /* GIFPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIFPage.h; sourceTree = "<group>"; };
 		AA92E1451C5D3127000688F7 /* GIFPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GIFPage.m; sourceTree = "<group>"; };
 		AA92E1481C5D4257000688F7 /* MCQppiGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQppiGO.png; sourceTree = "<group>"; };
@@ -218,7 +189,6 @@
 		AA92E17A1C5D7B39000688F7 /* MCQppiBACK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQppiBACK.png; sourceTree = "<group>"; };
 		AAA7C1EE1C40315300EE8B43 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pizzaMusic.mp3; sourceTree = "<group>"; };
-		AAA7CCBE1C6F9B3F001DA758 /* KenPizzaMan.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = KenPizzaMan.gif; sourceTree = "<group>"; };
 		AAA7CCD51C6FA501001DA758 /* KenPizzaMan1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KenPizzaMan1.png; sourceTree = "<group>"; };
 		AAA7CCD61C6FA501001DA758 /* KenPizzaMan3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KenPizzaMan3.png; sourceTree = "<group>"; };
 		AAA7CCD71C6FA501001DA758 /* KenPizzaMan5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KenPizzaMan5.png; sourceTree = "<group>"; };
@@ -239,36 +209,20 @@
 		AAA7CCF81C6FD26D001DA758 /* MCQSliceGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceGreen.png; sourceTree = "<group>"; };
 		AAA7CCF91C6FD26D001DA758 /* MCQMapSLICE29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICE29.png; sourceTree = "<group>"; };
 		AAA7CCFA1C6FD26D001DA758 /* MCQSliceRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRed.png; sourceTree = "<group>"; };
-		AAA7CD021C6FDF4D001DA758 /* MCQDollarLoad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQDollarLoad.png; sourceTree = "<group>"; };
 		AAA7CD031C6FDF4D001DA758 /* MCQPizzaLoad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQPizzaLoad.png; sourceTree = "<group>"; };
-		AAA7CD061C6FE27E001DA758 /* MCQDollarLoad1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQDollarLoad1.png; sourceTree = "<group>"; };
+		AAA7CD061C6FE27E001DA758 /* MCQDollarLoad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQDollarLoad.png; sourceTree = "<group>"; };
 		AAA7CD081C6FEE4A001DA758 /* MCQMapSLICElarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICElarge.png; sourceTree = "<group>"; };
 		AAA7CD0A1C6FEF8A001DA758 /* MCQMapSLICE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICE.png; sourceTree = "<group>"; };
 		AAAAA15A1C502289009EC685 /* skateBoardAlpha30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skateBoardAlpha30.png; sourceTree = "<group>"; };
 		AAAAA15C1C50235C009EC685 /* walkAlpha30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walkAlpha30.png; sourceTree = "<group>"; };
-		AAAC939D1C499ECE00D3AC6B /* MCQTabBarLISTa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQTabBarLISTa.png; sourceTree = "<group>"; };
-		AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAPa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQTabBarMAPa.png; sourceTree = "<group>"; };
 		AAB11A6E1C51ABA50058BC9C /* AddNewPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewPlace.h; sourceTree = "<group>"; };
 		AAB11A6F1C51ABA50058BC9C /* AddNewPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewPlace.m; sourceTree = "<group>"; };
 		AAB54B8E1C5ABDA9003A7C59 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dollarBill.jpg; sourceTree = "<group>"; };
-		AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizza29Alpha.png; sourceTree = "<group>"; };
 		AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dollarBillAlpha60.png; sourceTree = "<group>"; };
-		AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTb2.png; sourceTree = "<group>"; };
-		AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTb2.png; sourceTree = "<group>"; };
-		AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceLEFTt2.png; sourceTree = "<group>"; };
-		AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceBOTTOM2.png; sourceTree = "<group>"; };
-		AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceRIGHTt2.png; sourceTree = "<group>"; };
-		AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQSliceTOP2.png; sourceTree = "<group>"; };
-		AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGOb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQpizzaTimeLOGOb.png; sourceTree = "<group>"; };
-		AAB98D661C6941720004FA9E /* MCQMapSLICE180Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICE180Green.png; sourceTree = "<group>"; };
-		AAB98D681C6941FD0004FA9E /* MCQMapSLICE180Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MCQMapSLICE180Red.png; sourceTree = "<group>"; };
+		AAC11D111C726A67001D11FA /* KenSadPizzaManAlpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KenSadPizzaManAlpha.png; sourceTree = "<group>"; };
 		AAC9111D1C6BF398002FA301 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		AAC9111E1C6BF398002FA301 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		AAC911291C6C0737002FA301 /* fullPizza2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullPizza2.png; sourceTree = "<group>"; };
-		AAC9112A1C6C0737002FA301 /* fullPizza1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullPizza1.png; sourceTree = "<group>"; };
-		AAC9112B1C6C0737002FA301 /* fullPizza4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullPizza4.png; sourceTree = "<group>"; };
-		AAC9112C1C6C0737002FA301 /* fullPizza3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullPizza3.png; sourceTree = "<group>"; };
 		AACB1BC61C3B21890069E947 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		AACB1BC71C3B21890069E947 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		AACB1BCA1C3B28F30069E947 /* DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAO.h; sourceTree = "<group>"; };
@@ -283,15 +237,11 @@
 		AACC508F1C5BEB12008F4B59 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AACC50911C5BEB1D008F4B59 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AACC50931C5BEB2D008F4B59 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		AACD36221C6D2F5C002AF9DC /* fullPizza5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullPizza5.png; sourceTree = "<group>"; };
-		AACD36231C6D2F5C002AF9DC /* fullPizza6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullPizza6.png; sourceTree = "<group>"; };
-		AACD36241C6D2F5C002AF9DC /* fullPizza7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullPizza7.png; sourceTree = "<group>"; };
 		AACD362B1C6D5379002AF9DC /* pizzaHappyRate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pizzaHappyRate.jpg; sourceTree = "<group>"; };
 		AACD362C1C6D5379002AF9DC /* pizzaSadRate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pizzaSadRate.jpg; sourceTree = "<group>"; };
 		AACDE93E1C3D8DDD004EF963 /* skateboard.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = skateboard.jpeg; sourceTree = "<group>"; };
 		AACDE94B1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PizzaPlaceInfoViewController.h; sourceTree = "<group>"; };
 		AACDE94C1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PizzaPlaceInfoViewController.m; sourceTree = "<group>"; };
-		AADF84E91C66682200AD1B5D /* KenSadPizzaMan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = KenSadPizzaMan.jpg; sourceTree = "<group>"; };
 		AAE26FDB1C611CD800485813 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		AAE26FE11C612CF600485813 /* FeedbackPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackPageViewController.h; path = "Pizza Time NYC/FeedbackPageViewController.h"; sourceTree = "<group>"; };
 		AAE26FE21C612CF600485813 /* FeedbackPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackPageViewController.m; path = "Pizza Time NYC/FeedbackPageViewController.m"; sourceTree = "<group>"; };
@@ -307,7 +257,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAE26FDC1C611CD800485813 /* GLKit.framework in Frameworks */,
 				AAB54B8F1C5ABDA9003A7C59 /* libsqlite3.0.tbd in Frameworks */,
 				AACC50941C5BEB2D008F4B59 /* libsqlite3.tbd in Frameworks */,
 				AACC50921C5BEB1D008F4B59 /* libz.tbd in Frameworks */,
@@ -317,6 +266,7 @@
 				AACC50821C5BEADE008F4B59 /* CFNetwork.framework in Frameworks */,
 				AACC50861C5BEAEC008F4B59 /* CoreGraphics.framework in Frameworks */,
 				AACC50881C5BEAF2008F4B59 /* CoreLocation.framework in Frameworks */,
+				AAE26FDC1C611CD800485813 /* GLKit.framework in Frameworks */,
 				AA71E93E1C2B486A00FA48F6 /* MapKit.framework in Frameworks */,
 				AA84FCC41C5BF7C8000D9808 /* Parse.framework in Frameworks */,
 				AACC508A1C5BEAFC008F4B59 /* QuartzCore.framework in Frameworks */,
@@ -367,16 +317,6 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		998B96871C32052900DC8EB7 /* Apple Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				998B96841C32052300DC8EB7 /* Reachability.h */,
-				998B96851C32052300DC8EB7 /* Reachability.m */,
-			);
-			name = "Apple Reachability";
-			path = ..;
-			sourceTree = "<group>";
-		};
 		AA3E83B51C456E1C00C12D35 /* MethodManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -384,6 +324,17 @@
 				AA3E83B31C456E0300C12D35 /* MethodManager.m */,
 			);
 			name = MethodManager;
+			sourceTree = "<group>";
+		};
+		AA67CA061C7523F00087A775 /* Cocoa Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AA8D216C1C77EAA900EE46A5 /* TMReachability */,
+				AAC911201C6BF39F002FA301 /* MBProgressHUD */,
+				AADCD1B51C63B87E00E0B0C3 /* FLAnimatedImage */,
+				AADCD1B61C63B88500E0B0C3 /* FLAnimatedImageView */,
+			);
+			name = "Cocoa Frameworks";
 			sourceTree = "<group>";
 		};
 		AA71E8FB1C2B32E400FA48F6 = {
@@ -409,9 +360,6 @@
 		AA71E9061C2B32E400FA48F6 /* Pizza Time NYC */ = {
 			isa = PBXGroup;
 			children = (
-				AAC911201C6BF39F002FA301 /* MBProgressHUD */,
-				AADCD1B51C63B87E00E0B0C3 /* FLAnimatedImage */,
-				AADCD1B61C63B88500E0B0C3 /* FLAnimatedImageView */,
 				AAE26FE41C612CFB00485813 /* FeedbackPage */,
 				AA92E1471C5D312C000688F7 /* GIFPage */,
 				AACB1BCD1C3B28FB0069E947 /* DAO */,
@@ -421,19 +369,18 @@
 				AA71E9421C2B48BC00FA48F6 /* MapKitViewController */,
 				99260E001C2DD37900EFB125 /* PizzaPlace */,
 				99447E3B1C31B00D00260B8E /* InfoPage */,
-				998B96871C32052900DC8EB7 /* Apple Reachability */,
 				AACDE94E1C3DAB54004EF963 /* PizzaPlaceInfo */,
-				AA8E228F1C41B30A0018ABE8 /* OptionsPage */,
 				AA3E83B51C456E1C00C12D35 /* MethodManager */,
 				AAB11A711C51ACFA0058BC9C /* AddNewPlace */,
 				AA4B39B31C3DD8750086DB81 /* Main.storyboard */,
 				AA71E9181C2B32E500FA48F6 /* LaunchScreen.storyboard */,
 				AA71E9071C2B32E400FA48F6 /* Supporting Files */,
 				AAB54B8D1C5AB57F003A7C59 /* Frameworks */,
+				AA67CA061C7523F00087A775 /* Cocoa Frameworks */,
+				AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */,
 				AA71E91B1C2B32E500FA48F6 /* Info.plist */,
 				99260E031C2DD4DD00EFB125 /* Images.xcassets */,
 				AA71E9161C2B32E500FA48F6 /* Assets.xcassets */,
-				AA71E9131C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld */,
 			);
 			path = "Pizza Time NYC";
 			sourceTree = "<group>";
@@ -441,7 +388,6 @@
 		AA71E9071C2B32E400FA48F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AACD36281C6D2F63002AF9DC /* Loading Pie */,
 				AACD362A1C6D499E002AF9DC /* KEN */,
 				AA92E1611C5D7100000688F7 /* MCQ */,
 				AA92E1621C5D7126000688F7 /* FONTS */,
@@ -450,11 +396,8 @@
 				AACD362B1C6D5379002AF9DC /* pizzaHappyRate.jpg */,
 				AACD362C1C6D5379002AF9DC /* pizzaSadRate.jpg */,
 				AA324B401C600566001739C3 /* pizzaCamera2.png */,
-				AAB98D661C6941720004FA9E /* MCQMapSLICE180Green.png */,
-				AAB98D681C6941FD0004FA9E /* MCQMapSLICE180Red.png */,
 				AAAAA15A1C502289009EC685 /* skateBoardAlpha30.png */,
 				AAB67BFA1C4EA7320087F151 /* dollarBillAlpha60.png */,
-				AAB67BF61C4EA6200087F151 /* pizza29Alpha.png */,
 				AAB67BF21C4EA1FD0087F151 /* dollarBill.jpg */,
 				AACDE93E1C3D8DDD004EF963 /* skateboard.jpeg */,
 				99D6297D1C2F36DA00B49E26 /* TwoBrosPizzaLogo.jpg */,
@@ -509,32 +452,13 @@
 			name = "View Controller";
 			sourceTree = "<group>";
 		};
-		AA888F041C67ED3C00B3E6E2 /* ARCHIVE DELETE */ = {
+		AA8D216C1C77EAA900EE46A5 /* TMReachability */ = {
 			isa = PBXGroup;
 			children = (
-				990B5EC31C4CC003000BF1B5 /* MCQMapSLICE29b.png */,
-				990B5EBF1C4CB9B6000BF1B5 /* MCQMapSLICEb.png */,
-				AAB67C561C4EF3CC0087F151 /* MCQpizzaTimeLOGOb.png */,
-				AAA7CCE51C6FB0BE001DA758 /* move to archive */,
-				AAAC939D1C499ECE00D3AC6B /* MCQTabBarLISTa.png */,
-				AAAC939E1C499ECE00D3AC6B /* MCQTabBarMAPa.png */,
-				AAB67C4A1C4EED540087F151 /* MCQSliceLEFTb2.png */,
-				AAB67C4B1C4EED540087F151 /* MCQSliceRIGHTb2.png */,
-				AAB67C4C1C4EED540087F151 /* MCQSliceLEFTt2.png */,
-				AAB67C4D1C4EED540087F151 /* MCQSliceBOTTOM2.png */,
-				AAB67C4E1C4EED540087F151 /* MCQSliceRIGHTt2.png */,
-				AAB67C4F1C4EED540087F151 /* MCQSliceTOP2.png */,
+				AA8D216A1C77EAA200EE46A5 /* TMReachability.h */,
+				AA8D21691C77EAA200EE46A5 /* TMReachability.m */,
 			);
-			name = "ARCHIVE DELETE";
-			sourceTree = "<group>";
-		};
-		AA8E228F1C41B30A0018ABE8 /* OptionsPage */ = {
-			isa = PBXGroup;
-			children = (
-				AA8E228C1C41B2BF0018ABE8 /* OptionsPage.h */,
-				AA8E228D1C41B2BF0018ABE8 /* OptionsPage.m */,
-			);
-			name = OptionsPage;
+			name = TMReachability;
 			sourceTree = "<group>";
 		};
 		AA92E1471C5D312C000688F7 /* GIFPage */ = {
@@ -551,15 +475,13 @@
 			children = (
 				AAA7CD0A1C6FEF8A001DA758 /* MCQMapSLICE.png */,
 				AAA7CD081C6FEE4A001DA758 /* MCQMapSLICElarge.png */,
-				AAA7CD061C6FE27E001DA758 /* MCQDollarLoad1.png */,
-				AAA7CD021C6FDF4D001DA758 /* MCQDollarLoad.png */,
+				AAA7CD061C6FE27E001DA758 /* MCQDollarLoad.png */,
 				AAA7CD031C6FDF4D001DA758 /* MCQPizzaLoad.png */,
 				AAA7CCF81C6FD26D001DA758 /* MCQSliceGreen.png */,
 				AAA7CCF91C6FD26D001DA758 /* MCQMapSLICE29.png */,
 				AAA7CCFA1C6FD26D001DA758 /* MCQSliceRed.png */,
 				AAA7CCF21C6FCB96001DA758 /* MCQHeartBroken.png */,
 				AAA7CCF31C6FCB96001DA758 /* MCQHeart.png */,
-				AA888F041C67ED3C00B3E6E2 /* ARCHIVE DELETE */,
 				AA92E1651C5D78DB000688F7 /* MCQMapLOCATION.png */,
 				AA92E16A1C5D78DB000688F7 /* MCQMapSEARCH.png */,
 				AA92E1681C5D78DB000688F7 /* MCQMapOPTIONS.png */,
@@ -617,19 +539,6 @@
 				AAA7CCDC1C6FA501001DA758 /* KenPizzaMan19.png */,
 			);
 			path = "ken gif images";
-			sourceTree = "<group>";
-		};
-		AAA7CCE51C6FB0BE001DA758 /* move to archive */ = {
-			isa = PBXGroup;
-			children = (
-				AA888EF61C67E72100B3E6E2 /* MCQSliceLEFTtb.png */,
-				AA888EF71C67E72100B3E6E2 /* MCQSliceBOTTOMb.png */,
-				AA888EF81C67E72100B3E6E2 /* MCQSliceRIGHTtb.png */,
-				AA888EF91C67E72100B3E6E2 /* MCQSliceRIGHTbb.png */,
-				AA888EFA1C67E72100B3E6E2 /* MCQSliceLEFTbb.png */,
-				AA888EFB1C67E72100B3E6E2 /* MCQSliceTOPb.png */,
-			);
-			name = "move to archive";
 			sourceTree = "<group>";
 		};
 		AAB11A711C51ACFA0058BC9C /* AddNewPlace */ = {
@@ -691,25 +600,16 @@
 			name = DAO;
 			sourceTree = "<group>";
 		};
-		AACD36281C6D2F63002AF9DC /* Loading Pie */ = {
-			isa = PBXGroup;
-			children = (
-				AACD36221C6D2F5C002AF9DC /* fullPizza5.png */,
-				AACD36231C6D2F5C002AF9DC /* fullPizza6.png */,
-				AACD36241C6D2F5C002AF9DC /* fullPizza7.png */,
-				AAC911291C6C0737002FA301 /* fullPizza2.png */,
-				AAC9112A1C6C0737002FA301 /* fullPizza1.png */,
-				AAC9112B1C6C0737002FA301 /* fullPizza4.png */,
-				AAC9112C1C6C0737002FA301 /* fullPizza3.png */,
-			);
-			name = "Loading Pie";
-			sourceTree = "<group>";
-		};
 		AACD36291C6D4945002AF9DC /* SOUNDS */ = {
 			isa = PBXGroup;
 			children = (
-				AA888EF51C67E46900B3E6E2 /* adventureTimePizza.m4a */,
 				AAE26FE51C614DFA00485813 /* annoyedRick.mp3 */,
+				AA5EBE631C74EA8800629035 /* adventureTimePizza.m4a */,
+				AA5EBE641C74EA8800629035 /* ATHFPizzaTime.m4a */,
+				AA5EBE651C74EA8800629035 /* cowabunga.m4a */,
+				AA5EBE661C74EA8800629035 /* excellent.m4a */,
+				AA5EBE671C74EA8800629035 /* krustyKrabPizza.m4a */,
+				AA5EBE681C74EA8800629035 /* rickBestPizza.m4a */,
 				AAA7C1F01C40326E00EE8B43 /* pizzaMusic.mp3 */,
 			);
 			name = SOUNDS;
@@ -719,8 +619,7 @@
 			isa = PBXGroup;
 			children = (
 				AAA7CCC01C6F9CA1001DA758 /* ken gif images */,
-				AAA7CCBE1C6F9B3F001DA758 /* KenPizzaMan.gif */,
-				AADF84E91C66682200AD1B5D /* KenSadPizzaMan.jpg */,
+				AAC11D111C726A67001D11FA /* KenSadPizzaManAlpha.png */,
 			);
 			name = KEN;
 			sourceTree = "<group>";
@@ -872,26 +771,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5EBE691C750BAC00629035 /* adventureTimePizza.m4a in Resources */,
+				AA5EBE6A1C750BAC00629035 /* ATHFPizzaTime.m4a in Resources */,
+				AA5EBE6B1C750BAC00629035 /* cowabunga.m4a in Resources */,
+				AA5EBE6C1C750BAC00629035 /* excellent.m4a in Resources */,
+				AA5EBE6D1C750BAC00629035 /* krustyKrabPizza.m4a in Resources */,
+				AA5EBE6E1C750BAC00629035 /* rickBestPizza.m4a in Resources */,
 				AAA7CCDF1C6FA501001DA758 /* KenPizzaMan5.png in Resources */,
 				AA92E1501C5D5BEA000688F7 /* Rubik-Bold.ttf in Resources */,
 				AA92E1511C5D5BEA000688F7 /* Rubik-Black.ttf in Resources */,
 				AAA7CCDD1C6FA501001DA758 /* KenPizzaMan1.png in Resources */,
-				990B5EC11C4CB9B6000BF1B5 /* MCQMapSLICEb.png in Resources */,
 				AAA7CD0B1C6FEF8A001DA758 /* MCQMapSLICE.png in Resources */,
-				AACD36251C6D2F5C002AF9DC /* fullPizza5.png in Resources */,
 				AA92E17C1C5D7B39000688F7 /* MCQTabBarMAP.png in Resources */,
 				AAA7C1F11C40326E00EE8B43 /* pizzaMusic.mp3 in Resources */,
-				AACD36261C6D2F5C002AF9DC /* fullPizza6.png in Resources */,
-				AADF84EA1C66682200AD1B5D /* KenSadPizzaMan.jpg in Resources */,
-				AAC9112D1C6C0737002FA301 /* fullPizza2.png in Resources */,
-				AAB67BF71C4EA6200087F151 /* pizza29Alpha.png in Resources */,
 				AA92E1711C5D78DB000688F7 /* MCQMapSEARCH.png in Resources */,
 				AAA7CCFB1C6FD26D001DA758 /* MCQSliceGreen.png in Resources */,
 				AAAAA15B1C502289009EC685 /* skateBoardAlpha30.png in Resources */,
 				AAA7CCF01C6FB0CA001DA758 /* MCQSliceLEFTt.png in Resources */,
-				AAB98D671C6941720004FA9E /* MCQMapSLICE180Green.png in Resources */,
-				AA888EFC1C67E72100B3E6E2 /* MCQSliceLEFTtb.png in Resources */,
-				AAAC93A01C499ECE00D3AC6B /* MCQTabBarMAPa.png in Resources */,
 				AAA7CCE21C6FA501001DA758 /* KenPizzaMan13.png in Resources */,
 				AAA7CCEE1C6FB0CA001DA758 /* MCQSliceRIGHTt.png in Resources */,
 				AAA7CCE31C6FA501001DA758 /* KenPizzaMan15.png in Resources */,
@@ -899,60 +795,40 @@
 				AA324B411C600566001739C3 /* pizzaCamera2.png in Resources */,
 				AA888F031C67E8C800B3E6E2 /* GWPIZZA.jpg in Resources */,
 				AAE26FE61C614DFA00485813 /* annoyedRick.mp3 in Resources */,
-				AAC9112F1C6C0737002FA301 /* fullPizza4.png in Resources */,
 				AA92E1761C5D79B5000688F7 /* MCQMapSOUND.png in Resources */,
-				AA888F011C67E72100B3E6E2 /* MCQSliceTOPb.png in Resources */,
 				AAA7CCEF1C6FB0CA001DA758 /* MCQSliceLEFTb.png in Resources */,
 				AACDE93F1C3D8DDD004EF963 /* skateboard.jpeg in Resources */,
-				AAA7CCBF1C6F9B3F001DA758 /* KenPizzaMan.gif in Resources */,
-				AAA7CD071C6FE27E001DA758 /* MCQDollarLoad1.png in Resources */,
-				AACD36271C6D2F5C002AF9DC /* fullPizza7.png in Resources */,
-				990B5EC51C4CC003000BF1B5 /* MCQMapSLICE29b.png in Resources */,
+				AAA7CD071C6FE27E001DA758 /* MCQDollarLoad.png in Resources */,
 				AA92E1701C5D78DB000688F7 /* MCQMapSOUNDNOT.png in Resources */,
 				990B5EC21C4CB9B6000BF1B5 /* MCQMapBIKE.png in Resources */,
-				AAA7CD041C6FDF4D001DA758 /* MCQDollarLoad.png in Resources */,
 				AAA7CCFC1C6FD26D001DA758 /* MCQMapSLICE29.png in Resources */,
-				AAB67C531C4EED540087F151 /* MCQSliceBOTTOM2.png in Resources */,
-				AAB67C521C4EED540087F151 /* MCQSliceLEFTt2.png in Resources */,
 				AAA7CCE41C6FA501001DA758 /* KenPizzaMan19.png in Resources */,
-				AAB67C501C4EED540087F151 /* MCQSliceLEFTb2.png in Resources */,
 				AA92E16F1C5D78DB000688F7 /* MCQMapOPTIONS.png in Resources */,
 				AA92E17B1C5D7B39000688F7 /* MCQTabBarLIST.png in Resources */,
 				AA71E91A1C2B32E500FA48F6 /* LaunchScreen.storyboard in Resources */,
 				AAA7CCF11C6FB0CA001DA758 /* MCQSliceTOP.png in Resources */,
 				AA92E1491C5D4257000688F7 /* MCQppiGO.png in Resources */,
 				AAA7CCFD1C6FD26D001DA758 /* MCQSliceRed.png in Resources */,
-				AAB67C541C4EED540087F151 /* MCQSliceRIGHTt2.png in Resources */,
-				AA888EFF1C67E72100B3E6E2 /* MCQSliceRIGHTbb.png in Resources */,
 				AACD362E1C6D5379002AF9DC /* pizzaSadRate.jpg in Resources */,
-				AA888EFD1C67E72100B3E6E2 /* MCQSliceBOTTOMb.png in Resources */,
 				99260E041C2DD4DD00EFB125 /* Images.xcassets in Resources */,
-				AAAC939F1C499ECE00D3AC6B /* MCQTabBarLISTa.png in Resources */,
 				AAA7CCE11C6FA501001DA758 /* KenPizzaMan11.png in Resources */,
 				AAA7CCF71C6FCD44001DA758 /* MCQpizzaTimeLOGO.png in Resources */,
 				AA92E16C1C5D78DB000688F7 /* MCQMapLOCATION.png in Resources */,
 				AA92E17D1C5D7B39000688F7 /* MCQppiBACK.png in Resources */,
 				AAB67BFB1C4EA7320087F151 /* dollarBillAlpha60.png in Resources */,
 				AACD362D1C6D5379002AF9DC /* pizzaHappyRate.jpg in Resources */,
+				AAC11D121C726A67001D11FA /* KenSadPizzaManAlpha.png in Resources */,
 				AA71E9171C2B32E500FA48F6 /* Assets.xcassets in Resources */,
-				AA888F001C67E72100B3E6E2 /* MCQSliceLEFTbb.png in Resources */,
 				AA324B3D1C5FFB51001739C3 /* MCQaddADD.png in Resources */,
-				AAB67C511C4EED540087F151 /* MCQSliceRIGHTb2.png in Resources */,
 				AAA7CD051C6FDF4D001DA758 /* MCQPizzaLoad.png in Resources */,
 				AAA7CCEC1C6FB0CA001DA758 /* MCQSliceRIGHTb.png in Resources */,
 				AAB67BF31C4EA1FD0087F151 /* dollarBill.jpg in Resources */,
 				AAA7CCED1C6FB0CA001DA758 /* MCQSliceBOTTOM.png in Resources */,
-				AAB67C551C4EED540087F151 /* MCQSliceTOP2.png in Resources */,
 				AAAAA15D1C50235C009EC685 /* walkAlpha30.png in Resources */,
-				AAC911301C6C0737002FA301 /* fullPizza3.png in Resources */,
 				AAA7CD091C6FEE4A001DA758 /* MCQMapSLICElarge.png in Resources */,
 				AA4B39B51C3DD8750086DB81 /* Main.storyboard in Resources */,
-				AAC9112E1C6C0737002FA301 /* fullPizza1.png in Resources */,
 				AAA7CCF51C6FCB96001DA758 /* MCQHeart.png in Resources */,
 				AAA7CCDE1C6FA501001DA758 /* KenPizzaMan3.png in Resources */,
-				AAB98D691C6941FD0004FA9E /* MCQMapSLICE180Red.png in Resources */,
-				AAB67C571C4EF3CC0087F151 /* MCQpizzaTimeLOGOb.png in Resources */,
-				AA888EFE1C67E72100B3E6E2 /* MCQSliceRIGHTtb.png in Resources */,
 				990B5EC61C4CC003000BF1B5 /* MCQMapBIKE29.png in Resources */,
 				AAA7CCE01C6FA501001DA758 /* KenPizzaMan9.png in Resources */,
 				AAA7CCF41C6FCB96001DA758 /* MCQHeartBroken.png in Resources */,
@@ -985,17 +861,16 @@
 				AA71E9151C2B32E500FA48F6 /* Pizza_Time_NYC.xcdatamodeld in Sources */,
 				AA71E90F1C2B32E500FA48F6 /* ViewController.m in Sources */,
 				AACB1BC81C3B21890069E947 /* TableViewController.m in Sources */,
-				AA8E228E1C41B2BF0018ABE8 /* OptionsPage.m in Sources */,
 				AA92E1461C5D3127000688F7 /* GIFPage.m in Sources */,
 				AAC9111F1C6BF398002FA301 /* MBProgressHUD.m in Sources */,
 				99260DFF1C2DD36800EFB125 /* PizzaPlace.m in Sources */,
 				AAE26FE31C612CF600485813 /* FeedbackPageViewController.m in Sources */,
 				AA71E9411C2B48B800FA48F6 /* MapKitViewController.m in Sources */,
 				AACDE94D1C3DAB3E004EF963 /* PizzaPlaceInfoViewController.m in Sources */,
+				AA8D216B1C77EAA200EE46A5 /* TMReachability.m in Sources */,
 				AAF212571C62AEAD00A9520E /* FLAnimatedImageView.m in Sources */,
 				AA71E90C1C2B32E500FA48F6 /* AppDelegate.m in Sources */,
 				99447E3A1C31B00200260B8E /* InfoPage.m in Sources */,
-				998B96861C32052300DC8EB7 /* Reachability.m in Sources */,
 				AA71E9091C2B32E400FA48F6 /* main.m in Sources */,
 				AAF212561C62AEAD00A9520E /* FLAnimatedImage.m in Sources */,
 				AA3E83B41C456E0300C12D35 /* MethodManager.m in Sources */,
@@ -1160,7 +1035,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lsqlite3";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN4.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1176,7 +1051,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lsqlite3";
-				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN4.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcom.PTN4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -2,7 +2,7 @@
 //  TableViewController.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 1/4/16.
+//  Created by JD Leonard on 1/4/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 
@@ -11,6 +11,8 @@
 
 @interface TableViewController ()
 @property (nonatomic, retain) MapKitViewController *mapKit;
+@property (nonatomic, retain) DAO *dao;
+@property (strong, nonatomic) MethodManager *methodManager;
 
 @end
 
@@ -28,13 +30,10 @@ BOOL isRefreshAnimating;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	//	NSLog(@"Table View Controller loaded!");
-//	UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
-//	self.view.backgroundColor = orangeMCQ; // this changes the bar where the buttons are
-
+	
 	// instantiate tableView
 	self.tableView.delegate=self;
 	self.tableView.dataSource=self;
-//	self.tableView.backgroundColor = [[UIColor alloc]initWithRed:55.0/255.0 green:193.0/255.0 blue:0.0/255.0 alpha:1.0];
 	
 	self.methodManager = [MethodManager sharedManager];
 	self.methodManager.statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
@@ -51,7 +50,6 @@ BOOL isRefreshAnimating;
 		[self.mapKit sortByDistanceForClosest];
 	}
 	[self createRefreshControl];
-//	[self.tableView reloadData]; // removed 2.12.16 unecessary?
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -64,6 +62,9 @@ BOOL isRefreshAnimating;
 	[self assignLabels];
 }
 
+-(void)viewWillDisappear:(BOOL)animated {
+	self.dao.hideProgressHud = NO;
+}
 
 
 #pragma mark - CREATE PAGE
@@ -72,7 +73,6 @@ BOOL isRefreshAnimating;
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		pizzaPlace.image = @"TwoBrosPizzaLogo.jpg";
 		pizzaPlace.url = @"http://www.2brospizza.com/";
-		//		[self createAnnotation:pizzaPlace];
 	}
 	//	NSLog(@"PizzaPlaceArray:%@", self.pizzaPlaceArray);
 	
@@ -81,10 +81,10 @@ BOOL isRefreshAnimating;
 -(void)createSearchBar {
 	self.searchBar.delegate = self;
 	self.searchBar.placeholder = @"Search Address";
-
+	
 	self.searchBar.backgroundColor = [UIColor redColor]; // color of cancel and cursor
 	self.searchBar.barTintColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0]; // color of the bar
-//	self.searchBar.tintColor = [UIColor purpleColor]; // color of 'cancel'
+	//	self.searchBar.tintColor = [UIColor purpleColor]; // color of 'cancel'
 	
 	UIImageView *searchIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"walkAlpha30.png"]];
 	searchIcon.frame = CGRectMake(10, 10, 24, 24);
@@ -168,8 +168,6 @@ BOOL isRefreshAnimating;
 	}
 	// Display pizzaPlace in the table cell
 	PizzaPlace *pizzaPlace = [self.dao.pizzaPlaceArray objectAtIndex:indexPath.row];
-	//	UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-	//	recipeImageView.image = [UIImage imageNamed:recipe.imageFile];
 	
 	UILabel *nameLabel = (UILabel *)[cell viewWithTag:100];
 	nameLabel.text = [pizzaPlace.name uppercaseString];
@@ -185,19 +183,16 @@ BOOL isRefreshAnimating;
 	
 	UILabel *distanceLabel = (UILabel *)[cell viewWithTag:103];
 	distanceLabel.text = [NSString stringWithFormat:@"%.2f mi", pizzaPlace.distance];
-
+	
 	UILabel *ratingUpLabel = (UILabel *)[cell viewWithTag:104];
 	ratingUpLabel.text = [NSString stringWithFormat:@"%.0f%%", pizzaPlace.percentageLikes];
 	
 	UILabel *ratingDownLabel = (UILabel *)[cell viewWithTag:105];
 	ratingDownLabel.text = [NSString stringWithFormat:@"%.0f%%", pizzaPlace.percentageDislikes];
-
+	
 	
 	UIButton *rated = (UIButton *)[cell viewWithTag:106];
-//	rated.contentMode = UIViewContentModeScaleToFill;
-//	rated.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
-//	rated.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
-//rated.imageView.contentMode = UIViewContentModeScaleAspectFit;
+	
 	if (pizzaPlace.rated == RATEDLIKE) {
 		[rated setBackgroundImage:[UIImage imageNamed:@"MCQHeart.png"] forState:UIControlStateNormal];
 	}
@@ -207,25 +202,23 @@ BOOL isRefreshAnimating;
 	else { // (self.currentPizzaPlace.rated == RATEDNOT)
 		[rated setBackgroundImage:nil forState:UIControlStateNormal];
 	}
-
+	
 	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	for (PizzaPlace *pizzaPlace in self.dao.pizzaPlaceArray) {
 		if ([pizzaPlace.name isEqualToString:[[self.dao.pizzaPlaceArray objectAtIndex:indexPath.row]name]]) {
-			//			NSLog(@"User selected the PP = %@ and wanted %@", [[self.dao.pizzaPlaceArray objectAtIndex:indexPath.row]name], pizzaPlace.name);
+			// NSLog(@"User selected the PP = %@ and wanted %@", [[self.dao.pizzaPlaceArray objectAtIndex:indexPath.row]name], pizzaPlace.name);
 			
 			// Pass the selected object to the new view controller.
 			// Push the view controller.
-
+			
 			PizzaPlaceInfoViewController *pizzaPlaceInfoViewController = self.tabBarController.viewControllers[PPINFOPAGE];
 			[pizzaPlaceInfoViewController setLabelValues:pizzaPlace];
 			[self.tabBarController setSelectedIndex:PPINFOPAGE];
 		}
 	}
-	//[self.tabBarController showViewController:detailViewController sender:NULL];
-	
 }
 
 /*
@@ -308,8 +301,7 @@ BOOL isRefreshAnimating;
 	// keep the animation and actions of dismissing the search bar
 	[self searchBarCancelButtonClicked:(UISearchBar *) self.searchBar];
 	self.methodManager.searchSubmit = YES; //searching for address
-//	NSLog(@"self.methodManager.searchSubmit = YES");
-//	NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
+	//	NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
 	
 	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
 	[geocoder geocodeAddressString:theSearchBar.text completionHandler:^(NSArray *placemarks, NSError *error) {		//Error checking
@@ -317,15 +309,15 @@ BOOL isRefreshAnimating;
 		
 		CLPlacemark *placemark = [placemarks objectAtIndex:0];
 		CLLocation *resultLocation = placemark.location;
-//		NSLog(@"result's lat %f",resultLocation.coordinate.latitude);
-
+		//		NSLog(@"result's lat %f",resultLocation.coordinate.latitude);
+		
 		// set the distance of the PPs, then sort by
 		[self.mapKit findDistance:resultLocation];
-//		NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
+		//		NSLog(@"self.methodManager.searchSubmit is %d", self.methodManager.searchSubmit );
 		[self.mapKit sortByDistanceForClosest];
 		self.methodManager.searchSubmit = NO; // no longer searching for address
-//		NSLog(@"self.methodManager.searchSubmit = NO");
-
+		//		NSLog(@"self.methodManager.searchSubmit = NO");
+		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.tableView reloadData];
 			NSLog(@"search finished and reloaded");
@@ -351,7 +343,7 @@ BOOL isRefreshAnimating;
 	
 	// Create the graphic image views
 	self.pizzaImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCQPizzaLoad.png"]];
-	self.dollarImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCQDollarLoad1.png"]];
+	self.dollarImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MCQDollarLoad.png"]];
 	
 	// Add the graphics to the loading view
 	[self.refreshLoadingView addSubview:self.dollarImage];
@@ -380,28 +372,24 @@ BOOL isRefreshAnimating;
 
 - (void)refresh:(id)sender{ // ??? this needs refreshing haha
 	NSLog(@"begin = %f", self.methodManager.locationManager.location.coordinate.latitude);
-	// -- DO SOMETHING AWESOME (... or just wait 3 seconds) --
-	[self.view setUserInteractionEnabled:NO];
-	// This is where you'll make requests to an API, reload data, or process information
-	[self.dao fromLocalDataPP]; // this should update the likes
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(parseDone:)
-												 name:@"FinishedLoadingData"
-											   object:nil];
-	/*
-	double delayInSeconds = 5.0;
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		[self.mapKit sortByDistanceForClosest];
-		NSLog(@"DONE");
-		[self.tableView reloadData];
-		
-		// When done requesting/reloading/processing invoke endRefreshing, to close the control
+	// if no internet, do not attempt to reload
+	TMReachability *reachability = [TMReachability reachabilityWithHostName:@"www.google.com"];
+	NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+	if(internetStatus == NotReachable) {
+		[self.dao textOnlyHud:@"No Internet"];
 		[self.refreshControl endRefreshing];
-		NSLog(@"after = %f", self.methodManager.locationManager.location.coordinate.latitude);
-	});
-	// -- FINISHED SOMETHING AWESOME, WOO! --
-	 */
+	}
+	else {
+		// -- DO SOMETHING AWESOME -- //
+		[self.view setUserInteractionEnabled:NO];
+		// This is where you'll make requests to an API, reload data, or process information
+		self.dao.hideProgressHud = YES;
+		[self.dao fromLocalDataPP]; // this should update everything
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(parseDone:)
+													 name:@"FinishedLoadingData"
+												   object:nil];
+	}
 }
 
 - (void) parseDone:(NSNotification *) notification {
@@ -410,7 +398,9 @@ BOOL isRefreshAnimating;
 	[self createPizzaCells];
 	[self.tableView reloadData];
 	[self.refreshControl endRefreshing];
-	[[NSNotificationCenter defaultCenter]removeObserver:self name:@"FinishedLoadingData" object:nil];
+	[[NSNotificationCenter defaultCenter]removeObserver:self
+												   name:@"FinishedLoadingData"
+												 object:nil];
 	[self.view setUserInteractionEnabled:YES];
 }
 
@@ -548,7 +538,7 @@ BOOL isRefreshAnimating;
 }
 
 -(void)mapButtonPressed:(UIButton *)mapButton {
-//	NSLog(@"open and present the mapView here");
+	//	NSLog(@"open and present the mapView here");
 	[self.tabBarController setSelectedIndex:MAPPAGE];
 }
 

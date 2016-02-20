@@ -2,12 +2,12 @@
 //  ViewController.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 12/23/15.
+//  Created by JD Leonard on 12/23/15.
 //  Copyright © 2015 TTT. All rights reserved.
 //
 
 #import "ViewController.h"
-#import "MapKitViewController.h"
+#import <AudioToolbox/AudioServices.h>
 
 @interface ViewController ()
 
@@ -17,7 +17,7 @@
 
 @end
 
-int countHomePage; // for the background Color at the front
+double countHomePage; // for the background Color at the front
 BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = not the first time)
 /*
  countHomePage 1.20.16
@@ -48,14 +48,14 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	UIImageView *pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
 	pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
 	[self.view addSubview:pizzaTimeLogo];
-	
+	countHomePage +=1;
+
 	[self assignSlices];
-	
+	[self.dao alertTheUser];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	//	[self.navigationController setNavigationBarHidden:YES]; // removed 1.26.16 no more nav bar to worry about
 	[self assignLabels];
 	self.methodManager.mapPageBool = NO;
 	[self assignColors];
@@ -71,7 +71,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 		self.methodManager.firstTimeLoaded = YES;
 		self.methodManager.closestPP = NO;
 		self.methodManager.rotation = YES;
-//		[self.dao downloadParsePP]; // 1.29.16 download first, pin and then call local data
+		self.dao.hideProgressHud = NO;
 		[self.dao fromLocalDataPP];
 		//		[self.dao downloadParseGifs]; // 2.4.16 download first, pin and then call local gifs
 		[self.dao fromLocalDataGifs];
@@ -87,28 +87,35 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	//	[self.pizzaTimeLogo removeFromSuperview];
 }
 
+
 /*
- // I do not think this is doing anything I want it to 1.30.16
- -(UIInterfaceOrientationMask)supportedInterfaceOrientations {
- 
-	// Return a bitmask of supported orientations. If you need more,
-	// use bitwise or (see the commented return).
-	return UIInterfaceOrientationMaskPortrait;
-	// return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
- }
- 
- - (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation {
-	// Return the orientation you'd prefer - this is what it launches to. The
-	// user can still rotate. You don't have to implement this method, in which
-	// case it launches in the current orientation
-	return UIInterfaceOrientationPortrait;
- }
- */
+- (void)assignGif {
+//	self.methodManager = [MethodManager sharedManager]; // not necessary, unless move gif to method manager
+	
+	// animated images implement
+	NSArray *imageNames = @[@"KenPizzaMan1.png", @"KenPizzaMan3.png", @"KenPizzaMan5.png", @"KenPizzaMan9.png", @"KenPizzaMan11.png", @"KenPizzaMan13.png", @"KenPizzaMan15.png", @"KenPizzaMan19.png"];
+	
+	NSMutableArray *images = [[NSMutableArray alloc] init];
+	for (int i = 0; i < imageNames.count; i++) {
+		[images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
+	}
+	
+	// Normal Animation
+	self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+	self.imageView.animationImages = images;
+	self.imageView.animationDuration = 0.4;
+	
+	[self.imageView startAnimating];
+	[self.view addSubview:self.imageView];
+}
+*/
 
 -(void)assignLabels {// and buttons
 	
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
-	
+	[self.view addSubview:[self.methodManager assignSadPizza]];
+	[self.view addSubview:[self.methodManager assignDancingGif]];
+
 	//	self.pizzaTimeLogo = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/8, self.view.bounds.size.height/8, (self.view.bounds.size.width/4)*3, self.view.bounds.size.height/3)];
 	//	self.pizzaTimeLogo.image = [UIImage imageNamed:@"MCQpizzaTimeLOGO.png"];
 	//	[self.view addSubview:self.pizzaTimeLogo];
@@ -245,27 +252,26 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	UIColor *purpleMCQ = [[UIColor alloc]initWithRed:179/255.0 green:79/255.0 blue:197/255.0 alpha:1.0];
 	UIColor *darkBlueMCQ = [[UIColor alloc]initWithRed:69.0/255.0 green:92.0/255.0 blue:199.0/255.0 alpha:1.0];
 	// assign background color to change
-	countHomePage +=1;
-	switch (countHomePage%4) {
+	switch ((int)countHomePage%4) {
 		case 0:
 			//					NSLog(@"count is 0 - set blue");
 			self.view.backgroundColor = darkBlueMCQ;
-			countHomePage +=1;
+			countHomePage +=0.5;
 			break;
-		case 1:
+		case 1://starts here
 			//					NSLog(@"Count is 1 - set orange");
 			self.view.backgroundColor = orangeMCQ;
-			countHomePage +=1;
+			countHomePage +=0.5;
 			break;
 		case 2:
 			//					NSLog(@"Count is 2 - set purple");
 			self.view.backgroundColor = purpleMCQ;
-			countHomePage +=1;
+			countHomePage +=0.5;
 			break;
 		case 3:
 			//					NSLog(@"Count is 3 - set green");
 			self.view.backgroundColor = greenMCQ;
-			countHomePage +=1;
+			countHomePage +=0.5;
 			break;
 		default:
 			NSLog(@"CountHomePage is DEFAULT - decide what to do");
@@ -280,38 +286,24 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 	// Dispose of any resources that can be recreated.
 }
 
-#pragma mark - ACTIONS
-/*
- // Main initial button press
- -(void)pizzaTimeButtonPressed:(UIButton *)pizzaTimeButton {
-	NSLog(@"PizzaTimebutton was pressed");
-	// this should open the MAP VIEW of Pizza Time
- }
- */
+- (void)makeNoise:(NSString *)sound ofType:(NSString *)type {
+	//Retrieve audio file
+//	NSString *path  = [[NSBundle mainBundle] pathForResource:@"cowabunga" ofType:@".m4a"];
+//	NSURL *pathURL = [NSURL fileURLWithPath : path];
+	NSURL *pathURL = [[NSBundle mainBundle] URLForResource:sound withExtension:type];
+//NSLog(@"%@",[pathURL resourceSpecifier]);
+	SystemSoundID audioEffect;
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+	AudioServicesPlaySystemSound(audioEffect);
+	
+	// call the following function when the sound is no longer used
+	// (must be done AFTER the sound is done playing)
+	// Using GCD, we can use a block to dispose of the audio effect without using a NSTimer or something else to figure out when it'll be finished playing.
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		AudioServicesDisposeSystemSoundID(audioEffect);
+	});
 
-// this should disable and enable the sound of the app
-//-(void)speakerButtonPressed:(UIButton *)speakerButton {
-//	if (self.appDelegate.sound) {
-//		//		NSLog(@"sound disabled"); //disable sound
-//		[self.speakerButton setBackgroundImage:[self.appDelegate stopMusic] forState:UIControlStateNormal];
-//		//		self.appDelegate.audioPlayer.rate = 0.0;
-//	}
-//	else {
-//		//		NSLog(@"sound enabled"); //enable sound
-//		[self.speakerButton setBackgroundImage:[self.appDelegate playMusic] forState:UIControlStateNormal];
-//		//		self.appDelegate.audioPlayer.rate = 1.0;
-//	}
-//}
-
-/*
- // this should show the menu page
- -(void)optionsButtonPressed:(UIButton *)optionsButton {
-	NSLog(@"optionsButton was pressed");
-	// this should open the options page of Pizza Time
-	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionsPage"];
-	[self.navigationController pushViewController:detailViewController animated:YES];
- }
- */
+}
 
 #pragma mark - ACTIONS Slices
 /*
@@ -324,6 +316,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 -(void)leftBPressed:(UIButton *)leftBButton {
 //	NSLog(@"Open the FEEDBACK");
 	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"feedbackPage"];
+	[self makeNoise:@"annoyedRick" ofType:@"mp3"];
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
@@ -345,6 +338,7 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 -(void)rightBPressed:(UIButton *)rightBButton {
 	//	NSLog(@"Open the ABOUT");
 	UIViewController *detailViewController = (UIViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"aboutPage"];
+	[self makeNoise:@"ATHFPizzaTime" ofType:@"m4a"];
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
@@ -358,6 +352,11 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 
 -(void)leftTPressed:(UIButton *)leftTButton {
 	//	NSLog(@"Open the LIST");
+	[self makeNoise:@"adventureTimePizza" ofType:@"m4a"];
+	if (self.dao.pizzaPlaceArray.count == 0) {
+		[self.dao emptyAlert];
+	}
+	else {
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
@@ -366,12 +365,18 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 [self.tabBarController setSelectedIndex:LISTPAGE];
 						 self.leftT.frame = CGRectMake((self.screenSize.width/6), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6);
 					 }];
+	}
 }
 
 -(void)rightTPressed:(UIButton *)rightTButton {
 //	NSLog(@"Open the CLOSEST");
+	[self makeNoise:@"krustyKrabPizza" ofType:@"m4a"];
 	self.methodManager.directionsShow = YES;
 	self.methodManager.closestPP = YES;
+	if (self.dao.pizzaPlaceArray.count == 0) {
+		[self.dao emptyAlert];
+	}
+	else {
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
@@ -380,10 +385,16 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 [self.tabBarController setSelectedIndex:MAPPAGE];
 						 self.rightT.frame = CGRectMake((self.screenSize.width/2), (self.screenSize.height/4)*3 - (self.screenSize.height/6), self.screenSize.width/3, self.screenSize.height/6);
 					 }];
+	}
 }
 
 -(void)topPressed:(UIButton *)topButton {
+	if (self.dao.pizzaPlaceArray.count == 0) {
+		[self.dao emptyAlert];
+	}
+	else {
 	//	NSLog(@"Open the MAP");
+	[self makeNoise:@"rickBestPizza" ofType:@"m4a"];
 	self.methodManager.directionsShow = NO;
 	[UIView animateWithDuration:0.66
 					 animations:^{
@@ -393,10 +404,12 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 [self.tabBarController setSelectedIndex:MAPPAGE];
 						 self.top.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), (7*(self.screenSize.height/12) - self.screenSize.height*0.026), self.screenSize.width/3, self.screenSize.height/6 + self.screenSize.height*0.026);
 					 }];
+	}
 }
 
 -(void)bottomPressed:(UIButton *)bottomButton {
 	//	NSLog(@"Open the ADD");
+	[self makeNoise:@"excellent" ofType:@"m4a"];
 	[UIView animateWithDuration:0.66
 					 animations:^{
 						 // where is the button going?
@@ -405,86 +418,6 @@ BOOL firstTimeLoadedHomePage; // to stop refresh [of map] on initial load (NO = 
 						 [self.tabBarController setSelectedIndex:ADDPAGE];
 						 self.bottom.frame = CGRectMake(((self.screenSize.width/2) - (self.screenSize.width/6)), ((self.screenSize.height/4)*3), self.screenSize.width/3, self.screenSize.height/6 + self.screenSize.height*0.026);
 					 }];
-}
-
-#pragma mark - REACHABILITY
-
--(void)checkInternet {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object: nil];
-	
-	self.hostReachability = [Reachability reachabilityWithHostName:@"www.apple.com"];
-	[self.hostReachability startNotifier];
-	
-	self.internetReachability = [Reachability reachabilityForInternetConnection];
-	[self.internetReachability startNotifier];
-	
-	self.wifiReachability = [Reachability reachabilityForLocalWiFi];
-	[self.wifiReachability startNotifier];
-	// use a counter, by returning 1 if triggered and 0 if not, use this to eliminate checking for other connections. maybe even a bool
-	[self logReachability:self.hostReachability];
-	[self logReachability:self.internetReachability];
-	[self logReachability:self.wifiReachability];
-}
-
-- (void)reachabilityChanged:(NSNotification *)notification {
-	Reachability *reachability = [notification object];
-	[self logReachability: reachability];
-}
-
-- (void)logReachability:(Reachability *)reachability {
-	NSString *whichReachabilityString = nil;
-	
-	if (reachability == self.hostReachability) {
-		whichReachabilityString = @"www.apple.com";
-	} else if (reachability == self.internetReachability) {
-		whichReachabilityString = @"The Internet";
-	} else if (reachability == self.wifiReachability) {
-		whichReachabilityString = @"Local Wi-Fi";
-	}
-	
-	NSString *howReachableString = nil;
-	
-	switch (reachability.currentReachabilityStatus) {
-		case NotReachable: {
-			howReachableString = @"not reachable";
-			NSLog(@"Enter the alertView here to say connect");
-			[self connectionAlert];
-			break;
-		}
-		case ReachableViaWWAN: {
-			howReachableString = @"reachable by cellular data";
-			break;
-		}
-		case ReachableViaWiFi: {
-			howReachableString = @"reachable by Wi-Fi";
-			break;
-			
-		}
-	}
-	
-	//	NSLog(@"%@ %@", whichReachabilityString, howReachableString);
-	
-}
-
--(void)connectionAlert {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Internet Connection Disabled"
-													message:@"Are you brooding underground with Raphael?"
-												   delegate:self
-										  cancelButtonTitle:@"Battery"
-										  otherButtonTitles:@"Settings", nil];
-	[alert show];
- 
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	//	NSLog(@"%ld", (long)buttonIndex);
-	if (buttonIndex == 1) {
-		NSLog(@"open the settings app to wifi or root");
-	}
-	else {
-		NSLog(@"User does not want to share location");
-		// enter audio BUMMMMMMMERRRRR
-	}
 }
 
 @end

@@ -2,7 +2,7 @@
 //  MethodManager.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 1/12/16.
+//  Created by JD Leonard on 1/12/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 
@@ -53,8 +53,10 @@ static AVAudioPlayer *p;
 	return p;
 }
 
-- (void)dealloc {
+- (void)dealloc { // calls when app swiped away
 	// Should never be called, but just here for clarity really.
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
+	[[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
 }
 
 #pragma mark - CREATE
@@ -107,7 +109,7 @@ static AVAudioPlayer *p;
 	self.empireStateBuilding = [[CLLocation alloc]initWithLatitude:40.7484 longitude:-73.9857];
 }
 
-- (void) createOrientation {
+- (void)createOrientation {
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 	[[NSNotificationCenter defaultCenter]
 	 addObserver:self
@@ -171,6 +173,46 @@ static AVAudioPlayer *p;
 	return self.optionsButton;
 }
 
+-(UIImageView *)assignSadPizza {
+	if(self.imageViewImage)return self.imageViewImage;
+	UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake((self.statusBarSize.width/2)-35, 0, 100, 100)];
+	imageView.image = [UIImage imageNamed:@"KenSadPizzaManAlpha.png"];
+	self.imageViewImage = imageView;
+	if (sound == YES) {
+		self.imageViewImage.hidden = YES;
+	}
+	else {
+		self.imageView.hidden = YES;
+	}
+	return self.imageViewImage;
+}
+
+-(UIImageView *)assignDancingGif {
+	if(self.imageView)return self.imageView;
+//	self.imageView.image = nil;
+	UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake((self.statusBarSize.width/2)-35, 0, 100, 100)];
+	// animated images implement
+		NSArray *imageNames = @[@"KenPizzaMan1.png", @"KenPizzaMan3.png", @"KenPizzaMan5.png", @"KenPizzaMan9.png", @"KenPizzaMan11.png", @"KenPizzaMan13.png", @"KenPizzaMan15.png", @"KenPizzaMan19.png"];
+		
+		NSMutableArray *images = [[NSMutableArray alloc] init];
+		for (int i = 0; i < imageNames.count; i++) {
+			[images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
+		}
+		// Normal Animation
+		imageView.animationImages = images;
+		imageView.animationDuration = 0.8;
+	self.imageView = imageView;
+		[self.imageView startAnimating];
+	if (sound == YES) {
+		self.imageViewImage.hidden = YES;
+	}
+	else {
+		self.imageView.hidden = YES;
+		
+	}
+	return self.imageView;
+}
+
 #pragma mark - Actions
 
 // this should disable and enable the sound of the app
@@ -179,11 +221,15 @@ static AVAudioPlayer *p;
 		//		NSLog(@"sound disabled"); //disable sound
 		[speakerButton setBackgroundImage:self.stopMusic forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 0.0;
+		self.imageView.hidden = YES;
+		self.imageViewImage.hidden = NO;
 	}
 	else {
 		//		NSLog(@"sound enabled"); //enable sound
 		[speakerButton setBackgroundImage:self.playMusic forState:UIControlStateNormal];
 		//		self.appDelegate.audioPlayer.rate = 1.0;
+		self.imageView.hidden = NO;
+		self.imageViewImage.hidden = YES;
 	}
 }
 
@@ -222,16 +268,13 @@ static AVAudioPlayer *p;
 		[self.optionsButton removeFromSuperview];
 	if(self.speakerButton)
 		[self.speakerButton removeFromSuperview];
+	if(self.imageViewImage)
+		[self.imageViewImage removeFromSuperview];
+	if(self.imageView)
+		[self.imageView removeFromSuperview];
 }
 
 - (void)gifPresent {
-	//	AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-	//	UITabBarController *tabBarController = (UITabBarController *)delegate.window.rootViewController;
-	//	[tabBarController setSelectedIndex:ADDPAGE];
-//	NSTimeInterval seconds = [NSDate timeIntervalSinceReferenceDate];
-	NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
-	self.gifCount = (int)timeInMiliseconds;
-
 	self.window = [[UIApplication sharedApplication] keyWindow];
 	UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
 															 bundle: nil];

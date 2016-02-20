@@ -2,7 +2,7 @@
 //  MapKitViewController.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 12/23/15.
+//  Created by JD Leonard on 12/23/15.
 //  Copyright © 2015 TTT. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) MethodManager *methodManager;
 @property (strong, nonatomic) DAO *dao;
+@property (strong, nonatomic) MBProgressHUD *hud;
 @property CLLocationCoordinate2D newAddress; // used for handleLongPress, // maybe use for search, annotation clicking, etc. , which means move to method manager
 
 @end
@@ -55,7 +56,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	
 	self.methodManager = [MethodManager sharedManager];
 	self.dao = [DAO sharedDAO];
-	//	[self.dao createPizzaPlaces]; //removed for parse 1.29.16
 	//	NSLog(@"my array is full = %@", self.dao.pizzaPlaceArray);
 	
 	[self createMapView];
@@ -96,13 +96,14 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	}
 }
 
-
 -(void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:YES];
 	// set directions to NO
 	self.methodManager.directionsShow = NO;
+	self.dao.hideProgressHud = NO;
 	NSArray *pointsArray = [self.mapView overlays];
-	[self.mapView removeOverlays:pointsArray];}
+	[self.mapView removeOverlays:pointsArray];
+}
 
 
 #pragma mark - CREATE PAGE
@@ -135,7 +136,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	
 	self.searchBar.backgroundColor = [UIColor redColor]; // color of cancel and cursor
 	self.searchBar.barTintColor = [[UIColor alloc]initWithRed:0.0/255.0 green:188.0/255.0 blue:204.0/255.0 alpha:1.0]; // color of the bar
-	//	self.searchBar.tintColor = [UIColor purpleColor]; // color of 'cancel'
 	
 	UIImageView *searchIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"walkAlpha30.png"]];
 	searchIcon.frame = CGRectMake(10, 10, 24, 24);
@@ -208,7 +208,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation { // if location is off, this does not get called // otherwise, it gets called every update \\ as per 1.29.16, this is not true
 	//	NSLog(@"userLoc Lat = %f", userLocation.location.coordinate.latitude);
 	//	NSLog(@"locMan Lat = %f",self.methodManager.locationManager.location.coordinate.latitude);
-	//	if(![self checkForLocationServicesFound])return; // removing 1.29.16, since this should not get called twice (once from VDL and here)
 	if(userLocationShown) return;
 	//	NSLog(@"show UL directions is = %d", self.methodManager.directionsShow);
 	
@@ -286,13 +285,13 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		double pizzaPlaceLat = (double)pizzaPlace.latitude;
 		double pizzaPlaceLong = (double)pizzaPlace.longitude;
 		
-		//		NSLog(@"findDistance lat = %f", userLocation.coordinate.latitude);
+		// NSLog(@"findDistance lat = %f", userLocation.coordinate.latitude);
 		// assign user's location
 		double userLocationLat = (double)userLocation.coordinate.latitude;
 		double userLocationLong = (double)userLocation.coordinate.longitude;
 		
 		if (userLocation.coordinate.latitude == 0.0 || userLocation.coordinate.longitude == 0.0) {
-			//					NSLog(@"No idea where user is!");
+			// NSLog(@"No idea where user is!");
 			userLocationShown = NO;
 			userLocationLat = self.methodManager.empireStateBuilding.coordinate.latitude;
 			userLocationLong = self.methodManager.empireStateBuilding.coordinate.longitude;
@@ -500,16 +499,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
 #pragma mark - Location Services & AlertView
 
 -(BOOL)checkForLocationServicesEnabled {	// authorized or NOT
@@ -521,7 +510,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			[self.mapView setRegion:[self regionForAnnotations] animated:NO];
 		}
 		else {
-			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
+			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 1200, 1200);
 			[self.mapView setRegion:region animated:YES];
 		}
 		NSLog(@"Location Services Disabled");
@@ -550,17 +539,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 
 -(BOOL)checkForLocationServicesFound { // do not check on initial load, before allowed use the bool
 	self.methodManager = [MethodManager sharedManager];
-	//	if (userLocationShown) {
-	//		NSLog(@"UserLocationShown is true in cesFOUND");
-	//	}
-	/* // removed because locMan is created much earlier now in MM
-	 if (self.methodManager.firstTimeLoaded) {
-		NSLog(@"do not check locServFound first time");
-		// everything is good, continue
-		return TRUE;
-	 }
-	 else {	// check bool
-	 */
 	if (!self.methodManager.userLocRemind) {
 		NSLog(@"skip me please - do not remind about not found");
 		// everything is good, continue
@@ -580,7 +558,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 				[self.mapView setRegion:[self regionForAnnotations] animated:NO];
 			}
 			else {
-				MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
+				MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 1200, 1200);
 				[self.mapView setRegion:region animated:YES];
 			}
 			NSLog(@"Location Services Not Working");
@@ -593,7 +571,6 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 			return FALSE;
 		}
 	}
-	//	}
 }
 
 /*
@@ -639,7 +616,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 	//	NSLog(@"%@", allAddress);
 	[annotation setSubtitle:allAddress];
 	[self.mapView addAnnotation:annotation];
-	
+	[self.view setUserInteractionEnabled:YES];
 }
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -990,14 +967,24 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 
 -(void)mapButtonPressed:(UIButton *)mapButton {
 	NSLog(@"refresh the mapView here");
-	//create a function that removes all annotations please
-	[self removeAllAnnotations];
-	[self.dao fromLocalDataPP];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(parseDone:)
-												 name:@"FinishedLoadingData"
-											   object:nil];
-	
+	// if no internet, do not attempt to reload
+	TMReachability *reachability = [TMReachability reachabilityWithHostName:@"www.google.com"];
+	NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+	if(internetStatus == NotReachable) {
+		[self.dao textOnlyHud:@"No Internet"];
+	}
+	else {
+		self.hud = [self.dao progresshud:@"Raining Pizzas"withColor:[UIColor clearColor]];
+		//create a function that removes all annotations please
+		[self removeAllAnnotations];
+		self.dao.hideProgressHud = YES;
+		[self.dao fromLocalDataPP];
+		[self.view setUserInteractionEnabled:NO];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(parseDone:)
+													 name:@"FinishedLoadingData"
+												   object:nil];
+	}
 }
 
 - (void)removeAllAnnotations {
@@ -1014,8 +1001,11 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 - (void)parseDone:(NSNotification *) notification {
 	[self currentLocationButtonPressed];
 	[self createPizzaPins];
-	[[NSNotificationCenter defaultCenter]removeObserver:self name:@"FinishedLoadingData" object:nil];
-	
+	[[NSNotificationCenter defaultCenter]removeObserver:self
+												   name:@"FinishedLoadingData"
+												 object:nil];
+	[self.hud hideAnimated:YES];
+	//	[self.view setUserInteractionEnabled:YES];
 }
 
 - (void)listButtonPressed:(UIButton *)listButton {
@@ -1025,11 +1015,16 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 
 // Main initial button press
 - (void)currentLocationButtonPressed {
-	[self.methodManager.locationManager startUpdatingLocation]; // added 2.11.16 unsure if necessary because testing on simulator
+	//	[self.methodManager.locationManager startUpdatingLocation]; // added 2.11.16 unsure if necessary because testing on simulator
 	NSLog(@"Current Location button was pressed \n(LAT = %f)",self.methodManager.locationManager.location.coordinate.latitude);
-	// this should zoom in on current location again, if not found = ESB
 	NSArray *pointsArray = [self.mapView overlays];
 	[self.mapView removeOverlays:pointsArray];
+	for (id annotation in self.mapView.annotations)
+	{
+		if ([[annotation title] isEqualToString:@"You Found Me"])
+			[self.mapView removeAnnotation:annotation];
+	}
+	// this should zoom in on current location again, if not found = ESB
 	
 	if (![self checkForLocationServicesEnabled]) return;
 	if (![self checkForLocationServicesFound]) return;
@@ -1058,7 +1053,7 @@ BOOL userLocationShown; // to stop from reloading user's Location (NO = 0 = not 
 		}
 		else {
 			// set region of map to focus on Empire State Building
-			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 200, 200);
+			MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.methodManager.empireStateBuilding.coordinate, 1200, 1200);
 			[self.mapView setRegion:region animated:YES];
 		}
 	}

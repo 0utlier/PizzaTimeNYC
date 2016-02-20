@@ -2,13 +2,12 @@
 //  PizzaPlaceInfoViewController.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 1/6/16.
+//  Created by JD Leonard on 1/6/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 
 #import "PizzaPlaceInfoViewController.h"
 #import "MapKitViewController.h"
-//#import <Parse/Parse.h>
 
 @interface PizzaPlaceInfoViewController ()
 
@@ -44,6 +43,7 @@
 #pragma mark - ASSIGN VALUES
 
 - (void)assignLabels {// and buttons
+	[self.methodManager removeBothButtons];
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	

@@ -258,7 +258,7 @@
                                     <constraint firstAttribute="width" constant="108" id="I91-eU-LJy"/>
                                     <constraint firstAttribute="width" secondItem="qrF-cQ-b9b" secondAttribute="height" multiplier="5:3" id="Lr7-UO-dQf"/>
                                 </constraints>
-                                <state key="normal" title="DIRECTIONS" image="MCQppiGO.png"/>
+                                <state key="normal" image="MCQppiGO.png"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="I91-eU-LJy"/>
@@ -460,6 +460,7 @@
                                                     </constraints>
                                                 </button>
                                             </subviews>
+                                            <color key="backgroundColor" red="1" green="0.80784313725490198" blue="0.38431372549019605" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="k0K-qJ-ktv" firstAttribute="leading" secondItem="Hl0-hP-gTB" secondAttribute="leadingMargin" id="3wD-nZ-OLh"/>
                                                 <constraint firstItem="x8N-mK-aX1" firstAttribute="leading" secondItem="KxT-eM-UC6" secondAttribute="trailing" id="9bX-L5-TaS"/>

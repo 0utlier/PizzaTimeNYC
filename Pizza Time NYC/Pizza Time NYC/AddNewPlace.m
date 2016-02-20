@@ -2,14 +2,13 @@
 //  AddNewPlace.m
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 1/21/16.
+//  Created by JD Leonard on 1/21/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 
 #import "AddNewPlace.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AddressBookUI/AddressBookUI.h>
-//#import "MBProgressHUD.h"
 @interface AddNewPlace ()
 
 // for use of the avAudioPlayer & Menu Button
@@ -57,6 +56,7 @@
 
 
 -(void)assignLabels {// and buttons
+	[self.methodManager removeBothButtons];
 	[self.view addSubview:[self.methodManager assignOptionsButton]];
 	[self.view addSubview:[self.methodManager assignSpeakerButton]];
 	
@@ -163,7 +163,9 @@
 		// create a PFObject and parse it!
 		NSData *imageData = UIImagePNGRepresentation(self.imageView.image);
 		// Show progress
-		MBProgressHUD *hud = [self.dao progresshud:@"Sending Pizza"];
+		UIColor *orangeMCQ = [[UIColor alloc]initWithRed:255.0/255.0 green:206.0/255.0 blue:98.0/255.0 alpha:1.0];
+		MBProgressHUD *hud = [self.dao progresshud:@"Sending Pizza" withColor:orangeMCQ];
+		self.cameraButton.hidden = YES;
 		PFBooleanResultBlock block = ^(BOOL succeeded, NSError * _Nullable error) {
 			[hud hideAnimated:YES];
 			if (succeeded) {
@@ -184,6 +186,7 @@
 														  otherButtonTitles: nil];
 				[failAlert show];
 			}
+			self.cameraButton.hidden = NO;
 		};
 		[self.dao addNewPizzaPlace:self.nameTextField.text address:self.addressTextField.text location:self.location imageData:imageData block:block];
 	}
@@ -455,7 +458,7 @@
 		if (buttonIndex == 1) {
 			NSLog(@"user submitted, without a picture");
 			// set image as sad pizza
-			UIImage *sadPizzaMan = [UIImage imageNamed:@"KenSadPizzaMan.jpg"];
+			UIImage *sadPizzaMan = [UIImage imageNamed:@"KenSadPizzaManAlpha.png"];
 			self.imageView.image = sadPizzaMan;
 			
 			[self addButtonPressed:self.addButton]; // go back and submit again

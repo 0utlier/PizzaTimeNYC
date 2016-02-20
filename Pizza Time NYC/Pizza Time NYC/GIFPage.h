@@ -2,7 +2,7 @@
 //  GIFPage.h
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 1/30/16.
+//  Created by JD Leonard on 1/30/16.
 //  Copyright © 2016 TTT. All rights reserved.
 //
 

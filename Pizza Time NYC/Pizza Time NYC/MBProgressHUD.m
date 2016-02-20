@@ -21,7 +21,7 @@
 CGFloat const MBProgressMaxOffset = 1000000.f;
 
 static const CGFloat MBDefaultPadding = 4.f;
-static const CGFloat MBDefaultLabelFontSize = 16.f;
+static const CGFloat MBDefaultLabelFontSize = 18.f;
 static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 
 
@@ -996,7 +996,7 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 - (instancetype)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
-            _style = MBProgressHUDBackgroundStyleBlur;
+            _style = MBProgressHUDBackgroundStyleSolidColor;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
             _color = [UIColor colorWithWhite:0.8f alpha:0.6f];
 #else

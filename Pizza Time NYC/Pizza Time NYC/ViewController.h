@@ -2,25 +2,18 @@
 //  ViewController.h
 //  Pizza Time NYC
 //
-//  Created by Aditya Narayan on 12/23/15.
+//  Created by JD Leonard on 12/23/15.
 //  Copyright © 2015 TTT. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "Reachability.h"
-#import <AVFoundation/AVFoundation.h>
 #import "MethodManager.h"
 @class MapKitViewController;
 #import "TableViewController.h"
 #import "DAO.h"
 
-@interface ViewController : UIViewController <AVAudioPlayerDelegate>
+@interface ViewController : UIViewController
 
-
-// to check the internet connection
-@property (nonatomic) Reachability *hostReachability;
-@property (nonatomic) Reachability *internetReachability;
-@property (nonatomic) Reachability *wifiReachability;
 
 @property (nonatomic) CGSize screenSize;
 
@@ -32,6 +25,6 @@
 @property (nonatomic, retain) UIButton *top;
 @property (nonatomic, retain) UIButton *bottom;
 
-//@property (nonatomic, retain) UIImageView *pizzaTimeLogo;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
